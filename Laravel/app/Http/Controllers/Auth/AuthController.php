@@ -24,14 +24,14 @@ class AuthController extends BaseController
             $request->all(),
             [
                 'name' => 'required',
-                'email' => 'required|email',
+                'email' => 'required|email|unique:users,email',
                 'password' => 'required|integer',
                 'c_password' => 'required|same:password'
             ]
         );
 
         if ($validator->fails()) {
-            throw new AuthenticationException();
+            return $this->SendError('Error Of Validation', $validator->errors());
         }
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
@@ -41,8 +41,6 @@ class AuthController extends BaseController
 
         return $this->SendResponse($success, "User Registered");
     }
-
-
     public function login(Request $request)
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
