@@ -49,7 +49,7 @@ class AuthController extends BaseController
             $success['name'] = $user->name;
             return $this->SendResponse($success, "User Login Successfully");
         } else {
-            throw new AuthenticationException();
+            return $this->SendError("wrong email or password");
         }
     }
 }
