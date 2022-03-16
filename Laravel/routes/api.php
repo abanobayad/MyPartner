@@ -23,18 +23,21 @@ Route::namespace('App\Http\Controllers')->group(function()
 {
     Route::post('/register' , 'Auth\AuthController@register')->name('reg');
     Route::post('/login' , 'Auth\AuthController@login')->name('login');
+
+
+
+ Route::middleware('auth:sanctum')->group(function () {
+
+    // Route::resource('/profile', 'ProfileController');
+
+
+    Route::get('/getAllProfiles', 'ProfileController@index');
+    Route::post('/addProfile', 'ProfileController@ADD');
+    Route::post('/editProfile', 'ProfileController@EDIT');
+    Route::get('/deleteProfile/{id}', 'ProfileController@DELETE'); //user ID
+    Route::get('/getProfile/{id}', 'ProfileController@GET'); //user ID
+
 });
 
 
-// Route::middleware('auth:api')->group(function () {
-
-//     Route::resource('/product', 'API\ProductController');
-//     Route::resource('/post', 'API\PostController');
-
-    // Route::get('/product' , 'API\ProductController@index');
-    // Route::post('/product-do-create' , 'API\ProductController@store');
-    // Route::post('/product-do-edit' , 'API\ProductController@update');
-    // Route::get('/product-show/{id}' , 'API\ProductController@show');
-    // Route::get('/product-delete/{id}' , 'API\ProductController@destroy');
-
-// });
+ });
