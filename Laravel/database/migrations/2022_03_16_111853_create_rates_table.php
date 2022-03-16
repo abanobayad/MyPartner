@@ -14,7 +14,13 @@ class CreateRatesTable extends Migration
     public function up()
     {
         Schema::create('rates', function (Blueprint $table) {
-            $table->id();
+            $table->primary(['sender_id', 'receiver_id']);
+
+            $table->foreignId('sender_id')->constrained('users','id');
+            $table->foreignId('receiver_id')->constrained('users','id');
+
+            $table->integer('rate_value');
+
             $table->timestamps();
         });
     }

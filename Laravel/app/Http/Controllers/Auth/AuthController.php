@@ -52,4 +52,18 @@ class AuthController extends BaseController
             return $this->SendError("wrong email or password");
         }
     }
+
+
+
+    public function logout(Request $request)
+    {
+        // $access_token = auth()->user()->token();
+        // $token = $request->user()->token()->find($access_token);
+        // auth()->user()->tokens()->delete();
+        // $user = Auth::user()->token();
+        // $user->revoke();
+        $request->user()->currentAccessToken()->delete();
+
+            return $this->SendResponse( 'logout', "User Logout Successfully");
+    }
 }

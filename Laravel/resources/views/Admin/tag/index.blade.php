@@ -10,17 +10,27 @@
       <tr   >
         <th  scope="col">#</th>
         <th scope="col">Name</th>
+        <th scope="col">Created by</th>
+        <th scope="col">Image</th>
         <th  scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
-        @foreach ($cats as $cat)
+        @foreach ($tags as $tag)
         <tr>
           <th scope="row">{{$loop->iteration}}</th>
-          <td>{{$cat->name}}</td>
+          <td>{{$tag->name}}</td>
+          <td>{{$tag->admin->name}}</td>
+          @if ($tag->image == null)
+          <td>  <div>No Image for This Category</div></td>
+          @else
+                <td>
+                    <img src="{{asset('uploads/Categories').'/'.$tag->image}}" >
+                </td>
+          @endif
           <td>
-            <a  href="{{route('admin.tag.edit' , $cat->id)}}" class="btn btn-sm btn-dark text-white">Edit</a>
-            <a  href="{{route('admin.tag.delete' , $cat->id)}}" class="btn btn-sm btn-danger text-white">Delete</a>
+            <a  href="{{route('admin.tag.edit' , $tag->id)}}" class="btn btn-sm btn-dark text-white">Edit</a>
+            <a  href="{{route('admin.tag.delete' , $tag->id)}}" class="btn btn-sm btn-danger text-white">Delete</a>
           </td>
         </tr>
         @endforeach

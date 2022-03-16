@@ -10,6 +10,8 @@
         </div>
         <form method="POST" action="{{route('admin.group.doEdit')}}" enctype="multipart/form-data">
             @csrf
+        <input type="hidden" name="admin_id" value="{{ auth()->guard('admin')->user()->id}}">
+
             @include('Admin.inc.errors')
             <h4>Edit / {{$group->name}} </h4>
             <div class="mb-3">

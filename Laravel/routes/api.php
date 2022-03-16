@@ -14,30 +14,42 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 
 Route::namespace('App\Http\Controllers')->group(function()
 {
+
     Route::post('/register' , 'Auth\AuthController@register')->name('reg');
+
     Route::post('/login' , 'Auth\AuthController@login')->name('login');
 
 
-
- Route::middleware('auth:sanctum')->group(function () {
-
+ Route::middleware(['auth:sanctum'  , 'api'] )->group(function () {
     // Route::resource('/profile', 'ProfileController');
 
+        //Profile
+        Route::prefix('/profile')->group(function () {
+            Route::get('/', 'ProfileController@index');
+            Route::get('/show/{id}', 'ProfileController@GET');       //user ID
+            Route::post('/add', 'ProfileController@ADD');
+            Route::post('/edit', 'ProfileController@EDIT');
+            Route::get('/delete/{id}', 'ProfileController@DELETE'); //user ID
+        });
 
-    Route::get('/getAllProfiles', 'ProfileController@index');
-    Route::post('/addProfile', 'ProfileController@ADD');
-    Route::post('/editProfile', 'ProfileController@EDIT');
-    Route::get('/deleteProfile/{id}', 'ProfileController@DELETE'); //user ID
-    Route::get('/getProfile/{id}', 'ProfileController@GET'); //user ID
+
+        //Post
+        Route::prefix('/post')->group(function () {
+            Route::get('/', 'PostController@index');
+            Route::post('/add', 'PostController@ADD');
+            Route::post('/edit', 'PostController@EDIT');
+            Route::get('/delete/{id}', 'PostController@DELETE');  //user ID
+            Route::get('/show/{id}', 'PostController@GET');       //user ID
+        });
+
+        Route::post('/logout', 'Auth\AuthController@logout');
 
 });
-
-
- });
+});

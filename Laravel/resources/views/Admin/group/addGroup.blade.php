@@ -6,7 +6,9 @@
 <form method="POST" action="{{route('admin.group.doCreate')}}" enctype="multipart/form-data" >
     @csrf
     @include('Admin.inc.errors')
+
     <h6 class="mb-3">Groups / Add New Group</h6>
+    <input type="hidden" name="admin_id" value="{{ auth()->guard('admin')->user()->id}}">
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Enter Group Name</label>
       <input type="text" name="name" class="form-control">

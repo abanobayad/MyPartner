@@ -14,10 +14,10 @@ use Illuminate\Support\Facades\Auth;
 class ProfileController extends BaseController
 {
     public function index()
-    {
-        $data = Profile::all();
-        return $this->SendResponse($data, 'Data sent');
-    }
+        {
+            $data = Profile::all();
+            return $this->SendResponse($data, 'Data sent');
+        }
 
     public function ADD(Request $request)
         {
@@ -44,76 +44,81 @@ class ProfileController extends BaseController
         }
 
     public function EDIT(Request $request)
-    {
-        $input = $request->all();
-        $profile = Profile::findOrfail($request->user_id);
-
-        //  dd($profile->user_id);
-        //  dd(Auth::user()->id == $profile->user_id);
-        if (Auth::user()->id != $request->user_id) {
-            return $this->SendError("You Are Not Allowed to edit this profile");
-        } else {
-            $validator = Validator::make(
-                $input,
-                [
-                    'user_id' => 'required|exists:users,id',
-                    'image' => 'image|mimes:png,jpg,jpeg|nullable',
-                    'phone' => 'string|min:8|max:11|nullable',
-                    'address' => 'string|nullable',
-                    'bio' => 'string|nullable',
-                    'gender' => 'nullable',
-                ]
-            );
-
-            if ($validator->fails()) {
-                return $this->SendError("Error Of Edit profile", $validator->errors());
+        {
+            $input = $request->all();
+            $user = User::find($request->user_id);
+            // dd($user);
+            if($user == null)
+            {
+                return $this->SendError('User not found');
+            }
+            $profile = $user->profile()->first();
+            //  dd($profile->user_id);
+            //  dd(Auth::user()->id == $profile->user_id);
+            if (Auth::user()->id != $request->user_id) {
+                return $this->SendError("You Are Not Allowed to edit this profile");
             } else {
-                $profile->update($input);
-                $profile->save();
-                $profile_Json = ProfileResource::make($profile);
-                return $this->SendResponse($profile_Json, 'Profile Updated');
+                $validator = Validator::make(
+                    $input,
+                    [
+                        'user_id' => 'required|exists:users,id',
+                        'image' => 'image|mimes:png,jpg,jpeg|nullable',
+                        'phone' => 'string|min:8|max:11|nullable',
+                        'address' => 'string|nullable',
+                        'bio' => 'string|nullable',
+                        'gender' => 'nullable',
+                    ]
+                );
+
+                if ($validator->fails()) {
+                    return $this->SendError("Error Of Edit profile", $validator->errors());
+                } else {
+                    $profile->update($input);
+                    $profile->save();
+                    $profile_Json = ProfileResource::make($profile);
+                    return $this->SendResponse($profile_Json, 'Profile Updated');
+                }
             }
         }
-    }
-
 
     public function GET($id)
-    {
-        $user = User::find($id);
-        // dd($user);
-        if($user == null)
         {
-            return $this->SendError('User not found');
-        }
-        $profile = $user->profile()->first();
-        if (is_null($profile))
-            return $this->SendError('Profile not found');
-        else {
-            $js_prof = new ProfileResource($profile);
-            return $this->SendResponse($js_prof, 'Profile sent Successfully');
-        }
-    }
-
-    public function DELETE($id)
-    {
-        $user = User::find($id);
-        // dd($user);
-        if($user == null)
-        {
-            return $this->SendError('User not found');
-        }
-        $profile = $user->profile()->first();
-        // dd($profile);
-        if (is_null($profile)) {
-            return $this->SendError('Profile not found');
-        } else {
-            if (Auth::user()->id != $profile->user_id) {
-                return $this->SendError("You Are Not Allowed to delete this Profile");
-            } else {
-                $js_prof =  new ProfileResource($profile);
-                $profile->delete();
-                return $this->SendResponse($js_prof, 'Profile Deleted Successfully');
+            $user = User::find($id);
+            // dd($user);
+            if($user == null)
+            {
+                return $this->SendError('User not found');
+            }
+            $profile = $user->profile()->first();
+            if (is_null($profile))
+                return $this->SendError('Profile not found');
+            else {
+                $js_prof = new ProfileResource($profile);
+                return $this->SendResponse($js_prof, 'Profile sent Successfully');
             }
         }
-    }
+
+    public function DELETE($id)
+        {
+            $user = User::find($id);
+            // dd($user);
+            if($user == null)
+            {
+                return $this->SendError('User not found');
+            }
+            $profile = $user->profile()->first();
+            // dd($profile);
+            if (is_null($profile)) {
+                return $this->SendError('Profile not found');
+            } else {
+                if (Auth::user()->id != $profile->user_id) {
+                    return $this->SendError("You Are Not Allowed to delete this Profile");
+                } else {
+                    $js_prof =  new ProfileResource($profile);
+                    $profile->delete();
+                    return $this->SendResponse($js_prof, 'Profile Deleted Successfully');
+                }
+            }
+        }
+
 }
