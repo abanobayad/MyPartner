@@ -2,7 +2,7 @@
 
 @section('content')
 
-<a  class="btn btn-sm btn-primary mb-5" style="float: right" href="{{route('admin.cat.index')}}">Back</a>
+<a  class="btn btn-sm btn-secondary mb-5" style="float: right" href="{{route('admin.cat.index')}}">Back</a>
 <form method="POST" action="{{route('admin.cat.doCreate')}}" enctype="multipart/form-data" >
     @csrf
     @include('Admin.inc.errors')
@@ -19,7 +19,7 @@
     </div>
 
 
-    <button style="float:right" type="submit" class="btn btn-primary">Add</button>
+    <button style="float:right" type="submit" class="btn btn-secondary">Add</button>
   </form>
 
 @endsection

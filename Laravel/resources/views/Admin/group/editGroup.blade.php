@@ -6,7 +6,7 @@
     <div class="container">
 
         <div>
-            <a  class="btn btn-sm btn-primary" style="float: right" href="{{route('admin.group.index')}}">Back</a>
+            <a  class="btn btn-sm btn-secondary" style="float: right" href="{{route('admin.group.index')}}">Back</a>
         </div>
         <form method="POST" action="{{route('admin.group.doEdit')}}" enctype="multipart/form-data">
             @csrf
@@ -58,7 +58,7 @@
                 @endforeach
                 </div>
               </div>
-            <button  type="submit" class="btn btn-primary">Edit</button>
+            <button  type="submit" class="btn btn-secondary">Edit</button>
           </form>
     </div>
 </div>

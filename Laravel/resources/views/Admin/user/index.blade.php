@@ -3,7 +3,6 @@
 @section('content')
 <div class=" d-felx justify-content-between mb-2">
     <h4 style="display: inline-block">Users</h4>
-    <a class="btn btn-sm btn-primary" style="float: right" href="{{route('admin.user.create')}}">Add New</a>
 </div>
 <table class="table">
     <thead>
@@ -15,14 +14,13 @@
       </tr>
     </thead>
     <tbody>
-        @foreach ($cats as $cat)
+        @foreach ($users as $user)
         <tr>
           <th scope="row">{{$loop->iteration}}</th>
-          <td>{{$cat->name}}</td>
-          <td>{{$cat->email}}</td>
+          <td>{{$user->name}}</td>
+          <td>{{$user->email}}</td>
           <td>
-            <a  href="{{route('admin.user.edit' , $cat->id)}}" class="btn btn-sm btn-dark text-white">Edit</a>
-            <a  href="{{route('admin.user.delete' , $cat->id)}}" class="btn btn-sm btn-danger text-white">Delete</a>
+            <a  href="{{route('ban-detailes', $user->id)}}" class="btn btn-sm btn-dark text-white">Ban Details</a>
           </td>
         </tr>
         @endforeach

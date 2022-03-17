@@ -3,7 +3,7 @@
 @section('content')
 <div class=" d-felx justify-content-between mb-2">
     <h4 style="display: inline-block">Tags</h4>
-    <a class="btn btn-sm btn-primary" style="float: right" href="{{route('admin.tag.create')}}">Add New</a>
+    <a class="btn btn-sm btn-secondary" style="float: right" href="{{route('admin.tag.create')}}">Add New</a>
 </div>
 <table class="table " >
     <thead>

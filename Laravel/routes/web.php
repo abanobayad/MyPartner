@@ -59,14 +59,16 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
 
 
 
-                  //group users
+                  //users routes
                   Route::prefix('/users')->group(function () {
                     Route::get('/', 'UserAController@index')->name('admin.user.index');
-                    Route::get('/create', 'UserAController@create')->name('admin.user.create');
-                    Route::post('/do-create', 'UserAController@doCreate')->name('admin.user.doCreate');
-                    Route::get('/edit/{id}', 'UserAController@edit')->name('admin.user.edit');
-                    Route::post('/do-edit', 'UserAController@doEdit')->name('admin.user.doEdit');
-                    Route::get('/delete/{id}', 'UserAController@delete')->name('admin.user.delete');
+                    Route::get('ban/detailes/{user_id}' , 'BanController@index')->name('ban-detailes');
+                    Route::post('ban/' , 'BanController@ban')->name('ban');
+                    Route::post('unban/' , 'BanController@unban')->name('unban');
+                    Route::post('ban/check' , 'BanController@bannedStatus')->name('ban.check');
+
+
+
                 });
 
         Route::get('/logout', 'AdminAuthController@logout')->name('admin.logout');

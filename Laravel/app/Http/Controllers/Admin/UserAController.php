@@ -10,7 +10,7 @@ class UserAController extends Controller
 {
     public function index()
     {
-        $data['cats'] = User::select('id','name','email')->orderBy('id','desc')->get();
+        $data['users'] = User::select('id','name','email')->orderBy('id','desc')->get();
         return view('Admin.user.index')->with($data);
     }
 
@@ -32,7 +32,7 @@ class UserAController extends Controller
 
     public function edit($id)
     {
-        $data['cat'] = User::findOrfail($id);
+        $data['user'] = User::findOrfail($id);
         return view('Admin.user.editUser')->with($data);
     }
 

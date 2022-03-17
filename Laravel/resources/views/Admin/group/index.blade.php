@@ -3,7 +3,7 @@
 @section('content')
 
     <h4 style="display: inline-block">Groups</h4>
-    <a class="btn btn-sm btn-primary" style="float: right" href="{{route('admin.group.create')}}">Add New</a></div>
+    <a class="btn btn-sm btn-secondary" style="float: right" href="{{route('admin.group.create')}}">Add New</a></div>
 
 <div class="table-responsive">
 <table class="table">

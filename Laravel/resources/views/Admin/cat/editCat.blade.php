@@ -2,7 +2,7 @@
 
 @section('content')
 
-<a  class="btn btn-sm btn-primary mb-5" style="float: right" href="{{route('admin.cat.index')}}">Back</a>
+<a  class="btn btn-sm btn-secondary mb-5" style="float: right" href="{{route('admin.cat.index')}}">Back</a>
 <form method="POST" action="{{route('admin.cat.doEdit')}}" enctype="multipart/form-data" >
     @csrf
     @include('Admin.inc.errors')
@@ -22,7 +22,7 @@
             </div>
     </div>
 
-    <button  type="submit" class="btn btn-primary">Edit</button>
+    <button  type="submit" class="btn btn-secondary">Edit</button>
   </form>
 
 

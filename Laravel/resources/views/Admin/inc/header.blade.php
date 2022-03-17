@@ -260,26 +260,23 @@
                     </div>
                 </li>
 
-                                {{-- Users --}}
-                                <li class="nav-item nav-category">Users</li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="collapse" href="#users" aria-expanded="false"
-                                        aria-controls="users">
-                                        <i class="menu-icon mdi mdi-account"></i>
-                                        <span class="menu-title">Users Actions</span>
-                                        <i class="menu-arrow"></i>
-                                    </a>
-                                    <div class="collapse" id="users">
-                                        <ul class="nav flex-column sub-menu">
-                                            <li class="nav-item"> <a class="nav-link"
-                                                href="{{ route('admin.group.create') }}">Add User</a></li>
-                                            <li class="nav-item"> <a class="nav-link"
-                                                href="{{ route('admin.user.index') }}">Edit User</a></li>
-                                            <li class="nav-item"> <a class="nav-link"
-                                                href="{{ route('admin.user.index') }}">Delete User</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
+                {{-- Users --}}
+                <li class="nav-item nav-category">Users</li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#users" aria-expanded="false"
+                        aria-controls="users">
+                        <i class="menu-icon mdi mdi-account"></i>
+                        <span class="menu-title">Users Actions</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="users">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link"
+                                href="{{ route('admin.user.index') }}">Show Users</a></li>
+
+                        </ul>
+                    </div>
+                </li>
 
         </nav>
         <!-- partial -->

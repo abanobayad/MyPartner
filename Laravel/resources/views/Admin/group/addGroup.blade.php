@@ -2,7 +2,7 @@
 
 @section('content')
 
-<a  class="btn btn-sm btn-primary mb-5" style="float: right" href="{{route('admin.group.index')}}">Back</a>
+<a  class="btn btn-sm btn-secondary mb-5" style="float: right" href="{{route('admin.group.index')}}">Back</a>
 <form method="POST" action="{{route('admin.group.doCreate')}}" enctype="multipart/form-data" >
     @csrf
     @include('Admin.inc.errors')
@@ -20,9 +20,9 @@
       </div>
 
     <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Select Group Category</label>
-        <select name="category_id" class="alert-dark">
-            <option value=""class="form-control">Please Select Category</option>
+        <label for="exampleInputEmail1" class="form-label ">Select Group Category</label>
+        <select name="category_id" class="alert-dark mx-2">
+            <option value=""class="form-control ">Please Select Category</option>
             @foreach ($categories as $category)
             <option class="btn btn-outline-dark" value="{{$category->id}}" > {{$category->name}} </option>
             @endforeach
@@ -36,7 +36,7 @@
     </div>
 
 
-    <div class="mb-3 alert-success">
+    <div class="mb-3 alert-dark px-3">
         <label for="exampleInputEmail1" class="form-label">Select Group Tags</label>
         <div class="pb-3">
             @foreach ($tags as $tag)
@@ -49,7 +49,7 @@
         </div>
       </div>
 
-    <button style="float:right" type="submit" class="btn btn-primary">Add</button>
+    <button style="float:right" type="submit" class="btn btn-sm btn-outline-secondary">Add</button>
   </form>
 
 @endsection

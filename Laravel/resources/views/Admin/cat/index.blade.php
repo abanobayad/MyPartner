@@ -4,7 +4,7 @@
 
 <div class=" d-felx justify-content-between mb-2">
     <h4 style="display: inline-block">Categories</h4>
-    <a class="btn btn-sm btn-primary" style="float: right" href="{{route('admin.cat.create')}}">Add New</a>
+    <a class="btn btn-sm btn-secondary" style="float: right" href="{{route('admin.cat.create')}}">Add New</a>
 </div>
 <table class="table">
     <thead>

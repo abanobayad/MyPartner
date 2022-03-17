@@ -2,7 +2,7 @@
 
 @section('content')
 
-<a  class="btn btn-sm btn-primary mb-5" style="float: right" href="{{route('admin.tag.index')}}">Back</a>
+<a  class="btn btn-sm btn-secondary mb-5" style="float: right" href="{{route('admin.tag.index')}}">Back</a>
 <form method="POST" action="{{route('admin.tag.doEdit')}}" enctype="multipart/form-data" >
     @csrf
     <input type="hidden" name="admin_id" value="{{ auth()->guard('admin')->user()->id}}">
@@ -21,7 +21,7 @@
             <div style="float: right"><input class="form-control"  type="file" name="image" value="{{$tag->name}}"></div>
         </div>
 </div>
-    <button  type="submit" class="btn btn-primary">Edit</button>
+    <button  type="submit" class="btn btn-secondary">Edit</button>
   </form>
 
 
