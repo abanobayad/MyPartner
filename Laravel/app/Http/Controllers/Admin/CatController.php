@@ -25,10 +25,11 @@ class CatController extends Controller
 
     public function doCreate(Request $request)
     {
+        // dd($request);
         $data = $request->validate([
-            'name' => 'required|max:20',
             'admin_id' => 'required|exists:admins,id',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png'
+            'name' => 'required|max:20',
+            'image' => 'required|image|mimes:jpg,jpeg,png',
         ]);
 
         if ($request->hasFile('image')) {
@@ -55,7 +56,7 @@ class CatController extends Controller
             'name' => 'required|max:20',
             'admin_id' => 'required|exists:admins,id',
             'id' => 'required|exists:categories,id',
-            'image' => 'mimes:png,jpg,jpeg'
+            'image' => 'nullable|image|mimes:png,jpg,jpeg',
         ]);
         $OldImg = Category::find($request->id);
         if ($OldImg == null) {

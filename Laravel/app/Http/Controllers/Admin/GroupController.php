@@ -9,6 +9,7 @@ use App\Models\Group;
 use App\Models\Tag;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class GroupController extends Controller
 {
@@ -29,7 +30,10 @@ class GroupController extends Controller
 
     public function doCreate(Request $request)
     {
-        $data = $request->validate([
+
+        $data = $request->all();
+
+        $s = Validator::make($data , [
             'name' => 'required|max:50',
             'description' => 'required|max:255',
             'category_id' => 'required|exists:categories,id',
@@ -37,6 +41,8 @@ class GroupController extends Controller
             'image' => 'required|image|mimes:jpg,jpeg,png',
             'admin_id' => 'required|exists:admins,id',
         ]);
+
+        if($s ->fails()){return back()->withErrors($s->errors())->withInput();}
 
         $new_name =  $data['image']->hashName();
         Image::make($data['image'])->resize(150, 150)->save(public_path('uploads/Groups/' . $new_name)); //To store Image on the server

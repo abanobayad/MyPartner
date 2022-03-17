@@ -28,6 +28,7 @@ class TagController extends Controller
         $data = $request->validate([
             'name' => 'required|max:20',
             'admin_id' => 'required|exists:admins,id',
+            'image' => 'required|image|mimes:jpg,jpeg,png',
         ]);
 
         if ($request->hasFile('image')) {
@@ -52,7 +53,7 @@ class TagController extends Controller
             'name' => 'required|max:20',
             'id' => 'required|exists:tags,id',
             'admin_id' => 'required|exists:admins,id',
-            'image' => 'mimes:png,jpg,jpeg',
+            'image' => 'nullable|image|mimes:png,jpg,jpeg',
         ]);
 
 

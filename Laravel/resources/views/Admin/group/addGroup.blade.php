@@ -11,12 +11,12 @@
     <input type="hidden" name="admin_id" value="{{ auth()->guard('admin')->user()->id}}">
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Enter Group Name</label>
-      <input type="text" name="name" class="form-control">
+      <input type="text" name="name" class="form-control" value="{{old('name')}}">
     </div>
 
     <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Enter Group Description</label>
-        <input type="text" name="description" class="form-control">
+        <input type="text" name="description" class="form-control" value="{{old('description')}}">
       </div>
 
     <div class="mb-3">
@@ -24,7 +24,7 @@
         <select name="category_id" class="alert-dark">
             <option value=""class="form-control">Please Select Category</option>
             @foreach ($categories as $category)
-            <option class="btn btn-outline-dark" value="{{$category->id}}"> {{$category->name}} </option>
+            <option class="btn btn-outline-dark" value="{{$category->id}}" > {{$category->name}} </option>
             @endforeach
         </select>
     </div>

@@ -25,7 +25,7 @@
           <td>  <div>No Image for This Category</div></td>
           @else
                 <td>
-                    <img src="{{asset('uploads/Categories').'/'.$tag->image}}" >
+                    <img src="{{asset('uploads/Tags').'/'.$tag->image}}" >
                 </td>
           @endif
           <td>
