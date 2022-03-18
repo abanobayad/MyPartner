@@ -19,16 +19,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::namespace('App\Http\Controllers')->group(function()
-{
+Route::namespace('App\Http\Controllers\API')->group(function () {
 
-    Route::post('/register' , 'Auth\AuthController@register')->name('reg');
+    Route::post('/register', 'AuthController@register')->name('reg');
 
-    Route::post('/login' , 'Auth\AuthController@login')->name('login');
+    Route::post('/login', 'AuthController@login')->name('login');
 
 
- Route::middleware(['auth:sanctum'  , 'api'] )->group(function () {
-    // Route::resource('/profile', 'ProfileController');
+    Route::middleware(['auth:sanctum', 'api'])->group(function () {
 
         //Profile
         Route::prefix('/profile')->group(function () {
@@ -50,6 +48,5 @@ Route::namespace('App\Http\Controllers')->group(function()
         });
 
         Route::post('/logout', 'Auth\AuthController@logout');
-
-});
+    });
 });
