@@ -45,7 +45,7 @@ class GroupController extends Controller
         if($s ->fails()){return back()->withErrors($s->errors())->withInput();}
 
         $new_name =  $data['image']->hashName();
-        Image::make($data['image'])->resize(150, 150)->save(public_path('uploads/Groups/' . $new_name)); //To store Image on the server
+        Image::make($data['image'])->save(public_path('uploads/Groups/' . $new_name)); //To store Image on the server
         //  dd($new_name);
 
         $group = Group::create([

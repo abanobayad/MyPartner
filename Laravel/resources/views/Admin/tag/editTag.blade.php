@@ -17,7 +17,7 @@
     <div class="mb-3">
         <label  class="form-label">Tag Current Image</label>
         <div class="col-4  mb-5">
-            <img src="{{asset('uploads/Categories').'/'.$tag->image}}" alt="{{$tag->name}}" class="mb-3 col-12">
+            <img src="{{asset('uploads/Tags').'/'.$tag->image}}" alt="{{$tag->name}}" class="mb-3 col-12">
             <div style="float: right"><input class="form-control"  type="file" name="image" value="{{$tag->name}}"></div>
         </div>
 </div>

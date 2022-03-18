@@ -42,7 +42,7 @@ class TagController extends Controller
 
     public function edit($id)
     {
-        $data['cat'] = Tag::findOrfail($id);
+        $data['tag'] = Tag::findOrfail($id);
         return view('Admin.tag.editTag')->with($data);
     }
 

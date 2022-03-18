@@ -66,6 +66,7 @@ class CatController extends Controller
         } else {
             $OldImgName = Category::find($request->id)->image;
                 if ($request->hasFile('image')) {
+
                     Storage::disk('uploads')->delete('Categories/' . $OldImgName);
                     $newImgName = $request->image->hashName();
                     Image::make($data['image'])->save(public_path('uploads/Categories/' . $newImgName));
