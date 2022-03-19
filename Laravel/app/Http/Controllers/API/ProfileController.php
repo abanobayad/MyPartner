@@ -20,8 +20,8 @@ class ProfileController extends BaseController
         $data = Profile::all();
         // $js = new ProfileResource($data);
         foreach ($data as $d) {
-            $d->created_at = $d->created_at->format('d/m/Y');
-            $d->updated_at = $d->updated_at->format('d/m/Y');
+            // $d->created_at = $d->created_at->format('d/m/Y');
+            // $d->updated_at = $d->updated_at->format('d/m/Y');
             $d->image =  public_path('uploads/Users/').$d->image;
         }
         return $this->SendResponse($data, 'Data sent');
@@ -140,5 +140,22 @@ class ProfileController extends BaseController
                 return $this->SendResponse($js_prof, 'Profile Deleted Successfully');
             }
         }
+    }
+
+
+    public function UserAcc($id)
+    {
+        //Need To show User Profile data + His Posts  {{without its comments and replies}}
+// dd('sw');
+        $user = User::find($id);
+        $profile  = $user->profile()->get();
+        $posts  = $user->posts()->get();
+        // dd($posts);
+        $data['profile'] =$profile;
+        $data['posts'] = $posts;
+
+        $js_data = new ProfileResource($data);
+        return $this->SendResponse($data , "Data Of Account Sent successfuly" );
+
     }
 }
