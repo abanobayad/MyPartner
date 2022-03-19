@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Tag;
-use Image;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
 class TagController extends Controller
