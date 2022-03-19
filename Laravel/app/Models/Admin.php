@@ -19,11 +19,17 @@ class Admin extends Authenticatable
 
     public function categoires()
     {
-        return $this->hasMany(Category::class , 'admin_id');
+        return $this->hasMany(Category::class);
     }
 
     public function tags()
     {
-        return $this->hasMany(Tag::class , 'admin_id');
+        return $this->hasMany(Tag::class);
     }
+
+    public function groups()
+    {
+        return $this->hasMany(Group::class);
+    }
+
 }

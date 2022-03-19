@@ -19,6 +19,16 @@ class Category extends Model
 
     public function admin()
     {
-        return $this->belongsTo(Admin::class, 'admin_id');
+        return $this->belongsTo(Admin::class);
+    }
+
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    }
+
+    public function groups()
+    {
+        return $this->hasMany(Group::class);
     }
 }

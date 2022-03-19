@@ -19,7 +19,7 @@ class BanController extends Controller
 
     public function ban(Request $request)
     {
-        $request->validate(['time'=> 'required|integer|min:0|max:3'] , ['time.required' => 'You Must Enter Duration Of Ban']);
+        $request->validate(['time'=> 'required|integer|min:0|max:100'] , ['time.required' => 'You Must Enter Duration Of Ban']);
         $user_id = $request->user_id;
         $n = $request->time;
         $user = User::find($user_id);

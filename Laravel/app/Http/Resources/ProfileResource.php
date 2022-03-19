@@ -11,12 +11,11 @@ class ProfileResource extends JsonResource
     {
         // return parent::toArray($request);
 
-
-        return
+   return
         [
             'id'=>$this->id,
             'user_id' => $this->user_id ,
-            'image' => $this->image ,
+            'image' => public_path('uploads/Users/').$this->image ,
             'address' =>$this->address ,
             'bio' =>$this->bio ,
             'phone' =>$this->phone ,

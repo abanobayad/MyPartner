@@ -38,7 +38,49 @@ class User extends Authenticatable
 
 
 
+    public function posts()
+    {
+     return $this->hasMany(Post::class);
+    }
 
+
+    public function contacts()
+    {
+        return $this->hasMany(Contact::class);
+    }
+
+
+    public function requests()
+    {
+        return $this->hasMany(Req::class, 'requester_id');
+    }
+
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'reporter_id');
+    }
+
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'user_id');
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Reply::class, 'user_id');
+    }
+
+    public function SavedPosts()
+    {
+        return $this->hasMany(SavedPosts::class, 'user_id');
+    }
+
+    public function FavGroups()
+    {
+        return $this->hasMany(FavGroups::class, 'user_id');
+    }
 
 
 }

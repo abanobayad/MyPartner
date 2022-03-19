@@ -8,4 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class FavGroups extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'group_id',
+        'user_id',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class , 'user_id');
+    }
+
+    public function groups()
+    {
+        return $this->belongsTo(Group::class , 'group_id');
+    }
 }

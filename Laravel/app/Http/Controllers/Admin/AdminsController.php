@@ -30,9 +30,10 @@ class AdminsController extends Controller
             'password_confirmation' => 'min:6|nullable'
         ]);
 
-        if (!is_null($request->password)) {
+
+
+        if (!is_null($request->password)) { //If Req Has Password
             $OldImgName = Admin::findOrfail($id)->image;
-            // dd($OldImgName);
             if ($request->hasFile('image')) {
                 Storage::disk('uploads')->delete('Admins/' . $OldImgName);
                 $newImgName = $request->image->hashName();
@@ -46,7 +47,7 @@ class AdminsController extends Controller
                 'image'          => $data['image'],
             ]);
         return back()->with('message' , 'Data Changed Successfully...');
-        } else {
+        } else { //If Req Has NOT Password
             $OldImgName = Admin::findOrfail($id)->image;
             // dd($OldImgName);
             if ($request->hasFile('image')) {
