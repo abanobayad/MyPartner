@@ -31,8 +31,6 @@
                     <img src="{{asset('uploads/Categories').'/'.$cat->image}}" >
                 </td>
           @endif
-
-
           <td>
             <a  href="{{route('admin.cat.edit' , $cat->id)}}" class="btn btn-sm btn-dark text-white">Edit</a>
             <a  href="{{route('admin.cat.delete' , $cat->id)}}" class="btn btn-sm btn-danger text-white ">Delete</a>

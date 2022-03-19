@@ -39,7 +39,7 @@ class ProfileController extends BaseController
             ]
         );
         if ($validator->fails()) {
-            return $this->SendError("Validate Input",  $validator->errors()->user_id);
+            return $this->SendError("Validate Input",  $validator->errors());
         } else {
 
 

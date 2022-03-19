@@ -28,7 +28,7 @@
               <div class="mb-3">
                 <label  class="form-label">Group Image</label>
                 <div class="col-4  mb-5">
-                    <img src="{{asset('uploads/Groups').'/'.$group->image}}" alt="{{$group->name}}" class="mb-3" style="width: 150px ; height: 150px;">
+                    <img src="{{asset('uploads/Groups').'/'.$group->image}}" alt="{{$group->name}}" class="mb-3" style="width: 200px ; height: 150px;">
                     <div style="float: right"><input class="form-control"  type="file" name="image"></div>
                 </div>
               </div>

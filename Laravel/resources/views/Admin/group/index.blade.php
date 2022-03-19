@@ -12,6 +12,7 @@
         <th scope="col">#</th>
         <th scope="col">Name</th>
         <th scope="col">Category</th>
+        <th scope="col">Image</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
@@ -21,6 +22,16 @@
           <th scope="row">{{$loop->iteration}}</th>
           <td>{{$group->name}}</td>
           <td>{{$group->category->name}}</td>
+
+          @if ($group->image == null)
+          <td>  <div>No Image for This Category</div></td>
+          @else
+                <td>
+                    <img src="{{asset('uploads/Groups').'/'.$group->image}}" alt="{{$group->name}}">
+                </td>
+          @endif
+
+
           <td>
             <a  href="{{route('admin.group.edit' , $group->id)}}" class="btn btn-sm btn-dark text-white">Edit</a>
             <a  href="{{route('admin.group.delete' , $group->id)}}" class="btn btn-sm btn-danger text-white">Delete</a>
