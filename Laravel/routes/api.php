@@ -14,37 +14,35 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 
 Route::namespace('App\Http\Controllers\API')->group(function () {
 
-    Route::post('/register', 'AuthController@register')->name('reg');
 
+    //Auth Routes "without middleware of sanctum Auth"
+    Route::post('/register', 'AuthController@register')->name('reg');
     Route::post('/login', 'AuthController@login')->name('login');
 
 
-    Route::middleware(['auth:sanctum', 'api'])->group(function () {
+    Route::middleware(['auth:sanctum', 'api'])->group(function () { //Middleware of Auth and Ban
 
         //Profile
         Route::prefix('/profile')->group(function () {
-            Route::get('/', 'ProfileController@index');
-            Route::get('/show/{id}', 'ProfileController@GET');       //user ID
-            Route::post('/add', 'ProfileController@ADD');
-            Route::post('/edit', 'ProfileController@EDIT');
-            Route::get('/delete/{id}', 'ProfileController@DELETE'); //user ID
+            Route::get('/', 'ProfileController@index');                 //Show All Profiles for handle
+            Route::get('/show/{id}', 'ProfileController@GET');          //Show Profile of Specific User with his ID
+            Route::post('/add', 'ProfileController@ADD');               //Add User Profile
+            Route::post('/edit', 'ProfileController@EDIT');             //Edit User Profile
+            Route::get('/delete/{id}', 'ProfileController@DELETE');     //Delete Profile of Specific User with his user ID
+            Route::get('/account/{id}', 'ProfileController@UserAcc');   //Show Profile & Posts of  User with his user ID
         });
 
 
         //Post
         Route::prefix('/post')->group(function () {
-            Route::get('/', 'PostController@index');
-            Route::post('/add', 'PostController@ADD');
-            Route::post('/edit', 'PostController@EDIT');
-            Route::get('/delete/{id}', 'PostController@DELETE');  //user ID
-            Route::get('/show/{id}', 'PostController@GET');       //user ID
+            Route::get('/', 'PostController@index');                //Show All Posts For Handle
+            Route::post('/add', 'PostController@ADD');              //Add new Post
+            Route::post('/edit/{post_id}', 'PostController@EDIT');            //Edit existed Post
+            Route::get('/delete/{id}', 'PostController@DELETE');    //Delete Specific post With its ID
+            Route::get('/show/{id}', 'PostController@GET');         //Show Post and comments and replies with its ID
         });
 
         Route::post('/logout', 'Auth\AuthController@logout');

@@ -9,7 +9,7 @@ use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
-use Image;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -18,10 +18,7 @@ class ProfileController extends BaseController
     public function index()
     {
         $data = Profile::all();
-        // $js = new ProfileResource($data);
         foreach ($data as $d) {
-            $d->created_at = $d->created_at->format('d/m/Y');
-            $d->updated_at = $d->updated_at->format('d/m/Y');
             $d->image =  public_path('uploads/Users/').$d->image;
         }
         return $this->SendResponse($data, 'Data sent');
@@ -38,28 +35,27 @@ class ProfileController extends BaseController
                 'phone' => 'string|min:8|max:11|nullable',
                 'address' => 'string|nullable',
                 'bio' => 'string|nullable',
-                'gender' => 'nullable',
+                'gender' => 'in:male,female|nullable',
             ]
         );
         if ($validator->fails()) {
-            $validator->errors()->user_id = 'User Has Profile Already';
             return $this->SendError("Validate Input",  $validator->errors()->user_id);
         } else {
 
 
             if ($request->hasFile('image')) {
-                $newImgName = $request->image->hashName();
-                Image::make($request->image)->save(public_path('uploads/Users/' . $newImgName));
-                $request->image = $newImgName;
+                $newImgName = $input['image']->hashName();
+                Image::make($input['image'])->save(public_path('uploads/Users/' . $newImgName));
+                $input['image'] = $newImgName;
             }
 
-            $profile = Profile::create($input);
+            $profile = Profile::create($input['image']);
             $js_prof = new ProfileResource($profile);
             return $this->SendResponse($js_prof, "Profile Added");
         }
     }
 
-    public function EDIT(Request $request)
+    public function EDIT(Request $request )
     {
         $input = $request->all();
         $user = User::find($request->user_id);
@@ -80,7 +76,7 @@ class ProfileController extends BaseController
                     'phone' => 'string|min:8|max:11|nullable',
                     'address' => 'string|nullable',
                     'bio' => 'string|nullable',
-                    'gender' => 'nullable',
+                    'gender' => 'in:male,female|nullable',
                 ]
             );
 
@@ -91,7 +87,7 @@ class ProfileController extends BaseController
                 if ($request->hasFile('image')) {
                     Storage::disk('uploads')->delete('Users/' . $OldImgName);
                     $newImgName = $request->image->hashName();
-                    Image::make($request->image)->save(public_path('uploads/Users/' . $newImgName));
+                    Image::make($input['image'])->save(public_path('uploads/Users/' . $newImgName));
                     $input['image'] = $newImgName;
                 }
                 else    $input['image'] = $OldImgName;
@@ -122,6 +118,10 @@ class ProfileController extends BaseController
 
     public function DELETE($id)
     {
+        if (Auth::user()->id != $id) {
+            return $this->SendError("You Are Not Allowed to delete this profile");
+        }
+
         $user = User::find($id);
         // dd($user);
         if ($user == null) {
@@ -140,5 +140,22 @@ class ProfileController extends BaseController
                 return $this->SendResponse($js_prof, 'Profile Deleted Successfully');
             }
         }
+    }
+
+
+    public function UserAcc($id)
+    {
+        //Need To show User Profile data + His Posts  {{without its comments and replies}}
+// dd('sw');
+        $user = User::find($id);
+        $profile  = $user->profile()->get();
+        $posts  = $user->posts()->get();
+        // dd($posts);
+        $data['profile'] =$profile;
+        $data['posts'] = $posts;
+
+        $js_data = new ProfileResource($data);
+        return $this->SendResponse($data , "Data Of Account Sent successfuly" );
+
     }
 }
