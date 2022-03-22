@@ -45,6 +45,14 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
             Route::get('/show/{id}', 'PostController@GET');         //Show Post and comments and replies with its ID
         });
 
+
+        //Search
+        Route::prefix('/search')->group(function () {
+
+            Route::post('/groups', 'SearchBarController@GroupSearch');              //Add new Post
+
+        });
+
         Route::post('/logout', 'Auth\AuthController@logout');
     });
 });

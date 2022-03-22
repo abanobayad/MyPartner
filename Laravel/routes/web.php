@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', 'App\Http\Controllers\Admin\AdminAuthController@login')->name('admin.login1');
 
 Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(function () {
@@ -20,8 +21,8 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
         Route::get('/', 'DashboardController@index')->name('admin.home');
         // Route::get('/ban', 'BanController@ban')->name('admin.home');
         //Admin Edit
-            Route::get('editAdmin' ,  'AdminsController@edit')->name('admin.edit');
-            Route::post('do-editAdmin' , 'AdminsController@doEdit')->name('do-editAdmin');
+        Route::get('editAdmin',  'AdminsController@edit')->name('admin.edit');
+        Route::post('do-editAdmin', 'AdminsController@doEdit')->name('do-editAdmin');
 
 
         //category routes
@@ -47,33 +48,27 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
         });
 
 
-            //group routes
-            Route::prefix('/group')->group(function () {
-                Route::get('/', 'GroupController@index')->name('admin.group.index');
-                Route::get('/create', 'GroupController@create')->name('admin.group.create');
-                Route::post('/do-create', 'GroupController@doCreate')->name('admin.group.doCreate');
-                Route::get('/edit/{id}', 'GroupController@edit')->name('admin.group.edit');
-                Route::post('/do-edit', 'GroupController@doEdit')->name('admin.group.doEdit');
-                Route::get('/delete/{id}', 'GroupController@delete')->name('admin.group.delete');
-            });
+        //group routes
+        Route::prefix('/group')->group(function () {
+            Route::get('/', 'GroupController@index')->name('admin.group.index');
+            Route::get('/create', 'GroupController@create')->name('admin.group.create');
+            Route::post('/do-create', 'GroupController@doCreate')->name('admin.group.doCreate');
+            Route::get('/edit/{id}', 'GroupController@edit')->name('admin.group.edit');
+            Route::post('/do-edit', 'GroupController@doEdit')->name('admin.group.doEdit');
+            Route::get('/delete/{id}', 'GroupController@delete')->name('admin.group.delete');
+        });
 
-
-
-                  //users routes
-                  Route::prefix('/users')->group(function () {
-                    Route::get('/', 'UserAController@index')->name('admin.user.index');
-                    Route::get('ban/detailes/{user_id}' , 'BanController@index')->name('ban-detailes');
-                    Route::post('ban/' , 'BanController@ban')->name('ban');
-                    Route::post('unban/' , 'BanController@unban')->name('unban');
-                    Route::post('ban/check' , 'BanController@bannedStatus')->name('ban.check');
-
-
-
-                });
+        //users routes
+        Route::prefix('/users')->group(function () {
+            Route::get('/', 'UserAController@index')->name('admin.user.index');
+            Route::get('ban/detailes/{user_id}', 'BanController@index')->name('ban-detailes');
+            Route::post('ban/', 'BanController@ban')->name('ban');
+            Route::post('unban/', 'BanController@unban')->name('unban');
+            Route::post('ban/check', 'BanController@bannedStatus')->name('ban.check');
+        });
 
         Route::get('/logout', 'AdminAuthController@logout')->name('admin.logout');
-
-});
-Route::get('/login', 'AdminAuthController@login')->name('admin.login');
-Route::post('/do-login', 'AdminAuthController@doLogin')->name('admin.dologin');
+    });
+    Route::get('/login', 'AdminAuthController@login')->name('admin.login');
+    Route::post('/do-login', 'AdminAuthController@doLogin')->name('admin.dologin');
 });

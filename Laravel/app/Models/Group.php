@@ -4,9 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Nicolaslopezj\Searchable\SearchableTrait;
+
+
 
 class Group extends Model
 {
+    use SearchableTrait;
     use HasFactory;
 
     protected $fillable = [
@@ -15,6 +19,19 @@ class Group extends Model
         'description',
         'category_id',
         'admin_id',
+    ];
+
+    protected $searchable = [
+
+        'columns' => [
+            'groups.name'                => '10',
+            'groups.description'         => '10',
+            'categories.name'            => '10',
+        ],
+        'joins' =>
+        [
+            'categories' => ['groups.category_id','categories.id'],
+        ],
     ];
 
     public function admin()
