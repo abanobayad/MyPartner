@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/', 'App\Http\Controllers\Admin\AdminAuthController@login')->name('admin.login1');
 
 Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(function () {
     Route::middleware('adminsAuth:admin')->group(function () {  //kernel keyword no middelware class : guardName
