@@ -6,6 +6,7 @@ use App\Http\Controllers\API\BaseController;
 use Illuminate\Http\Request;
 use App\Models\Group;
 use App\Http\Resources\GroupSearchResource;
+use App\Http\Resources\GroupSearchBar;
 class SearchBarController extends BaseController
 {
     public function GroupSearch(Request $request)
@@ -13,7 +14,6 @@ class SearchBarController extends BaseController
         $search_keyword = $request->has('keyword') ? $request->get('keyword'):null;
         $search_category = $request->has('category') ? $request->get('category'):null;
         $search_tag = $request->has('tag') ? $request->get('tag'):[];
-
 
         $groups = Group::with(['category' , 'tags']);
 
@@ -26,7 +26,7 @@ class SearchBarController extends BaseController
         {
             $groups = $groups->whereCategoryId($search_category);
         }
-
+       
         elseif(is_array($search_tag) && count($search_tag) >0)
         {
             $groups = $groups->whereHas('tags', function ($query) use ($search_tag) {
@@ -35,11 +35,13 @@ class SearchBarController extends BaseController
         }
         // dd($groups->get());
 
-        $data =$groups->get();
-        foreach ($data as $d) {
-            $d->image =  public_path('uploads/Groups/') . $d->image;
-        }
-        // $js = new GroupSearchResource($data);
+        // $data =$groups->get();
+        // foreach ($data as $d) {
+        //     $d->image =  public_path('uploads/Groups/') . $d->image;
+        // }
+        $data= $groups->get();
+        // dd($data);
+        // $js = GroupSearchBar::collection($data);
         return $this->SendResponse($data, "Search Result Sent");
 
     }
