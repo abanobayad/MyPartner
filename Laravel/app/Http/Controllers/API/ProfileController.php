@@ -49,7 +49,7 @@ class ProfileController extends BaseController
                 $input['image'] = $newImgName;
             }
 
-            $profile = Profile::create($input['image']);
+            $profile = Profile::create($input);
             $js_prof = new ProfileResource($profile);
             return $this->SendResponse($js_prof, "Profile Added");
         }

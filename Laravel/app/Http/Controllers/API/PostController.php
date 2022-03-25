@@ -29,15 +29,11 @@ class PostController extends BaseController
     public function ADD(Request $request)
     {
 
-        if (Auth::user()->id != $request->user_id) {
-            return $this->SendError("You Are Not Allowed to ADD this post");
-        }
 
         $input = $request->all();
         $validator = Validator::make(
             $input,
             [
-                'user_id' => 'required|exists:users,id',
                 'group_id' => 'required|exists:groups,id',
                 'title' => 'string|required',
                 'content' => 'string|required',
@@ -47,6 +43,7 @@ class PostController extends BaseController
                 'price' => 'numeric|required',
             ]
         );
+        $input['user_id'] = Auth::user()->id;
 
         if ($validator->fails()) {
             return $this->SendError("Validate Input",  $validator->errors());
@@ -72,13 +69,10 @@ class PostController extends BaseController
             return $this->SendError('Post not found');
         }
 
-        if (Auth::user()->id != $request->user_id) {
-            return $this->SendError("You Are Not Allowed to edit this post");
-        } else {
+        else {
             $validator = Validator::make(
                 $input,
                 [
-                    'user_id' => 'required|exists:users,id',
                     'group_id' => 'required|exists:groups,id',
                     'title' => 'string|required',
                     'content' => 'string|required',
@@ -88,6 +82,8 @@ class PostController extends BaseController
                     'price' => 'numeric|required',
                 ]
             );
+
+            $input['user_id'] = Auth::user()->id;
 
             if ($validator->fails()) {
                 return $this->SendError("Error Of Edit profile", $validator->errors());

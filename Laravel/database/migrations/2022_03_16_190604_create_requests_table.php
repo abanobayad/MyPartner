@@ -16,6 +16,7 @@ class CreateRequestsTable extends Migration
         Schema::create('requests', function (Blueprint $table) {
             $table->primary(['post_id', 'requester_id']);
             $table->foreignId('post_id')->constrained('posts')->onDelete('cascade');
+            $table->foreignId('post_owner_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('requester_id')->constrained('users')->onDelete('cascade');
             $table->enum('status' , ['pending' , 'accept' , 'reject'])->defualt('pending');
             $table->timestamps();

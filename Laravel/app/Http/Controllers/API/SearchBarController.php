@@ -5,8 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\BaseController;
 use Illuminate\Http\Request;
 use App\Models\Group;
-use App\Http\Resources\GroupSearchResource;
-use App\Http\Resources\GroupSearchBar;
+use App\Http\Resources\GroupBarCollection;
 class SearchBarController extends BaseController
 {
     public function GroupSearch(Request $request)
@@ -26,23 +25,17 @@ class SearchBarController extends BaseController
         {
             $groups = $groups->whereCategoryId($search_category);
         }
-       
+
         elseif(is_array($search_tag) && count($search_tag) >0)
         {
             $groups = $groups->whereHas('tags', function ($query) use ($search_tag) {
                 $query->whereIn('groups_tags.tag_id', $search_tag);
             });
         }
-        // dd($groups->get());
 
-        // $data =$groups->get();
-        // foreach ($data as $d) {
-        //     $d->image =  public_path('uploads/Groups/') . $d->image;
-        // }
-        $data= $groups->get();
-        // dd($data);
-        // $js = GroupSearchBar::collection($data);
-        return $this->SendResponse($data, "Search Result Sent");
+        $data= $groups->latest()->get();
+        $js = new GroupBarCollection($data);
+        return $this->SendResponse($js, "Search Result Sent");
 
     }
 }

@@ -53,6 +53,15 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
 
         });
 
+
+        //Search
+            Route::prefix('/request')->group(function () {
+
+                Route::get('/', 'ReqController@index');                   //show all requests of Auth user
+                Route::post('/doRequest', 'ReqController@doReq');                   //Req Post
+
+            });
+
         Route::post('/logout', 'Auth\AuthController@logout');
     });
 });
