@@ -50,7 +50,7 @@
                 <div>
                     <a class="navbar-brand brand-logo"  href="{{ route('admin.home') }}">
                         {{-- <img src="{{ asset('images') }}/logo.svg" alt="logo" /> --}}
-                        <i class="mdi mdi-account-search"><span class="text-dark">My</span>Partner00</i>
+                        <i class="mdi mdi-account-search"><span class="text-dark">My</span>Partner</i>
                     </a>
                     <a class="navbar-brand brand-logo-mini" href="{{route('admin.home')}}">
                         {{-- <i>MyPartner</i> --}}
