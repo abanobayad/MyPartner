@@ -20,7 +20,7 @@ class AdminAuthController extends Controller
         ]);
 
         if (!auth()->guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password']])) {
-            return back();
+            return back()->withErrors('Invalid Email Or Password');
         } else {
             return redirect(route('admin.home'));
         }
