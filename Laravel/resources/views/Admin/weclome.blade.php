@@ -22,41 +22,29 @@
   <!-- endinject -->
   <link rel="shortcut icon" href="{{asset('images/back.png')}}" />
 
-
-    <title>MyPartner - Dashboard Login</title>
+    <title>Welcome-MyPartner</title>
 </head>
 <body>
     <div class="container-scroller text-center">
         <div class="container-fluid page-body-wrapper full-page-wrapper">
           <div class="content-wrapper d-flex align-items-center auth px-0">
             <div class="row w-100 mx-0">
-              <div class="col-lg-4 mx-auto">
-                <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-                    <div class="brand-logo text-center">
-                    @include('Admin.inc.errors')
-                    </div>
-                  <div class="brand-logo text-center">
-                    <i class="mdi mdi-account-multiple">MyPartner</i>
+
+                <div class="col-lg-4 mx-auto">
+                    <i class="mdi mdi-account-multiple text-dark" style="font-size: 30px">My<span style="color: darkblue">Partner</span>  </i>
                     <br>
                     <span>Find Your Partner</span>
-
                   </div>
-                  <h4>Hello! let's get started</h4>
-                  <h6 class="fw-light">Sign in to continue.</h6>
-                  <form class="pt-3" action="{{route('admin.dologin')}}" method="POST">
-                    @csrf
-                    <div class="form-group">
-                      <input type="email" class="form-control form-control-lg" name="email" id="exampleInputEmail1" placeholder="Username">
-                    </div>
-                    <div class="form-group">
-                      <input type="password" class="form-control form-control-lg"  name="password" id="exampleInputPassword1" placeholder="Password">
-                    </div>
-                    <div class="mt-3">
-                      <input type="submit" class="btn btn-block btn-dark btn-lg font-weight-medium auth-form-btn" value="SIGN IN" >
-                    </div>
-                  </form>
-                </div>
+              <div class="template-demo mt-2">
+                <a class="btn btn-outline-dark btn-icon-text" href="{{route('admin.login')}}">
+                  <span class="d-inline-block text-left">
+                    <small class="fw-light d-block">Let's Start Your Work</small>
+                    <br>
+                    <i class="mdi mdi-account-key mb-0"></i>
+                  </span>
+                </a>
               </div>
+
             </div>
           </div>
           <!-- content-wrapper ends -->

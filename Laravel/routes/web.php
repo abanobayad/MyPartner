@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'App\Http\Controllers\Admin\AdminAuthController@login')->name('admin.login1');
+Route::get('/', function(){
+    return view('Admin.weclome');
+});
 
 Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(function () {
     Route::middleware('adminsAuth:admin')->group(function () {  //kernel keyword no middelware class : guardName
