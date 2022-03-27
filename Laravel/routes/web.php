@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\RateController ;      // to access fun , class exist in productController
 
 /*
 |--------------------------------------------------------------------------
@@ -74,3 +75,4 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
     Route::get('/login', 'AdminAuthController@login')->name('admin.login');
     Route::post('/do-login', 'AdminAuthController@doLogin')->name('admin.dologin');
 });
+

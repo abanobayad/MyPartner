@@ -62,6 +62,27 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
 
             });
 
+        // rate
+            Route::prefix('/rate')->group(function () {
+                Route::get('/', 'RateController@index');                 //Show All rates for handle
+                Route::get('/myRate', 'RateController@myRate');              //Show user rates
+                Route::get('/get/{id}', 'RateController@GET');               //Show rates of Specific User with his ID
+                Route::get('/total/{id}', 'RateController@totalRate');           //Show total rates of Specific User with his ID
+                Route::post('/add', 'RateController@ADD');               //make new rate
+                Route::post('/edit/{id}', 'RateController@EDIT');             //Edit Specific rate
+                Route::get('/delete/{id}', 'RateController@DELETE');     //Delete specific rate
+            });
+
+
+        // report
+            Route::prefix('/report')->group(function () {
+                Route::get('/', 'ReportController@index');                          //Show All reports for handle
+                Route::get('/get/{id}', 'ReportController@GET');                    //Show reports of Specific post with his ID
+                Route::post('/add', 'ReportController@ADD');                        //make new report
+                Route::post('/edit/{id}', 'ReportController@EDIT');                 //Edit Specific report
+                Route::get('/delete/{id}', 'ReportController@DELETE');              //Delete specific report
+            });
+
         Route::post('/logout', 'Auth\AuthController@logout');
     });
 });
