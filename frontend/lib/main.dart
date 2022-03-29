@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:my_partner/login.dart';
-import 'package:my_partner/signup.dart';
+import 'package:frontend/screens/signup.dart';
 
-import 'homepage.dart';
-
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SignupPage(),
+    return MaterialApp(
+      title: 'MyPartner',
+      theme: ThemeData(
+        colorScheme: Theme.of(context).colorScheme.copyWith(
+              primary: const Color.fromARGB(255, 193, 74, 230),
+            ),
+      ),
+      home: const SignUp(),
     );
   }
 }
