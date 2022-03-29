@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\BaseController as BaseController;
-use App\Http\Resources\ProfileResource;
 use App\Models\Report;
 use App\Models\Post;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Notifications\AdminPostReported;
+use Illuminate\Support\Facades\Notification;
+use App\Models\Admin;
 
 class ReportController extends BaseController
 {
@@ -45,7 +47,6 @@ class ReportController extends BaseController
            $input,
            [
                'reason' => 'required',
-               'user_id' => 'required',
                'post_id' => 'required',
            ]
        );
@@ -53,8 +54,28 @@ class ReportController extends BaseController
            return $this->SendError("Validate Input",  $validator->errors());
        } else {
 
+        //user_id Edit
+        $input['user_id']= Auth::id();
+        $input['created_at']= now();
+        $input['updated_at']= now();
+
            $report = Report::create($input);
-          // $js_rate = new ProfileResource($rate);
+
+           //Notification part start
+           $Admins = Admin::all();
+           $post = Post::find($request->post_id);
+           $group = $post->group;
+           $reporter =Auth::user();
+           $details = [
+            'post_id' => $post->id,
+            'reporter_id' => $reporter->id,
+            'title' => $post->title.' post has been reported',
+            'body' => $post->title.' post in '.$group->name. ' group is reported by user: ' .$reporter->name,
+            ];
+           Notification::send($Admins , new AdminPostReported($details));
+           //notification part end
+
+          // $js_report = new ProfileResource($report);
            return $this->SendResponse($report, "report created");
        }
    }
@@ -71,7 +92,7 @@ class ReportController extends BaseController
        }else{
 
            if ( $report->user_id != Auth::id()) {
-               return $this->SendError("You Are Not Allowed to edit this rate");
+               return $this->SendError("You Are Not Allowed to edit this report");
            }else{
                $validator = Validator::make(
                    $input,
@@ -82,14 +103,14 @@ class ReportController extends BaseController
                );
 
                if($validator->fails()) {
-                   return $this->SendError("Error Of Edit rate", $validator->errors());
+                   return $this->SendError("Error Of Edit report", $validator->errors());
                } else {
                    $report->reason = $input['reason'];
                    $report->feedback = $input['feedback'];
 
                    $report->save();
                    //$profile_Json = ProfileResource::make($profile);
-                   return $this->SendResponse($report, 'rate Updated');
+                   return $this->SendResponse($report, 'report Updated');
                }
            }
        }
