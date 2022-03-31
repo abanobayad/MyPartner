@@ -82,7 +82,17 @@ class ReqController extends BaseController
     public function showReq($post_id, $req_id)
     {
         $req = Req::where('post_id', $post_id)->where('requester_id', $req_id)->first();
-        return view('frontend.showRequest', compact('req'));
+
+        if(Auth::id() != $req->post_owner_id)
+        {
+            return $this->SendError("You Are Not Allowed to show this Req");
+        }
+
+        $post = $req->post()->select('id','title')->get();
+        $requester = $req->requester()->select('id','name')->get();
+        $req = Req::select('status' , 'created_at')->where('post_id', $post_id)->where('requester_id', $req_id)->first();
+        $data = ['Requester' => $requester ,'Post' =>$post , 'Request' => $req];
+        return $this->SendResponse($data , "Request sent");
     }
 
     public function approveRequest($post_id, $requester_id)

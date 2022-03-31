@@ -34,11 +34,17 @@ class RateController extends BaseController
     // to add new rate in rates table
     public function ADD(Request $request)
     {
+
+        $sender_id = Auth::id();
+        $receiver_id = $request->receiver_id;
+        if($sender_id == $receiver_id)
+        {
+            return $this->SendError('You Cannot Rate Yourself');
+        }
         $input = $request->all();
         $validator = Validator::make(
             $input,
             [
-                'sender_id' => 'required',
                 'receiver_id' => 'required',
                 'rate_value' => 'required',
             ]
@@ -46,7 +52,10 @@ class RateController extends BaseController
         if ($validator->fails()) {
             return $this->SendError("Validate Input",  $validator->errors());
         } else {
-
+            $input['sender_id']=Auth::id();
+            $input['created_at'] = now();
+            $input['updated_at'] = now();
+            
             $rate = Rate::create($input);
            // $js_rate = new ProfileResource($rate);
             return $this->SendResponse($rate, "rate Added");

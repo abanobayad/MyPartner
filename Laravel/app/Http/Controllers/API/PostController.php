@@ -90,7 +90,7 @@ class PostController extends BaseController
             } else {
                 $OldImgName =  $post->image;
                 if ($request->hasFile('image')) {
-                    Storage::disk('uploads')->delete('Users/' . $OldImgName);
+                    Storage::disk('uploads')->delete('Posts/' . $OldImgName);
                     $newImgName = $request->image->hashName();
                     Image::make($input['image'])->save(public_path('uploads/Posts/' . $newImgName));
                     $input['image'] = $newImgName;

@@ -12,7 +12,7 @@ class Req extends Model
     protected $table = 'requests';
     protected $fillable = ['post_id' , 'requester_id' , 'status'];
 
-    public function user()
+    public function requester()
     {
         return $this->belongsTo(User::class , 'requester_id');
     }
