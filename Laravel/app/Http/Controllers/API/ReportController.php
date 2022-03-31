@@ -30,7 +30,7 @@ class ReportController extends BaseController
         return $this->SendError('post not found');
     }
 
-    $reports = Report::all()->where('post_id',$id);
+    $reports = Report::select()->where('post_id',$id)->get();
     if ($reports == null) {
         return $this->SendError("this post dosn't hava any reports not found");
     }else{

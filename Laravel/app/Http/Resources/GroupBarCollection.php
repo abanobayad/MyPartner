@@ -12,8 +12,7 @@ class GroupBarCollection extends ResourceCollection
         }
         // dd($this->tags);
         return [
-            'data' => [
-                'data' => $this->collection->map(function($data) {
+                'ٍSearchResullt' => $this->collection->map(function($data) {
                     return [
                         'id'                => $data->id,
                         'name'              =>$data->name,
@@ -29,7 +28,6 @@ class GroupBarCollection extends ResourceCollection
                         'Tags'              => $this->tags
                     ];
                 })
-            ]
         ];
 
     }
