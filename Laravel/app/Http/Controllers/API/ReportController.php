@@ -10,46 +10,26 @@ use Illuminate\Http\Request;
 use App\Notifications\AdminPostReported;
 use Illuminate\Support\Facades\Notification;
 use App\Models\Admin;
+use App\Http\Resources\ReportResource;
+use Illuminate\Validation\Rule;
 
 class ReportController extends BaseController
 {
-   //to return all reports exist in reports table
-   public function index()
-   {
-       $reports = Report::all();
-       return $this->SendResponse($reports, 'reports sent');
-   }
-
-
-   //to return reports of specific post
-   public function GET($id)
-   {
-
-    $post = Post::find($id);
-    if ($post == null) {
-        return $this->SendError('post not found');
-    }
-
-    $reports = Report::select()->where('post_id',$id)->get();
-    if ($reports == null) {
-        return $this->SendError("this post dosn't hava any reports not found");
-    }else{
-        return $this->SendResponse($reports, 'reports sent');}
-   }
-
-
 
    // to make new report
    public function ADD(Request $request)
    {
-       $input = $request->all();
-       $validator = Validator::make(
-           $input,
-           [
-               'reason' => 'required',
-               'post_id' => 'required',
-           ]
-       );
+        $input = $request->all();
+        $reasons =['reason1','reason2','reason3','reason4'];
+
+        $validator = Validator::make(
+            $input,
+            [
+                'reason' => Rule::in($reasons),
+                'post_id' => 'required',
+                'feedback' => 'nullable|string',
+            ]
+        );
        if ($validator->fails()) {
            return $this->SendError("Validate Input",  $validator->errors());
        } else {
@@ -59,7 +39,7 @@ class ReportController extends BaseController
         $input['created_at']= now();
         $input['updated_at']= now();
 
-           $report = Report::create($input);
+        $report = Report::create($input);
 
            //Notification part start
            $Admins = Admin::all();
@@ -75,10 +55,11 @@ class ReportController extends BaseController
            Notification::send($Admins , new AdminPostReported($details));
            //notification part end
 
-          // $js_report = new ProfileResource($report);
-           return $this->SendResponse($report, "report created");
+           $js_report = ReportResource::make($report);
+           return $this->SendResponse($js_report, "report created");
        }
    }
+
 
 
    // to update specific report
@@ -94,13 +75,14 @@ class ReportController extends BaseController
            if ( $report->user_id != Auth::id()) {
                return $this->SendError("You Are Not Allowed to edit this report");
            }else{
-               $validator = Validator::make(
-                   $input,
-                   [
-                    'reason' => 'required',
-                    'user_id' => 'required',
-                    'post_id' => 'required',                   ]
-               );
+            $reasons =['reason1','reason2','reason3','reason4'];
+
+             $validator = Validator::make(
+                 $input,
+                 [
+                  'reason' => Rule::in($reasons),
+                  'feedback' => 'nullable|string', ]
+             );
 
                if($validator->fails()) {
                    return $this->SendError("Error Of Edit report", $validator->errors());
@@ -109,8 +91,8 @@ class ReportController extends BaseController
                    $report->feedback = $input['feedback'];
 
                    $report->save();
-                   //$profile_Json = ProfileResource::make($profile);
-                   return $this->SendResponse($report, 'report Updated');
+                   $js_report = ReportResource::make($report);
+                   return $this->SendResponse($js_report, 'report Updated');
                }
            }
        }
@@ -131,6 +113,25 @@ class ReportController extends BaseController
                return $this->SendResponse($report, 'report Deleted Successfully');
            }
        }
+   }
+
+
+
+
+   public function GET($id)
+   {
+
+    $post = Post::find($id);
+    if ($post == null) {
+        return $this->SendError('post not found');
+    }
+
+    $reports = Report::all()->where('post_id',$id);
+    if ($reports == null) {
+        return $this->SendError("this post dosn't hava any reports not found");
+    }else{
+        $js_report = ReportResource::collection($reports);
+        return $this->SendResponse($js_report, "report sent");    }
    }
        }
 

@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\BaseController as BaseController;
-use App\Http\Resources\ProfileResource;
-
+use App\Http\Resources\RateResource;
 use App\Models\Rate;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
@@ -12,13 +11,6 @@ use Illuminate\Http\Request;
 
 class RateController extends BaseController
 {
-    //to return all rates exist in rates table
-    public function index()
-    {
-        $rates = Rate::all();
-        return $this->SendResponse($rates, 'rates sent');
-    }
-
 
     //to return my rates
     public function myRate()
@@ -28,13 +20,13 @@ class RateController extends BaseController
         if ($rates == null) {
             return $this->SendError('No one has rated you before');
         }
-        return $this->SendResponse($rates, 'rates sent');
+        $js_rate = RateResource::collection($rates);
+        return $this->SendResponse( $js_rate, 'rates sent');
     }
 
     // to add new rate in rates table
     public function ADD(Request $request)
     {
-
         $sender_id = Auth::id();
         $receiver_id = $request->receiver_id;
         if($sender_id == $receiver_id)
@@ -46,8 +38,8 @@ class RateController extends BaseController
             $input,
             [
                 'receiver_id' => 'required',
-                'rate_value' => 'required',
-            ]
+                'rate_value' => 'required|integer|between:1,5',
+                ]
         );
         if ($validator->fails()) {
             return $this->SendError("Validate Input",  $validator->errors());
@@ -55,31 +47,29 @@ class RateController extends BaseController
             $input['sender_id']=Auth::id();
             $input['created_at'] = now();
             $input['updated_at'] = now();
-            
+
             $rate = Rate::create($input);
-           // $js_rate = new ProfileResource($rate);
-            return $this->SendResponse($rate, "rate Added");
+            $js_rate = RateResource::make($rate);
+            return $this->SendResponse($js_rate, "rate Added");
         }
     }
 
 
-    // to get rates of sspecific user
+    // to get rates of specific user
     public function GET($id)
     {
         $user = User::find($id);
         if ($user == null) {
             return $this->SendError('User not found');
         }
-       // $rate = $user->rates()->first();
         $rate = Rate::all()->where('receiver_id',$user->id);
         if (is_null($rate))
-            return $this->SendError('there in no rates');
+            return $this->SendError('there in no rates for this user');
         else {
-            //$js_prof = new ProfileResource($profile);
-            return $this->SendResponse($rate, 'rates sent Successfully');
+            $js_rate = RateResource::collection($rate);
+            return $this->SendResponse($js_rate, 'rates sent Successfully');
         }
     }
-
 
     // to total sum of rates for specific user
     public function totalRate($id)
@@ -97,7 +87,11 @@ class RateController extends BaseController
                 $sum =$sum+ $item->rate_value;
             }
             $total = $sum / sizeof($rate);
-            return $this->SendResponse($total, 'rates sent Successfully');
+
+            $data['number_of_reviews'] = sizeof($rate);
+            $data['totoal_reviews_percentage'] = $total;
+
+            return $this->SendResponse($data, 'rates sent Successfully');
         }
     }
 
@@ -117,7 +111,7 @@ class RateController extends BaseController
                 $validator = Validator::make(
                     $input,
                     [
-                        'rate_value' => 'required',
+                        'rate_value' => 'required|integer|between:1,5',
                     ]
                 );
 
@@ -126,14 +120,12 @@ class RateController extends BaseController
                 } else {
                     $rate->rate_value = $input['rate_value'];
                     $rate->save();
-                    //$profile_Json = ProfileResource::make($profile);
-                    return $this->SendResponse($rate, 'rate Updated');
+                    $js_rate = RateResource::make($rate);
+                    return $this->SendResponse($js_rate, 'rate Updated');
                 }
             }
         }
     }
-
-
 
     public function DELETE($id)
     {
@@ -149,6 +141,47 @@ class RateController extends BaseController
             }
         }
     }
+
+
+    public function make($id){
+
+        $input['sender_id'] = Auth::id();
+        $input['receiver_id'] = $id;
+
+        $rate = Rate::select()->where('sender_id',$input['sender_id'])->where('receiver_id',$input['receiver_id'])->get()->first();
+
+        if($rate == null){
+            return $this->SendResponse($rate, 'make rate');
+        }else{
+            return $this->SendResponse($rate, 'update rate');
+        }
+    }
+
+
+    // public function create(Request $request){
+
+    //     $input['sender_id'] = Auth::id();
+    //     $input['receiver_id'] = $request->receiver_id;
+
+    //     $rate = Rate::select()->where('sender_id',$input['sender_id'])->where('receiver_id',$input['receiver_id'])->get()->first();
+
+    //     if($rate == null){
+    //         return $this->ADD($request);
+    //     }else{
+    //         return $this->EDIT($request,$rate->id);
+    //     }
+    // }
+
+
+    public function url($id){
+
+        $rate = Rate::find($id)->get()->first();
+        //$path = url()->current();
+        $path = url("/api/rate/show/{$rate->id}");
+        return $path;
+    }
+
+
         }
 
 

@@ -21,8 +21,9 @@
             <div class="navbar-menu-wrapper d-flex align-items-top">
                 <ul class="navbar-nav">
                     <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-                        <h1 class="welcome-text">Good Morning, <span
-                                class="text-black fw-bold">{{ auth()->guard('admin')->user()->name }}</span></h1>
+                     <h1 class="welcome-text">Good Morning, <span
+                                class="text-black fw-bold">{{ auth()->guard('admin')->user()->name }}
+                            </span></h1>
                         <h3 class="welcome-sub-text">Your performance summary this week </h3>
                     </li>
                 </ul>
@@ -123,12 +124,12 @@
                     <li class="nav-item dropdown d-none d-lg-block user-dropdown">
                         <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            <img class="img-xs rounded-circle" src="{{ asset('uploads/Admins') .'/'.  auth()->guard('admin')->user()->image }}"
+                           <img class="img-xs rounded-circle" src="{{ asset('uploads/Admins') .'/'.  auth()->guard('admin')->user()->image }}"
                                 alt="Profile image">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                             <div class="dropdown-header text-center ">
-                                <img class="img-md rounded-circle" src="{{ asset('uploads/Admins') .'/'.  auth()->guard('admin')->user()->image }}"
+                               <img class="img-md rounded-circle" src="{{ asset('uploads/Admins') .'/'.  auth()->guard('admin')->user()->image }}"
                                     alt="Profile image" width="60px" height="60px">
                                 <p class="mb-1 mt-3 font-weight-semibold">{{auth()->guard('admin')->user()->name}}</p>
                                 <p class="fw-light text-muted mb-0">{{auth()->guard('admin')->user()->email}}</p>
@@ -220,6 +221,60 @@
                                 href="{{ route('admin.group.index') }}">Edit Group</a></li>
                             <li class="nav-item"> <a class="nav-link"
                                 href="{{ route('admin.group.index') }}">Delete Group</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+
+                {{-- Contacts --}}
+                <li class="nav-item nav-category">Contacts</li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#Contacts" aria-expanded="false"
+                        aria-controls="groups">
+                        <i class="menu-icon mdi mdi-microsoft"></i>
+                        <span class="menu-title">Contacts Actions</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="groups">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link"
+                                href="{{ route('admin.contact.index') }}">All Contacts </a></li>
+                        </ul>
+                    </div>
+                </li>
+
+
+                {{-- Rates --}}
+                <li class="nav-item nav-category">Rates</li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#Rates" aria-expanded="false"
+                        aria-controls="groups">
+                        <i class="menu-icon mdi mdi-microsoft"></i>
+                        <span class="menu-title">Rates Actions</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="groups">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link"
+                                href="{{ route('admin.rate.index') }}">All Rates </a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                {{-- reports --}}
+                <li class="nav-item nav-category">Reports</li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#reports" aria-expanded="false"
+                        aria-controls="groups">
+                        <i class="menu-icon mdi mdi-microsoft"></i>
+                        <span class="menu-title">Reports Actions</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="groups">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link"
+                                href="{{ route('admin.report.index') }}">All reports</a></li>
+
                         </ul>
                     </div>
                 </li>

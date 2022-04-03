@@ -68,11 +68,30 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
             Route::post('ban/', 'BanController@ban')->name('ban');
             Route::post('unban/', 'BanController@unban')->name('unban');
             Route::post('ban/check', 'BanController@bannedStatus')->name('ban.check');
+
+            Route::get('/rate/index', 'RateController@index')->name('admin.rate.index');
+            Route::get('/rate/show/{id}', 'RateController@show')->name('admin.rate.show');
+            Route::get('/rate/delete/{id}', 'RateController@DELETE')->name('admin.rate.delete');
+
         });
+
+        // contact
+        Route::prefix('/contact')->group(function () {
+            Route::get('/index', 'ContController@index')->name('admin.contact.index');
+            Route::get('/show/{id}', 'ContController@show')->name('admin.contact.show');
+            Route::get('/delete/{id}', 'ContController@DELETE')->name('admin.contact.delete');
+        });
+
+        Route::prefix('/report')->group(function () {
+            Route::get('/index', 'RepController@index')->name('admin.report.index');
+            Route::get('/show/{id}', 'RepController@show')->name('admin.report.show');
+            Route::get('/delete/{id}', 'RepController@DELETE')->name('admin.report.delete');
+
+        });
+
 
         Route::get('/logout', 'AdminAuthController@logout')->name('admin.logout');
     });
     Route::get('/login', 'AdminAuthController@login')->name('admin.login');
     Route::post('/do-login', 'AdminAuthController@doLogin')->name('admin.dologin');
 });
-
