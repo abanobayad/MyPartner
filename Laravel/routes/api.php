@@ -42,7 +42,7 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
             Route::post('/add', 'PostController@ADD');              //Add new Post
             Route::post('/edit/{post_id}', 'PostController@EDIT');            //Edit existed Post
             Route::get('/delete/{id}', 'PostController@DELETE');    //Delete Specific post With its ID
-            Route::get('/show/{id}', 'PostController@GET');         //Show Post and comments and replies with its ID
+            Route::get('/show/{id}', 'PostController@GET')->name('showPost');         //Show Post and comments and replies with its ID
         });
 
 
@@ -54,12 +54,61 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
         });
 
 
-        //Search
+        //Req
             Route::prefix('/request')->group(function () {
 
                 Route::get('/', 'ReqController@index');                   //show all requests of Auth user
+                Route::get('/show/{p_id}/{r_id}', 'ReqController@showReq')->name('showRequest');                   //show specific request //Send Post ID and Requester ID
                 Route::post('/doRequest', 'ReqController@doReq');                   //Req Post
+                Route::get('acceptRequest/{post_id}/{requester_id}'  , 'RequestController@approveRequest')->name('acceptRequest');
+                Route::get('rejectRequest/{post_id}/{requester_id}'  , 'RequestController@rejectRequest')->name('rejectRequest');
+                Route::get('deleteRequest/{post_id}/{requester_id}'  , 'RequestController@deleteRequest')->name('deleteRequest');
 
+            });
+
+
+            //Notifications
+            Route::prefix('/notify')->group(function () {
+                Route::get('/markAllRead' , 'NotificationController@readAll');
+                Route::get('/markRead/{id}' , 'NotificationController@read');
+                Route::get('/get' , 'NotificationController@GET');
+                Route::get('/getAll' , 'NotificationController@GetAll');
+            });
+
+
+        //Comments
+            Route::prefix('/comment')->group(function () {
+                Route::post('/add', 'CommentController@comment');                   //add NEW comment
+                Route::post('/edit/{c_id}', 'CommentController@edit');              //Edit OLD Comment "Send Comment ID"
+            });
+
+
+        // rate
+            Route::prefix('/rate')->group(function () {
+                Route::get('/myRate', 'RateController@myRate');              //Show user rates
+                Route::get('/get/{id}', 'RateController@GET');               //Show rates of Specific User with his ID
+                Route::get('/total/{id}', 'RateController@totalRate');           //Show total rates of Specific User with his ID
+                Route::post('/add', 'RateController@ADD');               //make new rate
+                Route::post('/edit/{id}', 'RateController@EDIT');             //Edit Specific rate
+                Route::get('/delete/{id}', 'RateController@DELETE');     //Delete specific rate
+                Route::get('/make/{id}', 'RateController@make');
+
+
+            });
+
+
+        // report
+            Route::prefix('/report')->group(function () {
+                Route::post('/add', 'ReportController@ADD');                        //make new report
+                Route::post('/edit/{id}', 'ReportController@EDIT');                 //Edit Specific report
+                Route::get('/delete/{id}', 'ReportController@DELETE');              //Delete specific report
+            });
+
+
+
+        // contact
+            Route::prefix('/contact')->group(function () {
+                Route::post('/add', 'ContactController@ADD');                        //make new report
             });
 
         Route::post('/logout', 'Auth\AuthController@logout');

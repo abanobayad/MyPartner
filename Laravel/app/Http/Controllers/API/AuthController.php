@@ -49,13 +49,13 @@ class AuthController extends BaseController
     public function login(Request $request)
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            $user = Auth::user();
+            $user = User::find(Auth::id());
             $success['token'] = $user->createToken($user->name)->plainTextToken;
             $success['id'] = $user->id;
             $success['name'] = $user->name;
             return $this->SendResponse($success, "User Login Successfully");
         } else {
-            return $this->SendError("wrong email or password");
+            return $this->SendError("Wrong E-mail or Password");
         }
     }
 
