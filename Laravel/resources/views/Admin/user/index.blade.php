@@ -4,8 +4,8 @@
 <div class=" d-felx justify-content-between mb-2">
     <h4 style="display: inline-block">Users</h4>
 </div>
-<table class="table">
-    <thead>
+<table class="table text-center ">
+    <thead class="">
       <tr>
         <th scope="col">#</th>
         <th scope="col">Name</th>
@@ -21,8 +21,8 @@
           <td>{{$user->email}}</td>
           <td>
             <a  href="{{route('ban-detailes', $user->id)}}" class="btn btn-sm btn-dark text-white">Ban Details</a>
-            <a  href="{{route('admin.contact.get', $user->id)}}"  class="btn btn-info">Contacts Details</a>
-            <a  href="{{route('admin.rate.get', $user->id)}}" class="btn btn-secondary">Rate Details</a>
+            <a  href="{{route('admin.contact.get', $user->id)}}"  class="btn btn-sm  btn-primary">Contacts Details</a>
+            <a  href="{{route('admin.rate.get', $user->id)}}" class="btn btn-sm  btn-warning">Rate Details</a>
 
           </td>
         </tr>

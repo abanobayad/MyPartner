@@ -10,32 +10,32 @@
             </div>
 
             <div class="form-group">
-                <h4 for="exampleFormControlInput1"> post title : {{  $report->post->title }}</h4>
+                <h4 for="exampleFormControlInput1">Post Title : {{  $report->post->title }}</h4>
             </div>
 
             <div class="form-group">
-                <h4 for="exampleFormControlInput1"> post owner : {{$report->post->user->name}}</h4>
+                <h4 for="exampleFormControlInput1"> Post Owner : {{$report->post->user->name}}</h4>
             </div>
 
             <div class="form-group">
-                <h4 for="exampleFormControlInput1">reason  : {{  $report->reason }}</h4>
+                <h5 for="exampleFormControlInput1">Reason  : {{  $report->reason }}</h5>
             </div>
 
             <div class="form-group">
-                <h4 for="exampleFormControlInput1">feedbakc  : {{  $report->feedback }}</h4>
+                <h5 for="exampleFormControlInput1">Feedback  : {{  $report->feedback }}</h5>
             </div>
 
             <div class="form-group">
-                <h3 for="exampleFormControlInput1">created at : {{  $report->created_at->diffForhumans() }}</h3>
+                <h6 for="exampleFormControlInput1">Created at : {{  $report->created_at->diffForhumans() }}</h6>
             </div>
 
             <div class="form-group">
-                <h3 for="exampleFormControlInput1">updated at : {{  $report->updated_at->diffForhumans() }}</h3>
+                <h6 for="exampleFormControlInput1">Updated at : {{  $report->updated_at->diffForhumans() }}</h6>
             </div>
 
-            <div class="btn-group col-10 mx-auto">
-                <a href="{{route('admin.report.approve' ,[$report->post_id ,$report->user_id ])}}" > <button type="button"  class="btn btn-success btn-lg">Approve </button> </a> {{-- delete post--}}
-                <a href="{{route('admin.report.reject' , [$report->post_id ,$report->user_id ])}}" > <button type="button"  class="btn btn-danger btn-lg">Reject </button> </a>{{-- delete report--}}
+            <div class="btn-group  mx-auto" style="float: right">
+                <a href="{{route('admin.report.approve' ,[$report->post_id ,$report->user_id ])}}" > <button type="button"  class="btn btn-sm btn-success btn-lg">Approve </button> </a> {{-- delete post--}}
+                <a href="{{route('admin.report.reject' , [$report->post_id ,$report->user_id ])}}" > <button type="button"  class="btn btn-sm btn-danger btn-lg">Reject </button> </a>{{-- delete report--}}
             </div>
         </div>
     </div>
