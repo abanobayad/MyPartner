@@ -2,14 +2,31 @@
 
 @section('content')
 
-    <h4 style="display: inline-block">reports</h4>
+<h4 style="display: inline-block">Reports</h4>
+<div class="text-center pb-2 " style="float:right; width: 300px">
+    <form action="{{route('admin.report.index')}}" method="POST"  class="pb-2">
+        @csrf
+        <div class="row">
+        <div class="col-8">
+            <select name="handled" class="form-control mb-2 text-center">
+                <option value="all">All Reports</option>
+                <option value="yes" @if($selected_reps == 'yes') selected @endif>
+                    Handled Reports</option>
+                <option value="no"  @if($selected_reps == 'no') selected @endif >
+                    Not Handled Reports</option>
 
-    <select name="gender" id="handled" style="float: right;width:250px">
-        <option value="report">All reports</option>
-        <option value="yes" @if (old('report') == "yes") {{ 'selected' }} @endif>handled reports</option>
-        <option value="no" @if (old('report') == "no") {{ 'selected' }} @endif>not handled reports</option>
-    </select>
+                {{-- <option value="yes"@if(old('handled') == "yes") {{ 'selected' }} @endif>Handled Reports</option>
+                <option value="no" @if(old('handled') == "no") {{ 'selected' }} @endif>Not Handled Reports</option> --}}
+            </select>
+        </div>
+        <div class="col-4" >
+        <button type="submit" class="btn form-control mb-2">Show</button>
+        </div>
+    </div>
+</form>
+</div>
 
+<br>
 <div class="table-responsive">
 <table class="table">
     <thead>
@@ -37,8 +54,8 @@
 
 
           <td>
-            <a  href="{{route('admin.report.show' , $report->id)}}" class="btn btn-sm btn-dark text-white">Show Details</a>
-            <a  href="{{route('admin.report.delete' , $report->id)}}" class="btn btn-sm btn-danger text-white">Delete</a>
+            <a  href="{{route('admin.report.show' , [$report->post_id ,$report->user_id ])}}" class="btn btn-sm btn-dark text-white">Show Details</a>
+            <a  href="{{route('admin.report.delete',[$report->post_id ,$report->user_id])}}" class="btn btn-sm btn-danger text-white">Delete</a>
           </td>
         </tr>
         @endforeach

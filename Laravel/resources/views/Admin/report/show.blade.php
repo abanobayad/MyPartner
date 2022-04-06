@@ -34,8 +34,8 @@
             </div>
 
             <div class="btn-group col-10 mx-auto">
-                <a href="{{route('admin.report.approve' , $report->id)}}" > <button type="button"  class="btn btn-success btn-lg">Approve </button> </a> {{-- delete post--}}
-                <a href="{{route('admin.report.reject' , $report->id)}}" > <button type="button"  class="btn btn-danger btn-lg">Reject </button> </a>{{-- delete report--}}
+                <a href="{{route('admin.report.approve' ,[$report->post_id ,$report->user_id ])}}" > <button type="button"  class="btn btn-success btn-lg">Approve </button> </a> {{-- delete post--}}
+                <a href="{{route('admin.report.reject' , [$report->post_id ,$report->user_id ])}}" > <button type="button"  class="btn btn-danger btn-lg">Reject </button> </a>{{-- delete report--}}
             </div>
         </div>
     </div>

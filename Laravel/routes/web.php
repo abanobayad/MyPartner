@@ -69,6 +69,8 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
             Route::post('unban/', 'BanController@unban')->name('unban');
             Route::post('ban/check', 'BanController@bannedStatus')->name('ban.check');
 
+
+         //rate
             Route::get('/rate/index', 'RateController@index')->name('admin.rate.index');
             Route::get('/rate/low', 'RateController@low')->name('admin.rate.low');
             Route::get('/rate/show/{id}', 'RateController@show')->name('admin.rate.show');
@@ -85,12 +87,13 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
             Route::get('/delete/{id}', 'ContController@DELETE')->name('admin.contact.delete');
         });
 
+        //report
         Route::prefix('/report')->group(function () {
-            Route::get('/index', 'RepController@index')->name('admin.report.index');
-            Route::get('/show/{id}', 'RepController@show')->name('admin.report.show');
-            Route::get('/delete/{id}', 'RepController@DELETE')->name('admin.report.delete');
-            Route::get('/approve/{id}', 'RepController@approve')->name('admin.report.approve');
-            Route::get('/reject/{id}', 'RepController@reject')->name('admin.report.reject');
+            Route::any('/index', 'RepController@index')->name('admin.report.index');
+            Route::get('/show/{post_id}/{user_id}', 'RepController@show')->name('admin.report.show');
+            Route::get('/delete/{post_id}/{user_id}', 'RepController@DELETE')->name('admin.report.delete');
+            Route::get('/approve/{post_id}/{user_id}', 'RepController@approve')->name('admin.report.approve');
+            Route::get('/reject/{post_id}/{user_id}', 'RepController@reject')->name('admin.report.reject');
 
 
         });
