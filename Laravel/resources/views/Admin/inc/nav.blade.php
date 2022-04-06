@@ -230,12 +230,12 @@
                 <li class="nav-item nav-category">Contacts</li>
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#Contacts" aria-expanded="false"
-                        aria-controls="groups">
+                        aria-controls="Contacts">
                         <i class="menu-icon mdi mdi-microsoft"></i>
                         <span class="menu-title">Contacts Actions</span>
                         <i class="menu-arrow"></i>
                     </a>
-                    <div class="collapse" id="groups">
+                    <div class="collapse" id="Contacts">
                         <ul class="nav flex-column sub-menu">
                             <li class="nav-item"> <a class="nav-link"
                                 href="{{ route('admin.contact.index') }}">All Contacts </a></li>
@@ -248,15 +248,18 @@
                 <li class="nav-item nav-category">Rates</li>
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#Rates" aria-expanded="false"
-                        aria-controls="groups">
+                        aria-controls="Rates">
                         <i class="menu-icon mdi mdi-microsoft"></i>
                         <span class="menu-title">Rates Actions</span>
                         <i class="menu-arrow"></i>
                     </a>
-                    <div class="collapse" id="groups">
+                    <div class="collapse" id="Rates">
                         <ul class="nav flex-column sub-menu">
                             <li class="nav-item"> <a class="nav-link"
                                 href="{{ route('admin.rate.index') }}">All Rates </a></li>
+
+                            <li class="nav-item"> <a class="nav-link"
+                                    href="{{ route('admin.rate.low') }}">low Rates </a></li>
                         </ul>
                     </div>
                 </li>
@@ -265,12 +268,12 @@
                 <li class="nav-item nav-category">Reports</li>
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#reports" aria-expanded="false"
-                        aria-controls="groups">
+                        aria-controls="reports">
                         <i class="menu-icon mdi mdi-microsoft"></i>
                         <span class="menu-title">Reports Actions</span>
                         <i class="menu-arrow"></i>
                     </a>
-                    <div class="collapse" id="groups">
+                    <div class="collapse" id="reports">
                         <ul class="nav flex-column sub-menu">
                             <li class="nav-item"> <a class="nav-link"
                                 href="{{ route('admin.report.index') }}">All reports</a></li>

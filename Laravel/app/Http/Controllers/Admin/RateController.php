@@ -8,38 +8,20 @@ use Illuminate\Http\Request;
 
 class RateController extends Controller
 {
-    //to return all rates exist in rates table (admin)
     public function index()
     {
         $rates = Rate::all();
         return view('Admin.rate.index', compact('rates'));
     }
 
-
-    // to get details of specific contact
+    // to get details of specific rate
     public function show($id)
     {
         $rate = Rate::find($id);
-        if ($rate == null) {
-            return redirect()->back()->with('rate not found');
-        }else{
-            return view('Admin.rate.show', compact('rate'));
-        }
+        return view('Admin.rate.show', compact('rate'));
     }
 
-    public function DELETE($id)
-    {
-        $rate = Rate::find($id);
-        if ( $rate == null) {
-            return redirect()->back()->with('rate not found');
-        }else{
-                $rate = $rate->delete();
-                return redirect()->back();
-            }
-        }
-
-
-    // to get rates of specific user (admin)
+    // to get rates of specific user
     public function GET($id)
     {
         $user = User::find($id);
@@ -47,11 +29,20 @@ class RateController extends Controller
             return redirect()->back()->with('User not found');
         }
         $rates = Rate::select()->where('receiver_id',$user->id)->get();
-        if (is_null($rates))
-            return redirect()->back()->with('there in no rates for this user');
-        else {
-            return view('Admin.rate.get', compact('rates'));
+
+        $sum = 0;
+        $total = 0;
+        foreach ($rates as $rate){
+            $sum =$sum+ $rate->rate_value;
         }
+        if(sizeof($rates) > 0){
+            $total = $sum / sizeof($rates);
+            $data['number_of_reviews']=sizeof($rates);
+            $data['total_reviews_percentage']=$total;
+        }
+        $collection = collect(['number_of_reviews' => sizeof($rates), 'total_reviews_percentage' => $total]);
+
+        return view('Admin.rate.get', compact('rates','collection'));
     }
 
 
@@ -71,10 +62,54 @@ class RateController extends Controller
                 $sum =$sum+ $item->rate_value;
             }
             $total = $sum / sizeof($rate);
-            return view('Admin.rate.get', compact('total'));
+            $data['number_of_reviews']=sizeof($rate);
+            $data['total_reviews_percentage']=$total;
+            $collection = collect(['number_of_reviews' => sizeof($rate), 'total_reviews_percentage' => $total]);
+
+            return view('Admin.rate.total', compact('collection'));
         }
     }
 
+    public function DELETE($id)
+    {
+        $rate = Rate::find($id);
+        if ( $rate == null) {
+            return redirect()->back()->with('rate not found');
+        }else{
+            $rate = $rate->delete();
+            return redirect(route('admin.rate.index'));
+
+            }
+        }
+
+
+    public function low()
+    {
+        $users = User::all();
+        $data=[];
+        foreach($users as $user){
+            $rates = Rate::select()->where('receiver_id',$user->id)->get();
+            $sum = 0;
+            $total = 0;
+            foreach ($rates as $rate){
+                $sum =$sum+ $rate->rate_value;
+            }
+            if(sizeof($rates) > 0){
+                $total = $sum / sizeof($rates);
+                if($total<3){
+                    array_push($data,
+                    [
+                        'name' => $user->name,
+                        'id' => $user->id,
+                        'avg'=> $total,
+                        'number'=>sizeof($rates)
+                    ]);
+                }
+            }
+
+        }
+        return view('Admin.rate.low', compact('data'));
+    }
 
         }
 

@@ -20,8 +20,11 @@ class RateController extends BaseController
         if ($rates == null) {
             return $this->SendError('No one has rated you before');
         }
+        $data = $this->totalRate($user->id);
         $js_rate = RateResource::collection($rates);
-        return $this->SendResponse( $js_rate, 'rates sent');
+        $collection = collect(['reviews' =>$data ,'rates'=>$js_rate]);
+
+        return $this->SendResponse($collection, 'rates sent Successfully');
     }
 
     // to add new rate in rates table
@@ -54,6 +57,33 @@ class RateController extends BaseController
         }
     }
 
+     // to total sum of rates for specific user
+     public function totalRate($id)
+     {
+         $user = User::find($id);
+         if ($user == null) {
+             return $this->SendError('User not found');
+         }
+         $rate = Rate::all()->where('receiver_id',$user->id);
+         if (is_null($rate))
+             return $this->SendError('there in no rates');
+         else {
+             $sum = 0;
+             $total =0;
+             foreach ($rate as $item){
+                 $sum =$sum+ $item->rate_value;
+             }
+             if(count($rate)>0){
+                 $total = $sum / sizeof($rate);
+             }
+
+             $data['number_of_reviews'] = sizeof($rate);
+             $data['totoal_reviews_percentage'] = $total;
+
+             return $this->SendResponse($data, 'rates sent Successfully');
+         }
+     }
+
 
     // to get rates of specific user
     public function GET($id)
@@ -66,34 +96,13 @@ class RateController extends BaseController
         if (is_null($rate))
             return $this->SendError('there in no rates for this user');
         else {
+            $data = $this->totalRate($user->id);
             $js_rate = RateResource::collection($rate);
-            return $this->SendResponse($js_rate, 'rates sent Successfully');
+            $collection = collect(['reviews' =>$data ,'rate'=>$js_rate]);
+            return $this->SendResponse($collection, 'rates sent Successfully');
         }
     }
 
-    // to total sum of rates for specific user
-    public function totalRate($id)
-    {
-        $user = User::find($id);
-        if ($user == null) {
-            return $this->SendError('User not found');
-        }
-        $rate = Rate::all()->where('receiver_id',$user->id);
-        if (is_null($rate))
-            return $this->SendError('there in no rates');
-        else {
-            $sum = 0;
-            foreach ($rate as $item){
-                $sum =$sum+ $item->rate_value;
-            }
-            $total = $sum / sizeof($rate);
-
-            $data['number_of_reviews'] = sizeof($rate);
-            $data['totoal_reviews_percentage'] = $total;
-
-            return $this->SendResponse($data, 'rates sent Successfully');
-        }
-    }
 
     // to update specific rate
     public function EDIT(Request $request , $id)
@@ -180,6 +189,7 @@ class RateController extends BaseController
         $path = url("/api/rate/show/{$rate->id}");
         return $path;
     }
+
 
 
         }

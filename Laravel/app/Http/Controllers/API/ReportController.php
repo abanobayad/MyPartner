@@ -20,8 +20,15 @@ class ReportController extends BaseController
    public function ADD(Request $request)
    {
         $input = $request->all();
-        $reasons =['reason1','reason2','reason3','reason4'];
+        $input['user_id']= Auth::id();
+        $post = Post::find($input['post_id']);
 
+        if($input['user_id'] == $post->user_id)
+        {
+            return $this->SendError('You Cannot report your post');
+        }
+
+        $reasons =['reason1','reason2','reason3','reason4'];
         $validator = Validator::make(
             $input,
             [
@@ -35,7 +42,6 @@ class ReportController extends BaseController
        } else {
 
         //user_id Edit
-        $input['user_id']= Auth::id();
         $input['created_at']= now();
         $input['updated_at']= now();
 
@@ -55,8 +61,8 @@ class ReportController extends BaseController
            Notification::send($Admins , new AdminPostReported($details));
            //notification part end
 
-           $js_report = ReportResource::make($report);
-           return $this->SendResponse($js_report, "report created");
+        $js_report = ReportResource::make($report);
+        return $this->SendResponse($js_report, "report created");
        }
    }
 
@@ -115,9 +121,6 @@ class ReportController extends BaseController
        }
    }
 
-
-
-
    public function GET($id)
    {
 
@@ -133,6 +136,7 @@ class ReportController extends BaseController
         $js_report = ReportResource::collection($reports);
         return $this->SendResponse($js_report, "report sent");    }
    }
+
        }
 
 
