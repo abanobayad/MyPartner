@@ -21,6 +21,9 @@
           <td>{{$user->email}}</td>
           <td>
             <a  href="{{route('ban-detailes', $user->id)}}" class="btn btn-sm btn-dark text-white">Ban Details</a>
+            <a  href="{{route('admin.contact.get', $user->id)}}"  class="btn btn-info">Contacts Details</a>
+            <a  href="{{route('admin.rate.get', $user->id)}}" class="btn btn-secondary">Rate Details</a>
+
           </td>
         </tr>
         @endforeach

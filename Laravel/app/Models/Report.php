@@ -16,7 +16,7 @@ class Report extends Model
     ];
     public function user()
     {
-        return $this->belongsTo(User::class , 'reporter_id');
+        return $this->belongsTo(User::class , 'user_id');
     }
 
     public function post()
