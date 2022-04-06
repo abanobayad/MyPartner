@@ -34,7 +34,7 @@
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0"
                             aria-labelledby="messageDropdown">
                             <a class="dropdown-item py-3">
-                                <p class="mb-0 font-weight-medium float-left">Select category</p>
+                                <p class="mb-0 font-weight-medium float-left">Select Category</p>
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item preview-item">
@@ -153,7 +153,10 @@
         <!-- partial:partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas p-0 m-0" id="sidebar"  >
             <ul class="nav">
-                {{-- Home --}}
+
+{{-- SideBar --}}
+
+                {{-- Dashboard --}}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.home') }}">
                         <i class="mdi mdi-grid-large menu-icon"></i>
@@ -183,7 +186,6 @@
                     </div>
                 </li>
 
-
                 {{-- Tags --}}
                 <li class="nav-item nav-category">TAGS</li>
                 <li class="nav-item">
@@ -204,6 +206,7 @@
                         </ul>
                     </div>
                 </li>
+
                 {{-- Groups --}}
                 <li class="nav-item nav-category">Groups</li>
                 <li class="nav-item">
@@ -229,13 +232,13 @@
                 {{-- Contacts --}}
                 <li class="nav-item nav-category">Contacts</li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#Contacts" aria-expanded="false"
-                        aria-controls="Contacts">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#contact" aria-expanded="false"
+                        aria-controls="contact">
                         <i class="menu-icon mdi mdi-microsoft"></i>
                         <span class="menu-title">Contacts Actions</span>
                         <i class="menu-arrow"></i>
                     </a>
-                    <div class="collapse" id="Contacts">
+                    <div class="collapse" id="contact">
                         <ul class="nav flex-column sub-menu">
                             <li class="nav-item"> <a class="nav-link"
                                 href="{{ route('admin.contact.index') }}">All Contacts </a></li>
@@ -247,13 +250,13 @@
                 {{-- Rates --}}
                 <li class="nav-item nav-category">Rates</li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#Rates" aria-expanded="false"
-                        aria-controls="Rates">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#rates" aria-expanded="false"
+                        aria-controls="rates">
                         <i class="menu-icon mdi mdi-microsoft"></i>
                         <span class="menu-title">Rates Actions</span>
                         <i class="menu-arrow"></i>
                     </a>
-                    <div class="collapse" id="Rates">
+                    <div class="collapse" id="rates">
                         <ul class="nav flex-column sub-menu">
                             <li class="nav-item"> <a class="nav-link"
                                 href="{{ route('admin.rate.index') }}">All Rates </a></li>
