@@ -105,4 +105,20 @@ class CommentController extends BaseController
         $comment_Json = CommentResource::make($comment);
         return $this->SendResponse($comment_Json, "Comment Edit Success");
     }
+
+
+    public function DELETE($id)
+    {
+        $comment = Comment::find($id);
+        if ( $comment == null) {
+            return $this->SendError("comment not found");
+        }else{
+            if ($comment->user_id != Auth::id()) {
+                return $this->SendError("You Are Not Allowed to delete this comment");
+            }else{
+                $comment = $comment->delete();
+                return $this->SendResponse($comment, 'comment Deleted Successfully');
+            }
+        }
+    }
 }

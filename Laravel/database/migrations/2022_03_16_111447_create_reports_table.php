@@ -14,14 +14,19 @@ class CreateReportsTable extends Migration
     public function up()
     {
         Schema::create('reports', function (Blueprint $table) {
+
+
+
             $table->primary(['post_id', 'user_id']);
+            $table->foreignId('user_id')->constrained('users','id');
+            $table->foreignId('post_id')->constrained('posts','id')->onDelete('cascade');
+
 
             $table->enum('reason' , ['reason1' , 'reason2' , 'reason3' , 'reason4']);
             $table->text('feedback');
 
+            $table->enum('is_handled' , ['yes' , 'no'])->default('no');
 
-            $table->foreignId('user_id')->constrained('users','id');
-            $table->foreignId('post_id')->constrained('posts','id')->onDelete('cascade');
 
             $table->timestamps();
         });

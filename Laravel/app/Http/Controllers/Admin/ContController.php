@@ -23,12 +23,8 @@ class ContController extends Controller
         if ($user == null) {
             return redirect()->back()->with('User not found');
         }
-        $contacts = Contact::select()->where('user_id',$user->id)->get();
-        if (is_null($contacts))
-            return redirect()->back()->with('there in no contacts from this user');
-        else {
-            return view('Admin.contact.show', compact('contact'));
-        }
+        $contact = Contact::select()->where('user_id',$user->id)->get();
+        return view('Admin.contact.show', compact('contact'));
     }
 
     // to get details of specific contact
@@ -38,7 +34,7 @@ class ContController extends Controller
         if ($contact == null) {
             return redirect()->back()->with('contact not found');
         }else{
-            return view('Admin.contact.show', compact('contact'));
+            return view('Admin.contact.display', compact('contact'));
         }
     }
 
