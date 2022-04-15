@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\API;
+
 use App\Http\Controllers\API\BaseController as BaseController;
 
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +12,7 @@ use App\Models\Post;
 use App\Notifications\MakeComment;
 use Illuminate\Http\Request;
 use App\Http\Resources\CommentResource;
+use App\Notifications\MakeReply;
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Facades\Validator;
@@ -22,7 +24,10 @@ class ReplyController extends BaseController
     {
 
         $comment = Comment::find($request->comment_id);
-        $user = User::find($comment->user_id);          //comment Owner
+        if ($comment == null) {
+            return $this->SendError('Comment Not Found');
+        }
+        $user = User::find($comment->user->id);          //comment Owner
         $post = Post::find($comment->post_id);
 
 
@@ -65,31 +70,31 @@ class ReplyController extends BaseController
         }
 
         // notify post owner
-        if (Auth::id() != $user->id) {
-            $group = $post->group()->first();
+        if (Auth::id() != $post->user_id) {
+            $post_owner = User::find($post->user_id);
             $details = [
                 'post_id' => $post->id,
-                'title' => 'New Comment On ' . $post->title,
-                'body' => 'Your post in ' . $group->name . ' group has new comment from ' . Auth::user()->name,
+                'comment_id' => $comment->id,
+                'title' => 'New Reply On ' . $comment->content,
+                'body' => 'Your Comment on ' . $post->title . ' post has new reply from ' . Auth::user()->name,
             ];
 
-            $user->notify(new MakeComment($details));
+            $post_owner->notify(new MakeReply($details));
         }
 
         // notify comment owner
-        if(Auth::id() != $comment->user_id){
-            $group = $post->group()->first();
+        if (Auth::id() != $comment->user_id) {
             $details = [
                 'post_id' => $post->id,
-                'title' => 'New Comment On ' . $post->title,
-                'body' => 'Your post in ' . $group->name . ' group has new comment from ' . Auth::user()->name,
+                'comment_id' => $comment->id,
+                'title' => 'New Reply On ' . $comment->content,
+                'body' => 'Your Comment on ' . $post->title . ' post has new reply from ' . Auth::user()->name,
             ];
 
-            $user->notify(new MakeComment($details));
+            $user->notify(new MakeReply($details));
         }
 
-
-        return $this->SendResponse($request->content, "Comment Added Successfuly");
+        return $this->SendResponse($request->content, "Reply Added Successfuly");
     }
 
 
@@ -128,16 +133,15 @@ class ReplyController extends BaseController
     public function DELETE($id)
     {
         $reply = Reply::find($id);
-        if ( $reply == null) {
+        if ($reply == null) {
             return $this->SendError("reply not found");
-        }else{
+        } else {
             if ($reply->user_id != Auth::id()) {
                 return $this->SendError("You Are Not Allowed to delete this rate");
-            }else{
+            } else {
                 $reply = $reply->delete();
                 return $this->SendResponse($reply, 'reply Deleted Successfully');
             }
         }
     }
 }
-

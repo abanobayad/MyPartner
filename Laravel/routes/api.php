@@ -45,6 +45,15 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
             Route::get('/show/{id}', 'PostController@GET')->name('showPost');         //Show Post and comments and replies with its ID
         });
 
+        //group
+        Route::prefix('/group')->group(function () {
+                    Route::get('/', 'GroupController@index');                //Show All Posts For Handle
+                    Route::get('/getByCat/{id}', 'GroupController@GetGroupsByCategory');              //Add new Post
+                    Route::get('/show/{id}', 'GroupController@show')->name('showGroup');         //Show Post and comments and replies with its ID
+                    Route::get('/fav-group/{id}', 'GroupController@FavGroup');         //Show Post and comments and replies with its ID
+                    Route::get('/show-fav-group', 'GroupController@showFav');         //Show Post and comments and replies with its ID
+                });
+
 
         //Search
         Route::prefix('/search')->group(function () {
@@ -56,7 +65,6 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
 
         //Req
             Route::prefix('/request')->group(function () {
-
                 Route::get('/', 'ReqController@index');                   //show all requests of Auth user
                 Route::get('/show/{p_id}/{r_id}', 'ReqController@showReq')->name('showRequest');                   //show specific request //Send Post ID and Requester ID
                 Route::post('/doRequest', 'ReqController@doReq');                   //Req Post
@@ -80,7 +88,16 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
             Route::prefix('/comment')->group(function () {
                 Route::post('/add', 'CommentController@comment');                   //add NEW comment
                 Route::post('/edit/{c_id}', 'CommentController@edit');              //Edit OLD Comment "Send Comment ID"
+                Route::post('/delete/{c_id}', 'CommentController@DELETE');          //delete Comment "Send Comment ID"
             });
+
+
+        //Replies
+        Route::prefix('/reply')->group(function () {
+            Route::post('/add', 'ReplyController@make');                   //add NEW comment
+            Route::post('/edit/{r_id}', 'ReplyController@edit');              //Edit OLD Comment "Send Comment ID"
+            Route::post('/delete/{r_id}', 'ReplyController@DELETE');          //delete Comment "Send Comment ID"
+        });
 
 
         // rate
