@@ -17,7 +17,7 @@ class CreateGroupsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->string('image');
+            $table->string('image')->nullable()->default('default.png');
 
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->foreignId('admin_id')->constrained('admins','id');

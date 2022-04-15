@@ -28,9 +28,7 @@
                         <div class="card-body p-1">
                             <br> Needed Persons: <label for="post-needed_persons"
                                 class="card-text badge bg-success">{{ $post->needed_persons }} Person(s)</label>
-                            <br> Price: <label for="post-price" class="card-text badge bg-danger">{{ $post->price }}
-                                $</label>
-
+                            <br> Price: <label for="post-price" class="card-text badge bg-danger">{{ $post->price }}$</label>
                         </div>
                         {{-- Comments --}}
                         {{-- <div class="card-body">

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Rate;
+use App\Models\Post;
 
 class UserAController extends Controller
 {
@@ -32,4 +33,33 @@ class UserAController extends Controller
         }
         return view('Admin.user.profile.show', compact('user', 'total_rate' , 'posts'));
     }
+
+    public function search(Request $request , $user_id)
+    {
+
+         $request->validate(['q' => 'required|string']);
+            $q = $request->q;
+            $filteredPosts = Post::
+                  where([['user_id' , $user_id],['title' , 'like' , '%'. $q .'%'],])
+                ->orWhere([['user_id' , $user_id],['content' , 'like' , '%'. $q .'%']])
+                    ->get();
+
+
+        //  dd($filteredPosts->count());
+        if($filteredPosts->count() != 0)
+        {
+            $status = 'success';
+        return view('admin.user.profile.userSearchResult' , compact('filteredPosts' , 'status'));
+        }
+        else
+        {
+        return view('admin.user.profile.userSearchResult')->with(
+            [
+                'status' => 'fail',
+                'message' =>'Your input doesn\'t match any post ',
+            ]
+        );
+        }
+    }
+
 }

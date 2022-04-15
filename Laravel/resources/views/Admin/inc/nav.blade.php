@@ -100,7 +100,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0"
                             aria-labelledby="countDropdown">
-                            <a class="dropdown-item ">
+
                                 <div class="col-4 dropdown-item m-auto">
                                     <p class="mb-0 font-weight-lg float-left" id="noti_count">
                                         You have {{ auth()->guard('admin')->user()->unreadNotifications->count() }}
@@ -110,7 +110,7 @@
                                         View all
                                     </a>
                                 </div>
-                            </a>
+
                             <div class="dropdown-divider"></div>
                             <div id="noti_content">
                                 @foreach (auth()->guard('admin')->user()->unreadNotifications as $notification)

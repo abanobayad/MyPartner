@@ -75,6 +75,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
             Route::post('ban/check', 'BanController@bannedStatus')->name('ban.check');
 
 
+
          //rate
             Route::get('/rate/index', 'RateController@index')->name('admin.rate.index');
             Route::get('/rate/low', 'RateController@low')->name('admin.rate.low');

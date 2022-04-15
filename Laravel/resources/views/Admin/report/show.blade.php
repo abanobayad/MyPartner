@@ -2,8 +2,8 @@
 
 @section('content')
 
-<div class="container" style="padding-top: 2%">
-    <div class="card" >
+<div class="container ">
+    <div class="card col-6 m-auto" >
         <div class="card-body">
             <div class="form-group">
                 <h4 for="exampleFormControlInput1">  Reporter name :

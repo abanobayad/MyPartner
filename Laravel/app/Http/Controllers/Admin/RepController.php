@@ -6,6 +6,11 @@ use App\Models\Report;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use App\Notifications\PostReportApprovedToPostOwner;
+use App\Notifications\PostReportApprovedToReportOwner;
+use App\Notifications\PostReportRejectToReportOwner;
+use Illuminate\Support\Facades\Auth;
 
 class RepController extends Controller
 {
@@ -35,15 +40,15 @@ class RepController extends Controller
         }
     }
 
-    public function DELETE($post_id , $user_id){
-       $report = Report::select()->where('post_id' , $post_id)->where('user_id',$user_id)->first();
-       if ( $report == null) {
-        return redirect()->back()->with('report not found');
-    }else{
-            $report = $report->delete();
-            return redirect()->back();
-        }
-    }
+    // public function DELETE($post_id , $user_id){
+    //    $report = Report::select()->where('post_id' , $post_id)->where('user_id',$user_id)->first();
+    //    if ( $report == null) {
+    //     return redirect()->back()->with('report not found');
+    // }else{
+    //         $report = $report->delete();
+    //         return redirect()->back();
+    //     }
+    // }
 
    //to return reports of specific post
     public function GET($id){
@@ -69,16 +74,38 @@ class RepController extends Controller
         $post = Post::find($report->post_id);
         $post->visible = 'no';
         $post->save();
-        // $report->update(['is_handled' => 'yes']);
-        // $report->save();
+
+        $reporter = User::find($user_id);
+        $owner = User::find($post->user_id);
+        $details2owner = [
+            'title' => $post->title . 'Post has been Reported',
+            'body' => 'Your Post '.$post->title.' in ' . $post->group->name . ' group is reported for reason'.$report->reason.'
+             \n  MyPartner team Delete Your Post'
+        ];
+
+        $details2reporter = [
+            'title' => 'Report Accepted',
+            'body' => 'Your Report of ' .$post->title. 'Post in ' . $post->group->name . ' Group is Accepted By Myparnter Team
+            \n Thank You For Your Collaboration'
+        ];
+        $reporter->notify(new PostReportApprovedToReportOwner($details2reporter));
+        $owner->notify(new PostReportApprovedToPostOwner($details2owner));
 
         return redirect(route('admin.report.index'));
     }
 
     //delete report , send notification to report owner
     public function reject($post_id , $user_id){
-        $report = Report::select()->where('post_id' , $post_id)->where('user_id',$user_id)->delete();
-        return redirect(route('admin.report.index'));
+        Report::select()->where('post_id' , $post_id)->where('user_id',$user_id)->delete();
+        $post = Post::find($post_id);
+        $reporter = User::find($user_id);
+        $details2reporter = [
+            'title' => 'Report Rejected',
+            'body' => 'Your Report of ' .$post->title. 'Post in ' . $post->group->name . ' Group is Rejected By Myparnter Team'
+        ];
+        $reporter->notify(new PostReportRejectToReportOwner($details2reporter));
+
+        return redirect()->back();
     }
 
 }

@@ -53,7 +53,7 @@ class GroupController extends Controller
             'description'   => $request->description,
             'category_id'   => $request->category_id,
             'image'         => $new_name,
-            'admin_id' =>       $request->admin_id,
+            'admin_id'      => $request->admin_id,
         ]);
         $group->tags()->attach($request->tag);
         return redirect(route('admin.group.index'));
