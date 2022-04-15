@@ -26,6 +26,9 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
         //Admin Edit
         Route::get('editAdmin',  'AdminsController@edit')->name('admin.edit');
         Route::post('do-editAdmin', 'AdminsController@doEdit')->name('do-editAdmin');
+        // Notitifications
+        Route::get('/markAllRead' , 'NotificationController@readAll')->name('markAllRead');
+        Route::get('/markRead/{id}' , 'NotificationController@read')->name('markRead');
 
 
         //category routes
@@ -64,6 +67,8 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
         //users routes
         Route::prefix('/users')->group(function () {
             Route::get('/', 'UserAController@index')->name('admin.user.index');
+            Route::get('/{id}', 'UserAController@showUser')->name('admin.user.show');
+            Route::post('/searchUserPosts/{user_id}' , 'UserAController@search')->name('searchUserPosts');
             Route::get('ban/detailes/{user_id}', 'BanController@index')->name('ban-detailes');
             Route::post('ban/', 'BanController@ban')->name('ban');
             Route::post('unban/', 'BanController@unban')->name('unban');

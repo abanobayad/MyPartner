@@ -5,54 +5,31 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Rate;
 
 class UserAController extends Controller
 {
     public function index()
     {
-        $data['users'] = User::select('id','name','email')->orderBy('id','desc')->get();
+        $data['users'] = User::select('id', 'name', 'email')->orderBy('id', 'desc')->get();
         return view('Admin.user.index')->with($data);
     }
 
-
-    public function create()
+    public function showUser($id)
     {
-        return view('Admin.user.addUser');
-    }
-
-
-    public function doCreate(Request $request)
-    {
-        $data = $request->validate([
-            'name' => 'required|max:20'
-                    ]);
-        User::create($data);
-        return redirect(route('admin.user.index'));
-    }
-
-    public function edit($id)
-    {
-        $data['user'] = User::findOrfail($id);
-        return view('Admin.user.editUser')->with($data);
-    }
-
-
-    public function doEdit(Request $request )
-    {
-        $data = $request->validate([
-            'name' => 'required|max:20',
-            'id' => 'required|exists:users,id'
-                    ]);
-        User::findOrFail($request->id)->update($data);
-        return back();
-        // return redirect(route('admin.user.index'));
-    }
-
-
-    public function delete($id)
-    {
-
-        User::findOrfail($id)->delete();
-        return redirect(route('admin.user.index'));
+        $user = User::find($id);
+        $posts = $user->posts()->get();
+        $rate = Rate::select()->where('receiver_id', $user->id)->get();
+        $sum = 0;
+        if($rate)
+        {
+            $total_rate = 'No Rates Yet';
+        }
+        else
+        {
+            foreach ($rate as $item) {$sum = $sum + $item->rate_value;   }
+            $total_rate = $sum / sizeof($rate);
+        }
+        return view('Admin.user.profile.show', compact('user', 'total_rate' , 'posts'));
     }
 }
