@@ -68,7 +68,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
         Route::prefix('/users')->group(function () {
             Route::get('/', 'UserAController@index')->name('admin.user.index');
             Route::get('/{id}', 'UserAController@showUser')->name('admin.user.show');
-            Route::post('/searchUserPosts/{user_id}' , 'UserAController@search')->name('searchUserPosts');
+            Route::any('/searchUserPosts/{user_id}' , 'UserAController@search')->name('searchUserPosts');
             Route::get('ban/detailes/{user_id}', 'BanController@index')->name('ban-detailes');
             Route::post('ban/', 'BanController@ban')->name('ban');
             Route::post('unban/', 'BanController@unban')->name('unban');

@@ -19,7 +19,7 @@ class UserAController extends Controller
     public function showUser($id)
     {
         $user = User::find($id);
-        $posts = $user->posts()->get();
+        $posts = $user->posts()->paginate(4);
         $rate = Rate::select()->where('receiver_id', $user->id)->get();
         $sum = 0;
         if($rate)
@@ -36,13 +36,12 @@ class UserAController extends Controller
 
     public function search(Request $request , $user_id)
     {
-
          $request->validate(['q' => 'required|string']);
             $q = $request->q;
             $filteredPosts = Post::
                   where([['user_id' , $user_id],['title' , 'like' , '%'. $q .'%'],])
                 ->orWhere([['user_id' , $user_id],['content' , 'like' , '%'. $q .'%']])
-                    ->get();
+                    ->paginate(4);
 
 
         //  dd($filteredPosts->count());

@@ -4,8 +4,8 @@
 
 
     <div class="row">
-        <div class=" col-12 mt-5 d-flex justify-content-center">
-            <div class="col-8">
+        <div class=" col-12 d-flex justify-content-center">
+            <div class="col-10">
 
                         <div class="row">
                             <div class="col-12">
@@ -52,9 +52,9 @@
                     </div>
 
                 </div>
-                <hr class="mb-4">
-                <div class="m-auto text-center col-4 alert-secondary">{{ $user->bio }}</div>
-                <hr class="mb-4">
+                <hr class="mb-2">
+                <div class="m-auto text-center col-4 rounded alert-secondary">{{ $user->profile->bio }}</div>
+                <hr class="mb-2">
                 {{-- Start Posts --}}
 
                 {{-- Chech Group Has Posts Or not --}}
@@ -77,8 +77,9 @@
             </div>
 
         </div>
-
+    </div>
+    <div class="row">
     @include('Admin.user.profile.posts')
-
+    </div>
 
     @endsection
