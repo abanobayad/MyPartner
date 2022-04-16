@@ -259,7 +259,7 @@
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#tags" aria-expanded="false"
                         aria-controls="tags">
-                        <i class="menu-icon mdi mdi-dice-4"></i>
+                        <i class="menu-icon mdi mdi-tag-multiple"></i>
                         <span class="menu-title">TAG Actions</span>
                         <i class="menu-arrow"></i>
                     </a>
@@ -284,6 +284,8 @@
                         <span class="menu-title">Groups Actions</span>
                         <i class="menu-arrow"></i>
                     </a>
+
+
                     <div class="collapse" id="groups">
                         <ul class="nav flex-column sub-menu">
                             <li class="nav-item"> <a class="nav-link"
@@ -302,7 +304,7 @@
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#contact" aria-expanded="false"
                         aria-controls="contact">
-                        <i class="menu-icon mdi mdi-microsoft"></i>
+                        <i class="menu-icon mdi mdi mdi-voice"></i>
                         <span class="menu-title">Contacts Actions</span>
                         <i class="menu-arrow"></i>
                     </a>
@@ -320,7 +322,7 @@
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#rates" aria-expanded="false"
                         aria-controls="rates">
-                        <i class="menu-icon mdi mdi-microsoft"></i>
+                        <i class="menu-icon mdi mdi mdi-star-half"></i>
                         <span class="menu-title">Rates Actions</span>
                         <i class="menu-arrow"></i>
                     </a>
@@ -340,7 +342,7 @@
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#reports" aria-expanded="false"
                         aria-controls="reports">
-                        <i class="menu-icon mdi mdi-microsoft"></i>
+                        <i class="menu-icon mdi mdi mdi-alert-outline"></i>
                         <span class="menu-title">Reports Actions</span>
                         <i class="menu-arrow"></i>
                     </a>

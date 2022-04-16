@@ -47,7 +47,9 @@
                         <div class="button mt-2 d-flex flex-row align-items-center">
                             <button class="btn btn-sm btn-outline-dark w-100 m-2">Reports</button>
                             <button class="btn btn-sm btn-outline-success w-100 m-2">Send Message</button>
-                            <a href="{{route('ban-detailes', $user->id)}}" class="btn btn-sm btn-outline-danger w-100 m-2">Ban</a>
+                            <a href="{{route('ban-detailes', $user->id)}}"       class="btn btn-sm btn-outline-danger w-100 m-2">Ban</a>
+                            <a href="{{route('admin.contact.get', $user->id)}}"  class="btn btn-sm btn-outline-dark w-100 m-2">Contacts Details</a>
+                            <a href="{{route('admin.rate.get', $user->id)}}"     class="btn btn-sm btn-outline-dark w-100 m-2">Rate Details</a>
                         </div>
                     </div>
 

@@ -5,19 +5,24 @@
     <h4 style="display: inline-block">Groups</h4>
     <a class="btn btn-sm btn-secondary" style="float: right" href="{{route('admin.group.create')}}">Add New</a></div>
 
-<div class="table-responsive">
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Category</th>
-        <th scope="col">Image</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-        @foreach ($groups as $group)
+<div class="container mt-3">
+    <div class="row">
+      <div class="col-md-12">
+        <input class="form-control opacity-50 " id="myInput" type="text" placeholder="Search Table">
+        <br>
+        <table class="table text-center">
+          <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Category</th>
+                <th scope="col">Image</th>
+                <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tableData">
+              {{-- Start Fetch Data --}}
+              @foreach ($groups as $group)
         <tr>
           <th scope="row">{{$loop->iteration}}</th>
           <td>{{$group->name}}</td>
@@ -33,13 +38,16 @@
 
 
           <td>
-            <a  href="{{route('admin.group.edit' , $group->id)}}" class="btn btn-sm btn-dark text-white">Edit</a>
-            <a  href="{{route('admin.group.delete' , $group->id)}}" class="btn btn-sm btn-danger text-white">Delete</a>
+            <a  href="{{route('admin.group.edit' , $group->id)}}" class="btn-lg text-dark"><i class="menu-icon mdi mdi-border-color"></i></a>
+            <a  href="{{route('admin.group.delete' , $group->id)}}" class="btn-lg text-danger"><i class="menu-icon mdi mdi-delete-sweep"></i></a>
           </td>
         </tr>
         @endforeach
-    </tbody>
-  </table>
+            {{-- End Fetch Data --}}
+          </tbody>
+        </table>
+      </div>
+    </div>
 </div>
 
 

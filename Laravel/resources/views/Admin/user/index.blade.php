@@ -4,34 +4,38 @@
 <div class=" d-felx justify-content-between mb-2">
     <h4 style="display: inline-block">Users</h4>
 </div>
-<table class="table text-center ">
-    <thead class="">
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">E-mail</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-md-12">
+        <input class="form-control opacity-50" id="myInput" type="text" placeholder="Search Table">
+        <br>
+        <table class="table text-center">
+          <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tableData">
+              {{-- Start Fetch Data --}}
         @foreach ($users as $user)
-        <tr>
-          <th scope="row">{{$loop->iteration}}</th>
-          <td>{{$user->name}}</td>
-          <td>{{$user->email}}</td>
-          <td>
-            <a  href="{{route('ban-detailes', $user->id)}}" class="btn btn-sm btn-outline-dark">Ban Details</a>
-            <a  href="{{route('admin.contact.get', $user->id)}}"  class="btn btn-sm  btn-outline-dark">Contacts Details</a>
-            <a  href="{{route('admin.rate.get', $user->id)}}" class="btn btn-sm  btn-outline-dark">Rate Details</a>
-            <a  href="{{route('admin.user.show', $user->id)}}" class="btn btn-sm  btn-outline-dark">Show Profile</a>
-
-          </td>
-        </tr>
+            <tr>
+                <th scope="row">{{$loop->iteration}}</th>
+                <td>{{$user->name}}</td>
+                <td>{{$user->email}}</td>
+                {{-- class="btn-lg text-dark"><i class="menu-icon mdi mdi-border-color"></i></a>
+                class="btn-lg text-danger"><i class="menu-icon mdi mdi-delete-sweep"></i></a> --}}
+                <td><a  href="{{route('admin.user.show', $user->id)}}" class="btn btn-sm  btn-outline-dark">Show Profile <i class="menu-icon mdi mdi-account-circle"></i></a></td>
+            </tr>
         @endforeach
-    </tbody>
-  </table>
-
-
+            {{-- End Fetch Data --}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
 
 @endsection
