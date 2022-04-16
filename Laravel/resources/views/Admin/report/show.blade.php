@@ -2,11 +2,15 @@
 
 @section('content')
 
-<div class="container" style="padding-top: 2%">
-    <div class="card" >
+<div class="container ">
+    <div class="card col-6 m-auto" >
         <div class="card-body">
             <div class="form-group">
-                <h4 for="exampleFormControlInput1">Reporter name : {{  $report->user->name }}</h4>
+                <h4 for="exampleFormControlInput1">  Reporter name :
+                    <a href="{{route('admin.user.show' ,$report->user->id )}}">
+                      {{  $report->user->name }}
+                    </a>
+                </h4>
             </div>
 
             <div class="form-group">
@@ -14,7 +18,11 @@
             </div>
 
             <div class="form-group">
-                <h4 for="exampleFormControlInput1"> Post Owner : {{$report->post->user->name}}</h4>
+                <h4 for="exampleFormControlInput1"> Post Owner :
+                    <a href="{{route('admin.user.show' ,$report->user->id )}}">
+                        {{$report->post->user->name}}
+                    </a>
+                </h4>
             </div>
 
             <div class="form-group">

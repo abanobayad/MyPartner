@@ -20,9 +20,10 @@
           <td>{{$user->name}}</td>
           <td>{{$user->email}}</td>
           <td>
-            <a  href="{{route('ban-detailes', $user->id)}}" class="btn btn-sm btn-dark text-white">Ban Details</a>
-            <a  href="{{route('admin.contact.get', $user->id)}}"  class="btn btn-sm  btn-primary">Contacts Details</a>
-            <a  href="{{route('admin.rate.get', $user->id)}}" class="btn btn-sm  btn-warning">Rate Details</a>
+            <a  href="{{route('ban-detailes', $user->id)}}" class="btn btn-sm btn-outline-dark">Ban Details</a>
+            <a  href="{{route('admin.contact.get', $user->id)}}"  class="btn btn-sm  btn-outline-dark">Contacts Details</a>
+            <a  href="{{route('admin.rate.get', $user->id)}}" class="btn btn-sm  btn-outline-dark">Rate Details</a>
+            <a  href="{{route('admin.user.show', $user->id)}}" class="btn btn-sm  btn-outline-dark">Show Profile</a>
 
           </td>
         </tr>

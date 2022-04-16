@@ -77,6 +77,7 @@ class User extends Authenticatable
         return $this->hasMany(Rate::class, 'receiver_id');
     }
 
+
     public function SavedPosts()
     {
         return $this->hasMany(SavedPosts::class, 'user_id');

@@ -11,7 +11,7 @@
                 @csrf
                 <div class="row">
                 <div class="col-8">
-                    <select name="handled" class="form-control mb-2 text-center">
+                    <select name="handled" class="form-control text-center " style="font-size: 14px">
                         <option value="all">All Reports</option>
                         <option value="yes" @if($selected_reps == 'yes') selected @endif>
                             Handled Reports</option>
@@ -37,11 +37,11 @@
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">user name</th>
-            <th scope="col">post title</th>
-            <th scope="col">post owner</th>
-            <th scope="col">reason</th>
-            <th scope="col">feedback</th>
+            <th scope="col">User Name</th>
+            <th scope="col">Post Title</th>
+            <th scope="col">Post Owner</th>
+            <th scope="col">Reason</th>
+            <th scope="col">Feedback</th>
             <th scope="col">is handled </th>
             <th scope="col">Actions</th>
           </tr>
@@ -56,11 +56,9 @@
               <td>{{$report->reason}}</td>
               <td>{{$report->feedback}}</td>
               <td>{{$report->is_handled}}</td>
-
-
               <td>
                 <a  href="{{route('admin.report.show' , [$report->post_id ,$report->user_id ])}}" class="btn btn-sm btn-dark text-white">Show Details</a>
-                <a  href="{{route('admin.report.delete',[$report->post_id ,$report->user_id])}}" class="btn btn-sm btn-danger text-white">Delete</a>
+                <a  href="{{route('admin.report.reject',[$report->post_id ,$report->user_id])}}" class="btn btn-sm btn-danger text-white">Delete</a>
               </td>
             </tr>
             @endforeach
