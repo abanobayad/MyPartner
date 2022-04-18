@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RateResource extends JsonResource
+class ChatResource extends JsonResource
 {
 
     public function toArray($request)
@@ -12,15 +12,13 @@ class RateResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'Sender ' => $this->receiver()->select('id' , 'name')->get(),
-            'receiver ' => $this->sender()->select('id' , 'name')->get(),
-            'rate_value' => $this->rate_value,
-            'feedback' => $this->feedback,
+            'Sender ' => $this->sender()->select('id' , 'name')->get(),
+            'receiver ' => $this->receiver()->select('id' , 'name')->get(),
+            'body' => $this->body,
+            'attachment ' => $this->attachment,
+            'seen' => $this->seen,
             'created_at' =>$this->created_at->format('d/m/Y'),
             'updated_at' =>$this->updated_at->format('d/m/Y')
         ];
     }
-
-
 }
-

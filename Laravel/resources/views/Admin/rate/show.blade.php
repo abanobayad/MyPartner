@@ -17,6 +17,10 @@
             </div>
 
             <div class="form-group">
+                <h6 for="exampleFormControlInput1">feedback : {{  $rate->feedback }}</h6>
+            </div>
+
+            <div class="form-group">
                 <h6 for="exampleFormControlInput1">created at : {{  $rate->created_at->diffForhumans() }}</h6>
             </div>
 
