@@ -7,11 +7,10 @@
     <a class="btn btn-sm btn-secondary" style="float: right" href="{{route('admin.cat.create')}}">Add New</a>
 </div>
 
-<div class="container mt-3">
-    <div class="row">
-      <div class="col-md-12">
+
         <input class="form-control opacity-50" id="myInput" type="text" placeholder="Search Table">
         <br>
+        <div class="table-responsive">
         <table class="table text-center">
           <thead>
             <tr>
@@ -43,15 +42,11 @@
                   <a  href="{{route('admin.cat.delete' , $cat->id)}}" class="btn btn-sm btn-danger text-white ">Delete</a>
                 </td>
             </tr>
-        @endforeach
+          @endforeach
             {{-- End Fetch Data --}}
           </tbody>
         </table>
-      </div>
     </div>
-</div>
-
-
 
 
 @endsection
