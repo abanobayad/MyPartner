@@ -100,6 +100,10 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
         });
 
 
+        //Category
+        Route::prefix('/category')->group(function () {
+            Route::get('/show', 'CategoryController@show');
+        });
         // rate
             Route::prefix('/rate')->group(function () {
                 Route::get('/myRate', 'RateController@myRate');              //Show user rates
