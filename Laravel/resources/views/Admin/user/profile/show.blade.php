@@ -4,8 +4,6 @@
 
 
     <div class="row">
-        <div class=" col-12 d-flex justify-content-center">
-            <div class="col-10">
 
                         <div class="row">
                             <div class="col-12">
@@ -28,22 +26,24 @@
                     <div class="ml-3 w-100">
 
                         <h4 class="mb-0 mt-0" style="text-transform: capitalize;">{{ $user->name }}</h4>
+                        <div class="table-responsive">
+                            <div class="p-2 mt-2  d-flex justify-content-between rounded text stats">
 
-                        <div class="p-2 mt-2  d-flex justify-content-between rounded text stats">
-
-                                <div class="image">
-                                    <img class="img-lg rounded-circle"
-                                        src="{{ asset('uploads/Users') . '/' . $user->profile->image }}" alt="user_image">
-                                </div>
-                            <div class="d-flex flex-column"> <span class="articles">Posts</span> <span
-                                    class="number1">{{ count($user->posts) }}</span> </div>
-                            <div class="d-flex flex-column"> <span class="followers">Connections</span> <span
-                                    class="number2">--</span> </div>
-                            <div class="d-flex flex-column"> <span class="rating">Rating</span> <span
-                                    class="number3">
-                                    {{ $total_rate }}
-                                </span> </div>
+                                    <div class="image">
+                                        <img class="img-lg rounded-circle"
+                                            src="{{ asset('uploads/Users') . '/' . $user->profile->image }}" alt="user_image">
+                                    </div>
+                                <div class="d-flex flex-column"> <span class="articles">Posts</span> <span
+                                        class="number1">{{ count($user->posts) }}</span> </div>
+                                <div class="d-flex flex-column"> <span class="followers">Connections</span> <span
+                                        class="number2">--</span> </div>
+                                <div class="d-flex flex-column"> <span class="rating">Rating</span> <span
+                                        class="number3">
+                                        {{ $total_rate }}
+                                    </span> </div>
+                            </div>
                         </div>
+
                         <div class="button mt-2 d-flex flex-row align-items-center">
                             <button class="btn btn-sm btn-outline-dark w-100 m-2">Reports</button>
                             <button class="btn btn-sm btn-outline-success w-100 m-2">Send Message</button>
@@ -78,8 +78,7 @@
                 @endif
             </div>
 
-        </div>
-    </div>
+
     <div class="row">
     @include('Admin.user.profile.posts')
     </div>
