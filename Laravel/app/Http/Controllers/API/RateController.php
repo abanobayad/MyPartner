@@ -42,6 +42,8 @@ class RateController extends BaseController
             [
                 'receiver_id' => 'required',
                 'rate_value' => 'required|integer|between:1,5',
+                'feedback' => 'nullable',
+
                 ]
         );
         if ($validator->fails()) {
@@ -121,6 +123,7 @@ class RateController extends BaseController
                     $input,
                     [
                         'rate_value' => 'required|integer|between:1,5',
+                        'feedback' => 'nullable',
                     ]
                 );
 
@@ -128,6 +131,8 @@ class RateController extends BaseController
                     return $this->SendError("Error Of Edit rate", $validator->errors());
                 } else {
                     $rate->rate_value = $input['rate_value'];
+                    $rate->feedback = $input['feedback'];
+
                     $rate->save();
                     $js_rate = RateResource::make($rate);
                     return $this->SendResponse($js_rate, 'rate Updated');

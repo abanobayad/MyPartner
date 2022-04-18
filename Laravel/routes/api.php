@@ -132,6 +132,18 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
                 Route::post('/add', 'ContactController@ADD');                        //make new report
             });
 
+
+        // chat
+            Route::prefix('/chat')->group(function () {
+                Route::get('/conversation/{user_id}', 'ChatController@conversation')->name('conversation');
+                Route::post('/send_message/{user_id}', 'ChatController@send_message')->name('send_message');
+                Route::get('/delete_message/{id}', 'ChatController@delete_message')->name('delete_message');
+                Route::get('/delete_conversation/{user_id}', 'ChatController@delete_conversation')->name('delete_conversation');
+                Route::get('/my_chats', 'ChatController@my_chats')->name('my_chats');
+            });
+
+
+
         Route::post('/logout', 'Auth\AuthController@logout');
     });
 });
