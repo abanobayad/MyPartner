@@ -21,7 +21,6 @@ class GroupCollection extends ResourceCollection
                     'name'              =>$data->name,
                     'description'       =>$data->description,
                     'image'             => public_path('uploads/Groups/').$data->image,
-                    'created_at'        =>$data->created_at->format('d/m/Y'),
                     'updated_at'        =>$data->updated_at->diffForhumans(),
                 ];
             })

@@ -14,9 +14,9 @@ class ReplyResource extends JsonResource
             [
                 'id' => $this->id,
                 'content' => $this->content,
-                'user name'=> $this->user->name,
-                'image' => public_path('uploads/replies/').$this->image,
-
+                'username'=> $this->user->name,
+                'image' => public_path('uploads/Replies/').$this->image,
+                'created_at' =>$this->created_at->diffForhumans()
             ];
         }
         else
@@ -24,8 +24,9 @@ class ReplyResource extends JsonResource
             return
             [
                 'id' => $this->id,
-                'user name'=> $this->user->name,
+                'username'=> $this->user->name,
                 'content' => $this->content,
+                'created_at' =>$this->created_at->diffForhumans()
             ];
         }    }
 }

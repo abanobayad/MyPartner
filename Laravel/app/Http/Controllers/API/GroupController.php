@@ -5,6 +5,7 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Resources\FavGroupCollection;
 use App\Http\Resources\GroupCollection;
 use App\Http\Resources\GroupResource;
+use App\Http\Resources\PostCollection;
 use App\Models\Category;
 use App\Models\FavGroups;
 use App\Models\Group;
@@ -21,24 +22,27 @@ class GroupController extends BaseController
        return $this->SendResponse($groups , 'Groups Sent');
    }
 
-   public function GetGroupsByCategory($id)
-   {
-       $category = Category::find($id);
-       $groups = $category->groups()->get();
-       $js_groups = new GroupCollection($groups);
-       return $this->SendResponse($js_groups , 'Groups Sent');
-   }
+
 
    public function show($id)
    {
        $group = Group::find($id);
+       $posts = $group->posts()->get();
        if($group == null)
        {
            return $this->SendError('Group Not Found');
        }
        $js_group = new GroupResource($group);
-       return $this->SendResponse($js_group , 'Group Sent');
+       $js_posts = new PostCollection($posts);
+       $data =[
+           'group' =>$js_group,
+           'posts' =>$js_posts,
+       ];
+       return $this->SendResponse($data , 'Group with it\'s posts  Sent');
    }
+
+
+
 
    public function FavGroup($group_id)
    {

@@ -24,7 +24,7 @@ class ChatCollection extends ResourceCollection
                     'body' => $data->body,
                     'attachment ' => $data->attachment,
                     'seen' => $data->seen,
-                    'updated_at' =>$data->updated_at->format('d/m/Y')
+                    'updated_at' =>$data->updated_at->diffForhumans()
                 ];
 
                })

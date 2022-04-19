@@ -17,7 +17,7 @@ class CreateContactsTable extends Migration
             $table->id();
             $table->string('subject');
             $table->mediumText('content');
-
+            $table->enum('reason' , ['Create New Group' , 'Create New Category' , 'other'])->nullable();
             $table->foreignId('user_id')->constrained('users','id')->onDelete('cascade');
 
             $table->timestamps();

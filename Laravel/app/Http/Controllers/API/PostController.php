@@ -37,7 +37,7 @@ class PostController extends BaseController
                 'group_id' => 'required|exists:groups,id',
                 'title' => 'string|required',
                 'content' => 'string|required',
-                'location' => 'string|required',
+                'location' => 'string|required|url',
                 'image' => 'image|mimes:png,jpg,jpeg|nullable',
                 'needed_persons' => 'numeric|required',
                 'price' => 'numeric|required',

@@ -17,8 +17,14 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
             Route::post('/add', 'ProfileController@ADD');               //Add User Profile
             Route::post('/edit', 'ProfileController@EDIT');             //Edit User Profile
             Route::get('/delete/{id}', 'ProfileController@DELETE');     //Delete Profile of Specific User with his user ID
-            Route::get('/account/{id}', 'ProfileController@UserAcc');   //Show Profile & Posts of  User with his user ID
+            Route::get('/{id}', 'ProfileController@UserAcc');   //Show Profile & Posts of  User with his user ID
         });
+//Account
+Route::prefix('/account')->group(function () {
+    Route::get('/', 'AccountController@myAccount');
+    Route::get('/{user_id}', 'AccountController@guestAccount');
+});
+
 //Post
         Route::prefix('/post')->group(function () {
             Route::get('/', 'PostController@index');                //Show All Posts For Handle
@@ -30,7 +36,6 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
 //group
         Route::prefix('/group')->group(function () {
             Route::get('/', 'GroupController@index');                //Show All Posts For Handle
-            Route::get('/getByCat/{id}', 'GroupController@GetGroupsByCategory');              //Add new Post
             Route::get('/show/{id}', 'GroupController@show')->name('showGroup');         //Show Post and comments and replies with its ID
             Route::get('/fav-group/{id}', 'GroupController@FavGroup');         //Show Post and comments and replies with its ID
             Route::get('/show-fav-group', 'GroupController@showFav');         //Show Post and comments and replies with its ID
@@ -63,13 +68,15 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
         });
 //Replies
         Route::prefix('/reply')->group(function () {
-            Route::post('/add', 'ReplyController@make');                   //add NEW comment
-            Route::post('/edit/{r_id}', 'ReplyController@edit');              //Edit OLD Comment "Send Comment ID"
-            Route::post('/delete/{r_id}', 'ReplyController@DELETE');          //delete Comment "Send Comment ID"
+            Route::post('/add', 'ReplyController@make');                      //add NEW Reply
+            Route::post('/edit/{r_id}', 'ReplyController@edit');              //Edit OLD Reply "Send Reply ID"
+            Route::post('/delete/{r_id}', 'ReplyController@DELETE');          //delete Reply "Send Reply ID"
         });
 //Category
         Route::prefix('/category')->group(function () {
             Route::get('/show', 'CategoryController@show');
+            Route::get('/getByCat/{id}', 'CategoryController@GetGroupsByCategory');              //Add new Post
+
         });
 //Rate
         Route::prefix('/rate')->group(function () {
