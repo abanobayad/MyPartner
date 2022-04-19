@@ -7,12 +7,12 @@ class GroupBarCollection extends ResourceCollection
     public  $tags = [];
     public function toArray($request)
     {
+        // dd($this->collection->map->tags->first());
         foreach ($this->collection->map->tags->first() as $tag ){
-            array_push($this->tags ,['id' =>$tag->id,'name'=>$tag->name]);
-        }
+            array_push($this->tags ,['id' =>$tag->id,'name'=>$tag->name]);}
         // dd($this->tags);
         return [
-                'ٍSearchResullt' => $this->collection->map(function($data) {
+                $this->collection->map(function($data) {
                     return [
                         'id'                => $data->id,
                         'name'              =>$data->name,
