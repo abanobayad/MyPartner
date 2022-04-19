@@ -59,7 +59,22 @@ class GroupController extends BaseController
            ]
        );
 
-       return $this->SendResponse('User Add Group','Added');
+       return $this->SendResponse('User Add Group To Fav','Added');
+   }
+
+
+   public function UnFavGroup($group_id)
+   {
+    $f = FavGroups::select()->where('group_id' , $group_id)->where('user_id' , Auth::id())->first();
+    if(count($f) == 0)
+    {
+        return $this->SendError('This Group Doesn\'t Favorite Before');
+    }
+    else
+    {
+        $f->delete();
+       return $this->SendResponse('User Remove Group From Fav','Removed');
+    }
    }
 
    public function showFav()
@@ -69,4 +84,6 @@ class GroupController extends BaseController
        return $this->SendResponse($js_groups , 'Favorite Groups Sent');
 
    }
+
+
 }
