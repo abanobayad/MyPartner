@@ -6,10 +6,13 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Resources\PostResource;
+use App\Http\Resources\SavedPostsCollection;
+use App\Models\SavedPosts;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 
 class PostController extends BaseController
@@ -127,4 +130,54 @@ class PostController extends BaseController
         $post->delete();
         return $this->SendResponse($js_prof, 'Post Deleted Successfully');
     }
+
+
+
+    public function SavePost($post_id)
+    {
+        $post = Post::find($post_id);
+        if($post == null) {return $this->SendError('Post Not Found');}
+     $old_post = DB::table('saved_posts')->where('post_id', $post_id)->where('user_id', Auth::user()->id)->get();
+     if(count($old_post) > 0)
+     {
+         return $this->SendError('This Post Saved Before');
+     }
+
+        SavedPosts::create(
+            [
+                'user_id' => Auth::id() ,
+                'post_id' => $post_id
+            ]
+        );
+
+        return $this->SendResponse('User Save Post','Added');
+    }
+
+
+    public function UnSavePost($post_id)
+    {
+        $post = Post::find($post_id);
+        if($post == null) {return $this->SendError('Post Not Found');}
+     $f = SavedPosts::select()->where('post_id' , $post_id)->where('user_id' , Auth::id())->first();
+     // dd($f);
+     if($f == null)
+     {
+         return $this->SendError('This Post Doesn\'t Saved Before');
+     }
+     else
+     {
+         DB::table('saved_posts')->where('post_id', $post_id)->where('user_id', Auth::id())->delete();
+        return $this->SendResponse('User Unsave Post','Removed');
+     }
+    }
+
+    public function showSaved()
+    {
+        $posts = SavedPosts::where('user_id' , Auth::id())->get();
+        // dd($posts);
+        $js_posts = new SavedPostsCollection($posts);
+        return $this->SendResponse($js_posts , 'Saved Posts Sent');
+
+    }
+
 }

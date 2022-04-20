@@ -3,16 +3,12 @@
 namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Resources\FavGroupCollection;
-use App\Http\Resources\GroupCollection;
 use App\Http\Resources\GroupResource;
 use App\Http\Resources\PostCollection;
-use App\Models\Category;
 use App\Models\FavGroups;
 use App\Models\Group;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Models\User;
 
 class GroupController extends BaseController
 {
@@ -42,10 +38,10 @@ class GroupController extends BaseController
    }
 
 
-
-
    public function FavGroup($group_id)
    {
+    $group = Group::find($group_id);
+    if($group == null) {return $this->SendError('Group Not Found');}
     $old_group = DB::table('fav_groups')->where('group_id', $group_id)->where('user_id', Auth::user()->id)->get();
     if(count($old_group) > 0)
     {
@@ -65,14 +61,17 @@ class GroupController extends BaseController
 
    public function UnFavGroup($group_id)
    {
+    $group = Group::find($group_id);
+    if($group == null) {return $this->SendError('Group Not Found');}
     $f = FavGroups::select()->where('group_id' , $group_id)->where('user_id' , Auth::id())->first();
-    if(count($f) == 0)
+    // dd($f);
+    if($f == null)
     {
         return $this->SendError('This Group Doesn\'t Favorite Before');
     }
     else
     {
-        $f->delete();
+        DB::table('fav_groups')->where('group_id', $group_id)->where('user_id', Auth::id())->delete();
        return $this->SendResponse('User Remove Group From Fav','Removed');
     }
    }

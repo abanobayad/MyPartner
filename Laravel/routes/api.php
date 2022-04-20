@@ -32,12 +32,16 @@ Route::prefix('/account')->group(function () {
             Route::post('/edit/{post_id}', 'PostController@EDIT');            //Edit existed Post
             Route::get('/delete/{id}', 'PostController@DELETE');    //Delete Specific post With its ID
             Route::get('/show/{id}', 'PostController@GET')->name('showPost');         //Show Post and comments and replies with its ID
+            Route::get('/save-post/{id}', 'PostController@SavePost');         //Show Post and comments and replies with its ID
+            Route::get('/unsave-post/{id}', 'PostController@UnSavePost');         //Show Post and comments and replies with its ID
+            Route::get('/show-saved-posts', 'PostController@showSaved');         //Show Post and comments and replies with its ID
         });
 //group
         Route::prefix('/group')->group(function () {
             Route::get('/', 'GroupController@index');                //Show All Posts For Handle
             Route::get('/show/{id}', 'GroupController@show')->name('showGroup');         //Show Post and comments and replies with its ID
             Route::get('/fav-group/{id}', 'GroupController@FavGroup');         //Show Post and comments and replies with its ID
+            Route::get('/unfav-group/{id}', 'GroupController@UnFavGroup');         //Show Post and comments and replies with its ID
             Route::get('/show-fav-group', 'GroupController@showFav');         //Show Post and comments and replies with its ID
         });
 //Search
