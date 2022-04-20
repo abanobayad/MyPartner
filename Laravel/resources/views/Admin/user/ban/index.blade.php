@@ -1,7 +1,7 @@
 @extends('Admin.layout')
 
 @section('content')
-    <div class="card p-3 col-6  m-auto bg-light">
+    <div class="card p-3 col-lg-6 col-md-12  m-auto bg-light">
         @include('Admin.inc.errors')
         @include('Admin.inc.message')
         <div class="mb-3">

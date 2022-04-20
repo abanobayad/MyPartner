@@ -10,13 +10,12 @@
                                 <form action="{{ route('searchUserPosts', $user->id) }}" method="POST">
                                     @csrf
                                     <div class="row">
-                                        <div class="col-10">
+                                        <div class="col-lg-10 col-md-8 mb-2">
                                             <input type="text" name="q" class="form-control"
                                                 placeholder="Search User Posts" required>
                                         </div>
-                                        <div class="col-2">
-                                            <input type="submit" value="Search" class="btn btn-secondary form-control text-white"
-                                                style="float: right ; display: inline;">
+                                        <div class="col-lg-2 col-md-4">
+                                            <input type="submit" value="Search" class="btn btn-secondary form-control text-white">
                                         </div>
                                     </div>
                                 </form>
@@ -55,7 +54,7 @@
 
                 </div>
                 <hr class="mb-2">
-                <div class="m-auto text-center col-4 rounded alert-secondary">{{ $user->profile->bio }}</div>
+                <div class="m-auto mb-2 text-center col-4 rounded alert-secondary">{{ $user->profile->bio }}</div>
                 <hr class="mb-2">
                 {{-- Start Posts --}}
 
@@ -77,8 +76,6 @@
                     </div>
                 @endif
             </div>
-
-
     <div class="row">
     @include('Admin.user.profile.posts')
     </div>

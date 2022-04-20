@@ -19,7 +19,7 @@ class UserAController extends Controller
     public function showUser($id)
     {
         $user = User::find($id);
-        $posts = $user->posts()->paginate(4);
+        $posts = $user->posts()->paginate(6);
         $rate = Rate::select()->where('receiver_id', $user->id)->get();
         $sum = 0;
         if($rate)
