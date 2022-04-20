@@ -93,6 +93,12 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
             Route::get('/delete/{id}', 'ContController@DELETE')->name('admin.contact.delete');
         });
 
+//Posts
+        Route::prefix('/post')->group(function () {
+            Route::get('/show/{id}', 'PostController@show')->name('admin.post.show');
+        });
+
+
         //report
         Route::prefix('/report')->group(function () {
             Route::any('/index', 'RepController@index')->name('admin.report.index');
