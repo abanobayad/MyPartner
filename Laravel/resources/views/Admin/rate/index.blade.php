@@ -22,14 +22,22 @@
                    {{-- {{dd($cat->admin)}} --}}
                    <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
-                    <td> {{ $rate->sender->name }} </td>
-                    <td>{{ $rate->receiver->name }}</td>
+                    <td>
+                        <a href="{{ route('admin.user.show',$rate->sender->id) }}" style="text-decoration: none">
+                            {{ $rate->sender->name }}
+                        </a>
+                        </td>
+                    <td>
+                        <a href="{{ route('admin.user.show',$rate->receiver->id) }} " style="text-decoration: none">
+                        {{ $rate->receiver->name }}
+                        </a>
+                    </td>
                     <td>{{ $rate->rate_value }}</td>
 
                     <td>
-                        <a href="{{ route('admin.rate.show', $rate->id) }}" class="btn btn-sm btn-dark text-white">Show
+                        <a href="{{ route('admin.rate.show', [$rate->sender_id , $rate->receiver_id]) }}" class="btn btn-sm btn-dark text-white">Show
                             Details</a>
-                        <a href="{{ route('admin.rate.delete', $rate->id) }}"
+                        <a href="{{ route('admin.rate.delete', [$rate->sender_id , $rate->receiver_id]) }}"
                             class="btn btn-sm btn-danger text-white">Delete</a>
                     </td>
                 </tr>

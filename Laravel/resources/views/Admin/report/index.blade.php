@@ -4,10 +4,10 @@
     <h4>Reports</h4>
 
     <div class="row">
-        <div class="col-8">
+        <div class="col-lg-8 col-sm-4 mb-1">
             <input class="form-control opacity-50" id="myInput" type="text" placeholder="Search Table">
         </div>
-        <div class="col-4">
+        <div class="col-lg-4 col-sm-6">
             <div class="text-center pb-2 " style="float:right; ">
                 <form action="{{ route('admin.report.index') }}" method="POST" class="pb-2">
                     @csrf

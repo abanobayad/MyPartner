@@ -21,8 +21,9 @@ class UserAController extends Controller
         $user = User::find($id);
         $posts = $user->posts()->paginate(6);
         $rate = Rate::select()->where('receiver_id', $user->id)->get();
+        // dd($rate->count());
         $sum = 0;
-        if($rate)
+        if($rate->count() ==0)
         {
             $total_rate = 'No Rates Yet';
         }
@@ -31,7 +32,7 @@ class UserAController extends Controller
             foreach ($rate as $item) {$sum = $sum + $item->rate_value;   }
             $total_rate = $sum / sizeof($rate);
         }
-        return view('Admin.user.profile.show', compact('user', 'total_rate' , 'posts'));
+        return view('Admin.user.profile.show', compact('user','rate' ,'total_rate' , 'posts'));
     }
 
     public function search(Request $request , $user_id)

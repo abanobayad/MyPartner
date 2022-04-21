@@ -28,7 +28,7 @@
 
                 <div class="form-group">
                     <h4 for="exampleFormControlInput1"> Post Owner :
-                        <a href="{{ route('admin.user.show', $report->user->id) }}">
+                        <a href="{{ route('admin.user.show', $report->post->user->id) }}">
                             {{ $report->post->user->name }}
                         </a>
                     </h4>

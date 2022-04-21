@@ -34,7 +34,7 @@
                         <div class="d-flex flex-column"> <span class="articles">Posts</span> <span
                                 class="number1">{{ count($user->posts) }}</span> </div>
                         <div class="d-flex flex-column"> <span class="rating">Rating</span> <span
-                                class="number3 @if ($total_rate = 'No Rates Yet') text-danger @endif">
+                                class="number3 @if ($rate->count() == 0) text-danger @endif">
                                 {{ $total_rate }}
                             </span> </div>
                     </div>
@@ -42,7 +42,7 @@
 
                     <div class="row m-auto">
                         <div class="col-lg-3 col-sm-6">
-                            <button class="btn btn-sm btn-outline-dark w-100 m-2">Reports</button>
+                            <a class="btn btn-sm btn-outline-dark w-100 m-2" href="{{route('admin.report.getall' , $user->id)}}">Reports</a>
                         </div>
                         <div class="col-lg-3 col-sm-6">
                             <a href="{{ route('admin.contact.get', $user->id) }}"

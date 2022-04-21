@@ -108,4 +108,23 @@ class RepController extends Controller
         return redirect()->back();
     }
 
+    public function GetAll($id)
+    {
+        $user = User::find($id);
+
+        $SentReports = $user->reports()->get();
+        $posts = $user->posts()->get();
+
+        // foreach($posts as $post)
+        // {
+        //     foreach($post->reports()->get() as $report)
+        //     {
+        //             dd($report);
+        //     }
+        // }
+        // $ReceviedReports = $user->posts()->get();
+        // dd($SentReports);
+        return view('admin.report.getall' , compact('user' , 'SentReports' , 'posts'));
+    }
+
 }

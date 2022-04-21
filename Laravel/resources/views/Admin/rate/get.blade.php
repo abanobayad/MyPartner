@@ -2,58 +2,71 @@
 
 @section('content')
 
-<div class="container" style="padding-top: 2%">
-        @if(count($rates) < 1)
-            <div class="alert alert-danger" role="alert">
-                No one's rated this user before
-                        </div>
-        @else
-        <div class="alert alert-secondary" role="alert">
-            <h6 for="exampleFormControlInput1">number of reviews : {{ $collection['number_of_reviews']}}</h6>
-            <h6 for="exampleFormControlInput1">total reviews percentage : {{ $collection['total_reviews_percentage']}}</h6>
-
+<div class="row">
+    @if (count($rates) < 1)
+        <div class="alert alert-danger" role="alert">
+            No one rate {{$user->name}}
+        </div>
+    @else
+    <div class="col-6 m-auto">
+        <div class="card p-2 mb-2 bg-transparent" role="alert">
+            <div class="row">
+                <div class="col-12">
+                    <h5 class="text-muted">
+                        Rate Details of {{$user->name}}
+                    </h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+            <h6 for="exampleFormControlInput1">number of reviews : {{ $collection['number_of_reviews'] }}</h6>
+                </div>
+                <div class="col-6">
+                    <h6 for="exampleFormControlInput1">total reviews percentage :
+                        {{ $collection['total_reviews_percentage'] }}
+                    </h6>
+                </div>
+            </div>
 
         </div>
-            @foreach ($rates as $rate)
-            <div class="container p-5 my-5 border" >
-
-                    <div class="form-group">
-                        <h6 for="exampleFormControlInput1">Sender name : {{  $rate->sender->name }}</h6>
-                    </div>
-                    <div class="form-group">
-                        <h6 for="exampleFormControlInput1">receiver name : {{  $rate->receiver->name }}</h6>
-                    </div>
-
-                    <div class="form-group">
-                        <h6 for="exampleFormControlInput1">rate value  : {{  $rate->rate_value }}</h6>
-                    </div>
-
-                    <div class="form-group">
-                        <h6 for="exampleFormControlInput1">feedback  : {{  $rate->feedback }}</h6>
-                    </div>
-
-                    <div class="form-group">
-                        <h6 for="exampleFormControlInput1">created at : {{  $rate->created_at->diffForhumans() }}</h6>
-                    </div>
-
-                    <div class="form-group">
-                        <h6 for="exampleFormControlInput1">updated at : {{  $rate->updated_at->diffForhumans() }}</h6>
-                    </div>
-
-                    <div class="btn-group col-10 mx-auto">
-                        <button type="button" class="btn btn-primary btn-lg">send msg to {{  $rate->receiver->name  }} </button>
-                        <button type="button" class="btn btn-primary btn-lg">view {{  $rate->receiver->name  }} profile </button>
-                        <a href="{{route('ban-detailes' , $rate->receiver->id)}}" > <button type="button" class="btn btn-primary btn-lg">ban {{  $rate->receiver->name  }} </button> </a>
-                        <a href="{{route('admin.rate.delete' , $rate->id)}}" > <button type="button"  class="btn btn-primary btn-lg">Delete </button> </a>
-
-                    </div>
-
-                 </div>
-
-            @endforeach
-        @endif
-
-
+    </div>
 </div>
-@endsection
+    <input class="form-control opacity-50" id="myInput" type="text" placeholder="Search Table">
+    <br>
+    <div class="table-responsive">
+        <table class="table text-center">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Sender Name</th>
+                    <th scope="col">Receiver Name</th>
+                    <th scope="col">Rate Value</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="tableData">
+                {{-- Start Fetch Data --}}
+                @foreach ($rates as $rate)
+                    {{-- {{dd($cat->admin)}} --}}
+                    <tr>
+                        <th scope="row">{{ $loop->iteration }}</th>
+                        <td> {{ $rate->sender->name }} </td>
+                        <td>{{ $rate->receiver->name }}</td>
+                        <td>{{ $rate->rate_value }}</td>
 
+                        <td>
+                            <a href="{{ route('admin.rate.show', [$rate->sender_id, $rate->receiver_id]) }}"
+                                class="btn btn-sm btn-dark text-white">Show
+                                Details</a>
+                            <a href="{{ route('admin.rate.delete', [$rate->sender_id, $rate->receiver_id]) }}"
+                                class="btn btn-sm btn-danger text-white">Delete</a>
+                        </td>
+                    </tr>
+                @endforeach
+                {{-- End Fetch Data --}}
+            </tbody>
+        </table>
+    </div>
+    @endif
+
+@endsection

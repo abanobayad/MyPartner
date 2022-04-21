@@ -95,7 +95,7 @@
                             <div class="col-sm-12">
                                 <ul class="list-unstyled mb-0">
                                     @foreach ($post->group->tags as $tag)
-                                        <li><a href="#!">{{ $tag->name }}</a></li>
+                                        <li><a href="{{route('admin.tag.edit' , $tag->id)}}">{{ $tag->name }}</a></li>
                                     @endforeach
                                 </ul>
                             </div>

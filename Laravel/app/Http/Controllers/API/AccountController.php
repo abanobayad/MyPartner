@@ -20,7 +20,7 @@ class AccountController extends BaseController
         $posts = $user->posts()->get();
         $rate = Rate::select()->where('receiver_id', $user->id)->get();
         $sum = 0;
-        if ($rate) {
+        if ($rate->count() ==0) {
             $total_rate = 'No Rates Yet';
         } else {
             foreach ($rate as $item) {
@@ -60,7 +60,7 @@ class AccountController extends BaseController
         $posts = $user->posts()->get();
         $rate = Rate::select()->where('receiver_id', $user->id)->get();
         $sum = 0;
-        if ($rate) {
+        if ($rate->count() ==0) {
             $total_rate = 'No Rates Yet';
         } else {
             foreach ($rate as $item) {
