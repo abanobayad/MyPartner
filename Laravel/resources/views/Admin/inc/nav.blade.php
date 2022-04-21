@@ -81,8 +81,8 @@
                     </li>
                     {{-- Search Icon End --}}
 
-                    {{-- Start Notifications --}}
-                    <li class="nav-item dropdown">
+                {{-- Start Notifications --}}
+                    {{-- <li class="nav-item dropdown">
                         <a class="nav-link count-indicator" id="countDropdown" href="#" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             <span class="count "></span>
@@ -98,13 +98,13 @@
                                 </span>
                             @endif
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0"
+                        <div class="dropdown-menu dropdown-menu-left navbar-dropdown preview-list pb-0 col-md-12"
                             aria-labelledby="countDropdown">
 
                                 <div class="col-4 dropdown-item m-auto">
-                                    <p class="mb-0 font-weight-lg float-left" id="noti_count">
+                                    <span class="mb-0 font-weight-lg " id="noti_count">
                                         You have {{ auth()->guard('admin')->user()->unreadNotifications->count() }}
-                                        unread Notifications </p>
+                                        unread Notifications </span>
                                     <a class="badge badge-pill badge-primary"
                                         style="text-decoration: none ; color: blue" href="{{ route('markAllRead') }}">
                                         View all
@@ -118,10 +118,10 @@
                                         href="{{route('markRead' , $notification->id)}}">
                                         {{-- <div class="preview-thumbnail">
                                             <img src="images/faces/face1.jpg" alt="image" class="img-sm profile-pic">
-                                        </div> --}}
-                                        <div class="preview-item-content flex-grow py-2">
-                                            <p class="preview-subject ellipsis font-weight-medium text-dark">
-                                                {{ $notification->data['data']['title'] }}</p>
+                                        </div>  // Old End Of Comment Here
+                                        <div class="preview-item-content flex-grow py-2 col-md-12">
+                                            <span class="preview-subject ellipsis font-weight-medium text-dark">
+                                                {{ $notification->data['data']['title'] }}</span>
                                             <p class="fw-light small-text mb-0">
                                                 {{ $notification->data['data']['body'] }} </p>
                                         </div>
@@ -129,10 +129,73 @@
                                 @endforeach
                             </div>
                         </div>
-                    </li>
-                    {{-- End OF Notifi --}}
+                    </li> --}}
+                 {{-- End OF Notifi --}}
 
+{{-- Try --}}
 
+<li class="nav-item dropdown user-dropdown ">
+    <a class="nav-link count-indicator" id="UserDropdown" href="#" data-bs-toggle="dropdown"
+        aria-expanded="false">
+
+        {{-- El Sora el 5arigia --}}
+        <span class="count "></span>
+        <i class="icon-bell"></i>
+        <span class="count "></span>
+        @if (auth()->guard('admin')->user()->unreadNotifications->count() > 0)
+            <span class=" badge badge-danger text-warning"
+                id="noti_count">{{ auth()->guard('admin')->user()->unreadNotifications->count() }}
+            </span>
+        @else
+            <span class=" badge badge-dark text-dark "
+                id="noti_count">{{ auth()->guard('admin')->user()->unreadNotifications->count() }}
+            </span>
+        @endif
+
+    </a>
+
+    <div class="dropdown-menu dropdown-menu-right navbar-dropdown " aria-labelledby="UserDropdown">
+        <div class="dropdown-header text-center ">
+            {{-- View All --}}
+            <div class="row">
+                <div class="col-lg-9">
+                    <span class="mb-0 font-weight-lg " id="noti_count">
+                        You have {{ auth()->guard('admin')->user()->unreadNotifications->count() }}
+                        unread Notifications </span>
+                </div>
+                <div class="col-lg-3 ">
+
+            <a class="badge badge-pill badge-primary"
+            style="text-decoration: none ; color: blue" href="{{ route('markAllRead') }}">
+            View all
+        </a>
+                </div>
+            </div>
+
+            {{-- End View All --}}
+        </div>
+        <div class="dropdown-divider"></div>
+        {{-- Start Noti body --}}
+        @foreach (auth()->guard('admin')->user()->unreadNotifications as $notification)
+        <a class="dropdown-item preview-item"
+            href="{{route('markRead' , $notification->id)}}">
+            {{-- <div class="preview-thumbnail">
+                <img src="images/faces/face1.jpg" alt="image" class="img-sm profile-pic">
+            </div> --}}
+            <div class="preview-item-content flex-grow pt-2 col-md-12">
+                <span class="preview-subject  font-weight-medium text-dark">
+                    {{ $notification->data['data']['title'] }}</span>
+                            <p class="fw-light small-text mt-1 ">
+                                {{ $notification->data['data']['body'] }} </p>
+            </div>
+        </a>
+        @endforeach
+        {{-- End Noti body --}}
+
+    </div>
+</li>
+
+{{-- End Try --}}
                     {{-- Notiy Comented --}}
                     {{-- {{-- Notifications Start
                     <li class="nav-item dropdown">
@@ -184,7 +247,7 @@
                 {{-- Notifications End --}}
 
                     {{-- Admin Account Start --}}
-                    <li class="nav-item dropdown d-none d-lg-block user-dropdown">
+                    <li class="nav-item dropdown  d-lg-block user-dropdown">
                         <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             <img class="img-xs rounded-circle"
@@ -200,12 +263,16 @@
                                 </p>
                                 <p class="fw-light text-muted mb-0">{{ auth()->guard('admin')->user()->email }}</p>
                             </div>
-                            <a class="dropdown-item" href="{{ route('admin.edit') }}"><i
-                                    class="dropdown-item-icon mdi mdi-lead-pencil text-primary me-2"></i>Edit
-                                Account</a>
-                            <a class="dropdown-item" href="{{ route('admin.logout') }}"><i
-                                    class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign
-                                Out</a>
+                            <div class="row">
+                                <div class="col-sm-12 m-auto">
+                                    <a class="dropdown-item " href="{{ route('admin.edit') }}"><i
+                                            class="dropdown-item-icon mdi mdi-lead-pencil text-primary me-2"></i>Edit
+                                        Account</a>
+                                    <a class="dropdown-item" href="{{ route('admin.logout') }}"><i
+                                            class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign
+                                        Out</a>
+                                </div>
+                            </div>
 
                         </div>
                     </li>
@@ -222,7 +289,7 @@
         <nav class="sidebar sidebar-offcanvas p-0 m-0" id="sidebar">
             <ul class="nav">
 
-                {{-- SideBar --}}
+         {{-- SideBar --}}
 
                 {{-- Dashboard --}}
                 <li class="nav-item">
@@ -231,7 +298,6 @@
                         <span class="menu-title">Dashboard</span>
                     </a>
                 </li>
-
 
                 {{-- Cats --}}
                 <li class="nav-item nav-category">Categories</li>
@@ -256,7 +322,7 @@
 
                 {{-- Tags --}}
                 <li class="nav-item nav-category">TAGS</li>
-                <li class="nav-item">
+                    <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#tags" aria-expanded="false"
                         aria-controls="tags">
                         <i class="menu-icon mdi mdi-tag-multiple"></i>
@@ -277,7 +343,7 @@
 
                 {{-- Groups --}}
                 <li class="nav-item nav-category">Groups</li>
-                <li class="nav-item">
+                    <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#groups" aria-expanded="false"
                         aria-controls="groups">
                         <i class="menu-icon mdi mdi-microsoft"></i>
@@ -301,7 +367,7 @@
 
                 {{-- Contacts --}}
                 <li class="nav-item nav-category">Contacts</li>
-                <li class="nav-item">
+                    <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#contact" aria-expanded="false"
                         aria-controls="contact">
                         <i class="menu-icon mdi mdi mdi-voice"></i>
@@ -319,7 +385,7 @@
 
                 {{-- Rates --}}
                 <li class="nav-item nav-category">Rates</li>
-                <li class="nav-item">
+                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#rates" aria-expanded="false"
                         aria-controls="rates">
                         <i class="menu-icon mdi mdi mdi-star-half"></i>
@@ -339,7 +405,7 @@
 
                 {{-- reports --}}
                 <li class="nav-item nav-category">Reports</li>
-                <li class="nav-item">
+                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#reports" aria-expanded="false"
                         aria-controls="reports">
                         <i class="menu-icon mdi mdi mdi-alert-outline"></i>
@@ -357,7 +423,7 @@
 
                 {{-- Users --}}
                 <li class="nav-item nav-category">Users</li>
-                <li class="nav-item">
+                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#users" aria-expanded="false"
                         aria-controls="users">
                         <i class="menu-icon mdi mdi-account"></i>

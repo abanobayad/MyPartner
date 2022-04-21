@@ -1,8 +1,8 @@
 {{-- Check Group Has Posts Or not --}}
 <link rel="stylesheet" href="{{asset('css/editProfile.css')}}">
 @if ($posts->count() == 0)
-    <div class=" m-auto col-6 alert alert-danger d-flex justify-content-center">There Is No Posts Yet in
-        {{ $user->name }} Account!!</div>
+    <div class=" m-auto col-lg-6 col-md-12 alert alert-danger text-center d-flex justify-content-center">There Is No Posts Yet in
+        "{{ $user->name }}" Account!! </div>
 @else
 {{--
     <div class="col-10 content m-auto">
