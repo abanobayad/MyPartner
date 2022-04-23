@@ -17,7 +17,7 @@ use App\Http\Controllers\API\RateController ;      // to access fun , class exis
 Route::get('/', function(){
     return view('Admin.weclome');
 });
-
+Route::view('forgot_password', 'User.reset-password')->name('password.reset');
 Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(function () {
     Route::middleware('adminsAuth:admin')->group(function () {  //kernel keyword no middelware class : guardName
 
