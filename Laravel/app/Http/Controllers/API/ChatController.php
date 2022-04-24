@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Resources\ChatResource;
 use App\Models\chat;
+use App\Models\message;
 use App\Models\Req;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -12,29 +13,35 @@ use Illuminate\Http\Request;
 class ChatController extends BaseController
 {
 
-    public function conversation($reciver_id)
+    // user1 is auth user
+
+    public function conversation($user2)
     {
         $user1 = Auth::id();
-        $user2 = $reciver_id;
-        $conversation = chat::select()->where([['sender_id',$user2],['receiver_id',$user1],['v_r',1]])
-                        ->orWhere([['receiver_id',$user2],['sender_id',$user1],['v_s',1]])->orderBy('created_at','DESC')->get();
 
-        if(is_null($conversation->first())){
+        $chat = chat::select()->where([['user1_id',$user1],['user2_id',$user2]])->orWhere([['user1_id',$user2],['user2_id',$user1]])->first();
+
+        if( $chat->user1_id == Auth::id()){
+            $messages = message::select()->where([ ['chat_id',$chat->id] , ['v_user1',1] ])->get();
+        }else{
+            $messages = message::select()->where([ ['chat_id',$chat->id] , ['v_user2',1] ])->get();
+        }
+
+        if(is_null($messages->first())){
             return $this->SendError('there in no conversation with this user');
         }
 
-        foreach($conversation as $message){
-            if($message->receiver_id == Auth::id() ){
-                chat::where('sender_id', $reciver_id)->where('receiver_id', Auth::id())->update(['seen' => 1]);
-            }
+        foreach($messages as $message){
+             message::where('sender_id', $user2)->update(['seen' => 1]);
         }
-        $js_conv = ChatResource::collection($conversation);
+
+        $js_conv = ChatResource::collection($messages);
         return $this->SendResponse($js_conv, "conversation send");
     }
 
 
 
-    public function send_message(Request $request , $receiver_id){
+    public function send_message(Request $request , $user2){
         $input = $request->all();
         $validator = Validator::make(
             $input,
@@ -47,33 +54,42 @@ class ChatController extends BaseController
             return $this->SendError("Validate Input",  $validator->errors());
         }else{
 
-            $input['sender_id'] = Auth::id();
-            $input['receiver_id'] = $receiver_id;
+            $user1 = Auth::id();
+            $input['sender_id'] =$user1;
             $input['seen'] = 0;
 
+            $chat_id = chat::select()->where([['user1_id',$user1],['user2_id',$user2]])->orWhere([['user1_id',$user2],['user2_id',$user1]])->first();
+            if(is_null($chat_id)){
+                $request = Req::select()->where([['post_owner_id',$user1 ],['requester_id',$user2,['status','accept'] ]])
+                ->orWhere([['post_owner_id',$user2 ],['requester_id',$user1,['status','accept'] ]])->first();
 
-            $request = Req::select()->where([['post_owner_id',$input['sender_id']],['requester_id',$input['receiver_id'],['status','accept'] ]])
-            ->orWhere([['post_owner_id',$input['receiver_id'] ],['requester_id',$input['sender_id'],['status','accept'] ]])->first();
-
-            if($request == null){
-                return $this->SendError( "you can't send message to this user");
+                if($request == null){
+                    return $this->SendError( "you can't send message to this user");
+                }else{
+                    $chat = chat::create([
+                        'user1_id'=>$user1,
+                        'user2_id'=>$user2,
+                    ]);
+                    $input['chat_id'] =$chat->id;
+                    $message = message::create($input);
+                    $js_message = ChatResource::make($message);
+                    return $this->SendResponse($js_message, "message send");
+                }
             }
 
-            $message = chat::create($input);
-            $js_message = ChatResource::make($message);
-            return $this->SendResponse($js_message, "message send");
+
         }
     }
 
 
     public function delete_message($id)
     {
-        $message = chat::find($id);
+        $message = message::find($id);
         if($message->sender_id == Auth::id() ){
-            chat::where('id', $id)->update(['v_s' => '0']);
+            message::where('id', $id)->update(['v_user1' => '0']);
         }
-        elseif($message->receiver_id == Auth::id()){
-            chat::where('id', $id)->update(['v_r' => '0']);
+        else{
+            message::where('id', $id)->update(['v_user2' => '0']);
         }
 
         return $this->SendResponse(null, 'message Deleted Successfully');
@@ -81,19 +97,16 @@ class ChatController extends BaseController
 
     }
 
-    public function delete_conversation($user_id)
+    // id of conversation
+    public function delete_conversation($id)
     {
-        $senderId = Auth::id();
-        $receiverId = $user_id;
-        $conversation = chat::select()->where([['sender_id',$receiverId],['receiver_id',$senderId]])
-                        ->orWhere([['receiver_id',$receiverId],['sender_id',$senderId]])->get();
-
+        $conversation = message::select()->where('chat_id',$id)->get();
         foreach($conversation as $message){
             if($message->sender_id == Auth::id() ){
-                chat::where('id', $message->id)->update(['v_s' => '0']);
+                message::where('id', $message->id)->update(['v_user1' => '0']);
             }
-            elseif($message->receiver_id == Auth::id()){
-                chat::where('id', $message->id)->update(['v_r' => '0']);
+            else{
+                message::where('id', $message->id)->update(['v_user2' => '0']);
             }
         }
 
@@ -104,17 +117,16 @@ class ChatController extends BaseController
     public function my_chats()
     {
         $data=[];
-
-        $user = Auth::id();
-        $Chats = chat::select()->where('sender_id',$user)->orWhere('receiver_id',$user)->orderBy('created_at','DESC')->get();
+        $user1 = Auth::id();
+        $Chats = chat::select()->where('user1_id',$user1)->orWhere('user2_id',$user1)->orderBy('created_at','DESC')->get();
 
         foreach ($Chats as $Chat){
-            if($Chat->sender_id == $user ){
-                $last_mess = $Chat->latest()->first();
-                array_push($data,["user_id" => $Chat->receiver_id],["last_message" => $last_mess]);
+            if($Chat->user1_id == $user1 ){
+                $last_mess = message::select('body')->where([ ['chat_id',$Chat->id] , ['v_user1',1] ])->latest()->first();
+                array_push($data,["user" => $Chat->user2()->select('id' , 'name')->get()],["last_message" => $last_mess]);
             }else{
-                $last_mess = $Chat->latest()->first();
-                array_push($data,["user_id" => $Chat->sender_id],["last_message" => $last_mess]);
+                $last_mess = message::select('body')->where([ ['chat_id',$Chat->id] , ['v_user2',1] ])->latest()->first();
+                array_push($data,["user" => $Chat->user1()->select('id' , 'name')->get()],["last_message" => $last_mess]);
             }
         }
 

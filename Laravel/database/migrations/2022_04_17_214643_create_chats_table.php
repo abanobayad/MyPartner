@@ -14,14 +14,9 @@ class CreateChatsTable extends Migration
     public function up()
     {
         Schema::create('chats', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->foreignId('sender_id')->constrained('users','id');
             $table->foreignId('receiver_id')->constrained('users','id');
-            $table->string('body');
-            $table->string('attachment')->nullable();
-            $table->enum('v_s',[1,0])->default(1); //1 means visable
-            $table->enum('v_r',[1,0])->default(1); //1 means visable
-            $table->integer('seen')->default(0);
             $table->timestamps();
         });
     }

@@ -10,10 +10,19 @@ class ChatResource extends JsonResource
     public function toArray($request)
     {
 
+        $chat = $this->chat()->select()->first();
+        $sender = $this->sender()->select('id' , 'name')->first();
+
+        if($chat->user1_id == $sender->id){
+            $reciver = $chat->user2()->select('id' , 'name')->get();
+        }else{
+            $reciver = $chat->user1()->select('id' , 'name')->get();
+        }
+
         return [
             'id' => $this->id,
-            'Sender ' => $this->sender()->select('id' , 'name')->get(),
-            'receiver ' => $this->receiver()->select('id' , 'name')->get(),
+            'Sender ' => $sender,
+            'reciver'=>$reciver,
             'body' => $this->body,
             'attachment ' => $this->attachment,
             'seen' => $this->seen,
