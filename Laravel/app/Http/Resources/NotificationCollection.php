@@ -27,7 +27,7 @@ class NotificationCollection extends ResourceCollection
                     return [
                         'id'                => $data->id,
                         'details'              => $data->data,
-                        'created_at'        => $data->created_at
+                        'created_at'        => $data->created_at->diffForhumans()
                     ];})];
 
 

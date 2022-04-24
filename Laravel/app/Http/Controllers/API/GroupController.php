@@ -3,15 +3,12 @@
 namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Resources\FavGroupCollection;
-use App\Http\Resources\GroupCollection;
 use App\Http\Resources\GroupResource;
-use App\Models\Category;
+use App\Http\Resources\PostCollection;
 use App\Models\FavGroups;
 use App\Models\Group;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Models\User;
 
 class GroupController extends BaseController
 {
@@ -21,27 +18,30 @@ class GroupController extends BaseController
        return $this->SendResponse($groups , 'Groups Sent');
    }
 
-   public function GetGroupsByCategory($id)
-   {
-       $category = Category::find($id);
-       $groups = $category->groups()->get();
-       $js_groups = new GroupCollection($groups);
-       return $this->SendResponse($js_groups , 'Groups Sent');
-   }
+
 
    public function show($id)
    {
        $group = Group::find($id);
+       $posts = $group->posts()->get();
        if($group == null)
        {
            return $this->SendError('Group Not Found');
        }
        $js_group = new GroupResource($group);
-       return $this->SendResponse($js_group , 'Group Sent');
+       $js_posts = new PostCollection($posts);
+       $data =[
+           'group' =>$js_group,
+           'posts' =>$js_posts,
+       ];
+       return $this->SendResponse($data , 'Group with it\'s posts  Sent');
    }
+
 
    public function FavGroup($group_id)
    {
+    $group = Group::find($group_id);
+    if($group == null) {return $this->SendError('Group Not Found');}
     $old_group = DB::table('fav_groups')->where('group_id', $group_id)->where('user_id', Auth::user()->id)->get();
     if(count($old_group) > 0)
     {
@@ -55,7 +55,25 @@ class GroupController extends BaseController
            ]
        );
 
-       return $this->SendResponse('User Add Group','Added');
+       return $this->SendResponse('User Add Group To Fav','Added');
+   }
+
+
+   public function UnFavGroup($group_id)
+   {
+    $group = Group::find($group_id);
+    if($group == null) {return $this->SendError('Group Not Found');}
+    $f = FavGroups::select()->where('group_id' , $group_id)->where('user_id' , Auth::id())->first();
+    // dd($f);
+    if($f == null)
+    {
+        return $this->SendError('This Group Doesn\'t Favorite Before');
+    }
+    else
+    {
+        DB::table('fav_groups')->where('group_id', $group_id)->where('user_id', Auth::id())->delete();
+       return $this->SendResponse('User Remove Group From Fav','Removed');
+    }
    }
 
    public function showFav()
@@ -65,4 +83,6 @@ class GroupController extends BaseController
        return $this->SendResponse($js_groups , 'Favorite Groups Sent');
 
    }
+
+
 }

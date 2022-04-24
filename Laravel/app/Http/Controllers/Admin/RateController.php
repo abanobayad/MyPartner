@@ -15,9 +15,9 @@ class RateController extends Controller
     }
 
     // to get details of specific rate
-    public function show($id)
+    public function show($s_id , $r_id)
     {
-        $rate = Rate::find($id);
+        $rate = Rate::select()->where('sender_id' , $s_id)->where('receiver_id' , $r_id)->first();
         return view('Admin.rate.show', compact('rate'));
     }
 
@@ -42,7 +42,7 @@ class RateController extends Controller
         }
         $collection = collect(['number_of_reviews' => sizeof($rates), 'total_reviews_percentage' => $total]);
 
-        return view('Admin.rate.get', compact('rates','collection'));
+        return view('Admin.rate.get', compact('user','rates','collection'));
     }
 
 
@@ -70,9 +70,9 @@ class RateController extends Controller
         }
     }
 
-    public function DELETE($id)
+    public function DELETE($s_id , $r_id)
     {
-        $rate = Rate::find($id);
+        $rate = Rate::select()->where('sender_id' , $s_id)->where('receiver_id' , $r_id)->first();
         if ( $rate == null) {
             return redirect()->back()->with('rate not found');
         }else{

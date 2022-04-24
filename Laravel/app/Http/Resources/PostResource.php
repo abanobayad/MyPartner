@@ -22,8 +22,7 @@ class PostResource extends JsonResource
             'image'             => public_path('uploads/Posts/').$this->image ,
             'needed_persons'    => $this->needed_persons,
             'price'             => $this->price,
-            'created_at'        => $this->created_at->format('d/m/Y'),
-            'updated_at'        => $this->updated_at->format('d/m/Y')
+            'updated_at'        => $this->updated_at->diffForhumans()
         ];
     }
 }

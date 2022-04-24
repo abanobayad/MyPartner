@@ -26,8 +26,7 @@ class ChatResource extends JsonResource
             'body' => $this->body,
             'attachment ' => $this->attachment,
             'seen' => $this->seen,
-            'created_at' =>$this->created_at->format('d/m/Y'),
-            'updated_at' =>$this->updated_at->format('d/m/Y')
+            'created_at' =>$this->created_at->diffForhumans()
         ];
     }
 }

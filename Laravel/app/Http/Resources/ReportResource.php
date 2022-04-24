@@ -20,8 +20,7 @@ class ReportResource extends JsonResource
 
             'reason ' => $this->reason,
             'feedback ' => $this->feedback,
-            'created_at' =>$this->created_at->format('d/m/Y'),
-            'updated_at' =>$this->updated_at->format('d/m/Y')
+            'updated_at' =>$this->updated_at->diffForhumans()
 
         ];
     }

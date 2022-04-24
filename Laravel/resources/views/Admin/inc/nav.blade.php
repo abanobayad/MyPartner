@@ -81,14 +81,15 @@
                     </li>
                     {{-- Search Icon End --}}
 
-                    {{-- Start Notifications --}}
+
+                    {{-- Try --}}
                     <li class="nav-item dropdown">
-                        <a class="nav-link count-indicator" id="countDropdown" href="#" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            <span class="count "></span>
-                            <i class="icon-bell"></i>
-                            <span class="count "></span>
+                        <a class="nav-link count-indicator" id="notificationDropdown" href="#"
+                            data-bs-toggle="dropdown">
+                            <i class="icon-bell icon-lg"></i>
+
                             @if (auth()->guard('admin')->user()->unreadNotifications->count() > 0)
+                                <span class="count "></span>
                                 <span class=" badge badge-danger text-warning"
                                     id="noti_count">{{ auth()->guard('admin')->user()->unreadNotifications->count() }}
                                 </span>
@@ -99,40 +100,36 @@
                             @endif
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0"
-                            aria-labelledby="countDropdown">
-
-                                <div class="col-4 dropdown-item m-auto">
-                                    <p class="mb-0 font-weight-lg float-left" id="noti_count">
-                                        You have {{ auth()->guard('admin')->user()->unreadNotifications->count() }}
-                                        unread Notifications </p>
-                                    <a class="badge badge-pill badge-primary"
-                                        style="text-decoration: none ; color: blue" href="{{ route('markAllRead') }}">
-                                        View all
-                                    </a>
-                                </div>
-
-                            <div class="dropdown-divider"></div>
-                            <div id="noti_content">
-                                @foreach (auth()->guard('admin')->user()->unreadNotifications as $notification)
-                                    <a class="dropdown-item preview-item"
-                                        href="{{route('markRead' , $notification->id)}}">
-                                        {{-- <div class="preview-thumbnail">
-                                            <img src="images/faces/face1.jpg" alt="image" class="img-sm profile-pic">
-                                        </div> --}}
-                                        <div class="preview-item-content flex-grow py-2">
-                                            <p class="preview-subject ellipsis font-weight-medium text-dark">
-                                                {{ $notification->data['data']['title'] }}</p>
+                            aria-labelledby="notificationDropdown">
+                            <a  href="{{ route('markAllRead') }}" class="dropdown-item py-3 border-bottom">
+                                <p class="mb-0 font-weight-medium float-left">
+                                    You have
+                                    {{ auth()->guard('admin')->user()->unreadNotifications->count() }}
+                                    new notifications
+                                </p>
+                                <span class="badge badge-pill badge-primary float-right text-primary">View all</span>
+                            </a>
+                            @foreach (auth()->guard('admin')->user()->unreadNotifications as $notification)
+                                <a class="dropdown-item  preview-item py-3" href="{{ route('markRead', $notification->id) }}">
+                                    <div class="preview-item-content">
+                                            <h6 class="preview-subject fw-normal text-dark mb-1">
+                                                <div class="preview-item-content flex-grow py-2 col-md-12">
+                                                    <span class="preview-subject ellipsis font-weight-medium text-dark">
+                                                        {{ $notification->data['data']['title'] }}</span>
+                                                    <p class="fw-light small-text mb-0">
+                                                        {{ $notification->data['data']['body'] }} </p>
+                                                </div>
+                                            </h6>
                                             <p class="fw-light small-text mb-0">
-                                                {{ $notification->data['data']['body'] }} </p>
+                                                {{ $notification->updated_at->diffForHumans()}}
+                                            </p>
                                         </div>
                                     </a>
-                                @endforeach
-                            </div>
+                            @endforeach
                         </div>
                     </li>
-                    {{-- End OF Notifi --}}
 
-
+                    {{-- End Try --}}
                     {{-- Notiy Comented --}}
                     {{-- {{-- Notifications Start
                     <li class="nav-item dropdown">
@@ -184,7 +181,7 @@
                 {{-- Notifications End --}}
 
                     {{-- Admin Account Start --}}
-                    <li class="nav-item dropdown d-none d-lg-block user-dropdown">
+                    <li class="nav-item dropdown  d-lg-block user-dropdown">
                         <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             <img class="img-xs rounded-circle"
@@ -200,12 +197,16 @@
                                 </p>
                                 <p class="fw-light text-muted mb-0">{{ auth()->guard('admin')->user()->email }}</p>
                             </div>
-                            <a class="dropdown-item" href="{{ route('admin.edit') }}"><i
-                                    class="dropdown-item-icon mdi mdi-lead-pencil text-primary me-2"></i>Edit
-                                Account</a>
-                            <a class="dropdown-item" href="{{ route('admin.logout') }}"><i
-                                    class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign
-                                Out</a>
+                            <div class="row">
+                                <div class="col-sm-12 m-auto">
+                                    <a class="dropdown-item " href="{{ route('admin.edit') }}"><i
+                                            class="dropdown-item-icon mdi mdi-lead-pencil text-primary me-2"></i>Edit
+                                        Account</a>
+                                    <a class="dropdown-item" href="{{ route('admin.logout') }}"><i
+                                            class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign
+                                        Out</a>
+                                </div>
+                            </div>
 
                         </div>
                     </li>
@@ -231,7 +232,6 @@
                         <span class="menu-title">Dashboard</span>
                     </a>
                 </li>
-
 
                 {{-- Cats --}}
                 <li class="nav-item nav-category">Categories</li>

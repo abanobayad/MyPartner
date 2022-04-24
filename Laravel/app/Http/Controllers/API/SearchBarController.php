@@ -34,6 +34,10 @@ class SearchBarController extends BaseController
         }
 
         $data= $groups->latest()->get();
+
+        if(count($data) == 0){
+            return $this->SendError("No Matchs");
+        }
         $js = new GroupBarCollection($data);
         return $this->SendResponse($js, "Search Result Sent");
 

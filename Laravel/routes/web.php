@@ -17,7 +17,7 @@ use App\Http\Controllers\API\RateController ;      // to access fun , class exis
 Route::get('/', function(){
     return view('Admin.weclome');
 });
-
+Route::view('forgot_password', 'User.reset-password')->name('password.reset');
 Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(function () {
     Route::middleware('adminsAuth:admin')->group(function () {  //kernel keyword no middelware class : guardName
 
@@ -73,15 +73,16 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
             Route::post('ban/', 'BanController@ban')->name('ban');
             Route::post('unban/', 'BanController@unban')->name('unban');
             Route::post('ban/check', 'BanController@bannedStatus')->name('ban.check');
-
+        });
 
 
          //rate
-            Route::get('/rate/index', 'RateController@index')->name('admin.rate.index');
-            Route::get('/rate/low', 'RateController@low')->name('admin.rate.low');
-            Route::get('/rate/show/{id}', 'RateController@show')->name('admin.rate.show');
-            Route::get('/rate/get/{id}', 'RateController@GET')->name('admin.rate.get');
-            Route::get('/rate/delete/{id}', 'RateController@DELETE')->name('admin.rate.delete');
+         Route::prefix('/rate')->group(function () {
+            Route::get('/', 'RateController@index')->name('admin.rate.index');
+            Route::get('/low', 'RateController@low')->name('admin.rate.low');
+            Route::get('/show/{s_id}/{r_id}', 'RateController@show')->name('admin.rate.show');
+            Route::get('/get/{id}', 'RateController@GET')->name('admin.rate.get');
+            Route::get('/delete/{s_id}/{r_id}', 'RateController@DELETE')->name('admin.rate.delete');
 
         });
 
@@ -93,13 +94,21 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
             Route::get('/delete/{id}', 'ContController@DELETE')->name('admin.contact.delete');
         });
 
+//Posts
+        Route::prefix('/post')->group(function () {
+            Route::get('/show/{id}', 'PostController@show')->name('admin.post.show');
+        });
+
+
         //report
         Route::prefix('/report')->group(function () {
             Route::any('/index', 'RepController@index')->name('admin.report.index');
             Route::get('/show/{post_id}/{user_id}', 'RepController@show')->name('admin.report.show');
+            Route::get('/getall/{user_id}', 'RepController@GetAll')->name('admin.report.getall');
             Route::get('/delete/{post_id}/{user_id}', 'RepController@DELETE')->name('admin.report.delete');
             Route::get('/approve/{post_id}/{user_id}', 'RepController@approve')->name('admin.report.approve');
             Route::get('/reject/{post_id}/{user_id}', 'RepController@reject')->name('admin.report.reject');
+
 
 
         });

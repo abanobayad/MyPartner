@@ -24,7 +24,7 @@ class ReqController extends BaseController
             array_push($arr ,
             [
             'reqeusted_post' =>$req->post()->select('id','title')->get(),
-            'requester' =>$req->user()->select('id','name')->get(),
+            'requester' =>$req->requester()->select('id','name')->get(),
             'status' => $req->status
         ]);
         }
@@ -38,8 +38,13 @@ class ReqController extends BaseController
     public function doReq(Request $request)
     {
 
+
         $old_req = DB::table('requests')->where('post_id', $request->post_id)->where('requester_id', Auth::user()->id)->get();
         $post = Post::find($request->post_id);
+        if($post == null)
+        {
+            return $this->SendError('Wrong Post');
+        }
         $user = User::find($post->user_id);
         // dd($user->id);
 
@@ -81,7 +86,18 @@ class ReqController extends BaseController
 
     public function showReq($post_id, $req_id)
     {
+
+        $post = Post::find($post_id);
+
+        if(Auth::id() != $post->user_id)
+        {
+            return $this->SendError("You Are Not Allowed To Show This Request");
+        }
         $req = Req::where('post_id', $post_id)->where('requester_id', $req_id)->first();
+
+        if(is_null($req))
+        {return $this->SendError("Wrong Request");}
+
 
         if(Auth::id() != $req->post_owner_id)
         {
@@ -97,22 +113,42 @@ class ReqController extends BaseController
 
     public function approveRequest($post_id, $requester_id)
     {
+
+        $post = Post::find($post_id);
+
+        if(Auth::id() != $post->user_id)
+        {
+            return $this->SendError("You Are Not Allowed To Edit This Request");
+        }
         // DB::table('course_student')->where('student_id',$id)->where('course_id', $c_id)->update(['status'=>'approve']);
         DB::table('requests')->where('post_id', $post_id)->where('requester_id', $requester_id)->update(['status' => 'accept']);
-        return back();
+        return $this->SendResponse('Done' , "Request Accepted");
     }
 
     public function rejectRequest($post_id, $requester_id)
     {
+
+        $post = Post::find($post_id);
+
+        if(Auth::id() != $post->user_id)
+        {
+            return $this->SendError("You Are Not Allowed To Edit This Request");
+        }
         // DB::table('course_student')->where('student_id',$id)->where('course_id', $c_id)->update(['status'=>'approve']);
         DB::table('requests')->where('post_id', $post_id)->where('requester_id', $requester_id)->update(['status' => 'reject']);
-        return back();
+        return $this->SendResponse('Done' , "Request Rejected");
     }
 
     public function deleteRequest($post_id, $requester_id)
     {
+        $post = Post::find($post_id);
+
+        if(Auth::id() != $post->user_id)
+        {
+            return $this->SendError("You Are Not Allowed To Edit This Request");
+        }
         // DB::table('course_student')->where('student_id',$id)->where('course_id', $c_id)->update(['status'=>'approve']);
         DB::table('requests')->where('post_id', $post_id)->where('requester_id', $requester_id)->delete();
-        return back();
+        return $this->SendResponse('Done' , "Request Deleted");
     }
 }

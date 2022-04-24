@@ -19,7 +19,6 @@ class ContactResource extends JsonResource
             'Sender ' => $this->user()->select('id' , 'name')->get(),
             'subject ' => $this->subject,
             'content' => $this->content,
-            'created_at' =>$this->created_at->format('d/m/Y'),
-            'updated_at' =>$this->updated_at->format('d/m/Y')
+            'created_at' =>$this->created_at->diffForhumans()
         ];    }
 }
