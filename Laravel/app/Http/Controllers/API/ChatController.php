@@ -58,8 +58,8 @@ class ChatController extends BaseController
             $input['sender_id'] =$user1;
             $input['seen'] = 0;
 
-            $chat_id = chat::select()->where([['user1_id',$user1],['user2_id',$user2]])->orWhere([['user1_id',$user2],['user2_id',$user1]])->first();
-            if(is_null($chat_id)){
+            $chat = chat::select()->where([['user1_id',$user1],['user2_id',$user2]])->orWhere([['user1_id',$user2],['user2_id',$user1]])->first();
+            if(is_null($chat)){
                 $request = Req::select()->where([['post_owner_id',$user1 ],['requester_id',$user2,['status','accept'] ]])
                 ->orWhere([['post_owner_id',$user2 ],['requester_id',$user1,['status','accept'] ]])->first();
 
@@ -71,13 +71,13 @@ class ChatController extends BaseController
                         'user2_id'=>$user2,
                     ]);
                     $input['chat_id'] =$chat->id;
-                    $message = message::create($input);
-                    $js_message = ChatResource::make($message);
-                    return $this->SendResponse($js_message, "message send");
                 }
+            }else{
+                $input['chat_id'] =$chat->id;
             }
-
-
+            $message = message::create($input);
+            $js_message = ChatResource::make($message);
+            return $this->SendResponse($js_message, "message send");
         }
     }
 
@@ -118,15 +118,18 @@ class ChatController extends BaseController
     {
         $data=[];
         $user1 = Auth::id();
+
         $Chats = chat::select()->where('user1_id',$user1)->orWhere('user2_id',$user1)->orderBy('created_at','DESC')->get();
 
         foreach ($Chats as $Chat){
             if($Chat->user1_id == $user1 ){
                 $last_mess = message::select('body')->where([ ['chat_id',$Chat->id] , ['v_user1',1] ])->latest()->first();
-                array_push($data,["user" => $Chat->user2()->select('id' , 'name')->get()],["last_message" => $last_mess]);
+                if(!is_null($last_mess)){
+                    array_push($data,["user" => $Chat->user2()->select('id' , 'name')->get()],["last_message" => $last_mess]);}
             }else{
                 $last_mess = message::select('body')->where([ ['chat_id',$Chat->id] , ['v_user2',1] ])->latest()->first();
-                array_push($data,["user" => $Chat->user1()->select('id' , 'name')->get()],["last_message" => $last_mess]);
+                if(!is_null($last_mess)){
+                    array_push($data,["user" => $Chat->user1()->select('id' , 'name')->get()],["last_message" => $last_mess]);}
             }
         }
 

@@ -112,7 +112,7 @@ Route::prefix('/account')->group(function () {
             Route::post('/send_message/{user_id}', 'ChatController@send_message')->name('send_message');
             Route::get('/delete_message/{id}', 'ChatController@delete_message')->name('delete_message');
             Route::get('/delete_conversation/{user_id}', 'ChatController@delete_conversation')->name('delete_conversation');
-            Route::get('/my_chats', 'ChatController2@my_chats')->name('my_chats');
+            Route::get('/my_chats', 'ChatController@my_chats')->name('my_chats');
         });
 //Logout
         Route::post('/logout', 'AuthController@logout');
