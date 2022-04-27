@@ -22,7 +22,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
     Route::middleware('adminsAuth:admin')->group(function () {  //kernel keyword no middelware class : guardName
 
         Route::get('/', 'DashboardController@index')->name('admin.home');
-        // Route::get('/ban', 'BanController@ban')->name('admin.home');
+        //Route::get('/ban', 'BanController@ban')->name('admin.home');
         //Admin Edit
         Route::get('editAdmin',  'AdminsController@edit')->name('admin.edit');
         Route::post('do-editAdmin', 'AdminsController@doEdit')->name('do-editAdmin');
