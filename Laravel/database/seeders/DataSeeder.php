@@ -17,14 +17,14 @@ class DataSeeder extends Seeder
     public function run()
     {
     //Cats
-        $Courses = Category::create(['name' => 'Courses','image' => 'defult.jpg', 'admin_id' => 1]);
-        $Entertaniment= Category::create(['name' => 'Entertaniment','image' => 'defult.jpg', 'admin_id' => 1]);
-        $Food = Category::create(['name' => 'Food','image' => 'defult.jpg', 'admin_id' => 1]);
+        $Courses = Category::create(['name' => 'Courses','image' => 'default.png', 'admin_id' => 1]);
+        $Entertaniment= Category::create(['name' => 'Entertaniment','image' => 'default.png', 'admin_id' => 1]);
+        $Food = Category::create(['name' => 'Food','image' => 'default.png', 'admin_id' => 1]);
 
     //Tags
-        $WebDevelopment = Tag::create(['name' => 'Web Development','image' => 'defult.jpg', 'admin_id' => 1]);
-        $Backend =  Tag::create(['name' => 'Backend','image' => 'defult.jpg', 'admin_id' => 1]);
-        $Frontend = Tag::create(['name' => 'Frontend','image'=> 'defult.jpg', 'admin_id' => 1]);
+        $WebDevelopment = Tag::create(['name' => 'Web Development','image' => 'default.png', 'admin_id' => 1]);
+        $Backend =  Tag::create(['name' => 'Backend','image' => 'default.png', 'admin_id' => 1]);
+        $Frontend = Tag::create(['name' => 'Frontend','image'=> 'default.png', 'admin_id' => 1]);
 
     //Groups
 
@@ -34,7 +34,7 @@ class DataSeeder extends Seeder
             'description' => 'Laravel Group For Php Laravel' ,
             'admin_id' => '1' ,
             'category_id' => $Courses->id ,
-            'image'=> 'defult.jpg',
+            'image'=> 'default.png',
             'created_at'=> now(),
             'updated_at'=> now(),
         ]
