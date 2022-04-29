@@ -10,6 +10,26 @@
     });
     </script>
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js"></script>
+
+    <script>
+        // form repeater Initialization
+$('.repeater-default').repeater({
+  show: function () {
+    $(this).slideDown();
+  },
+  hide: function (deleteElement) {
+    if (confirm('Are you sure you want to delete this element?')) {
+      $(this).slideUp(deleteElement);
+    }
+  }
+});
+
+    </script>
+
+
+
 </div></div>
 <footer class="footer">
     <div class="d-sm-flex justify-content-center justify-content-sm-between">

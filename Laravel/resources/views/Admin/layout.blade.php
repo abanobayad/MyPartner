@@ -1,4 +1,5 @@
 @include('Admin.inc.header')
+@include('sweetalert::alert')
 
 <div class="main-panel">
     <div class="content-wrapper ">

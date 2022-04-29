@@ -10,7 +10,7 @@ use App\Models\Tag;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-
+use Alert;
 class GroupController extends Controller
 {
     public function index()
@@ -56,6 +56,8 @@ class GroupController extends Controller
             'admin_id'      => $request->admin_id,
         ]);
         $group->tags()->attach($request->tag);
+        Alert::success('Add Completed', 'Group '.$group->name .' Added Successfully');
+
         return redirect(route('admin.group.index'));
     }
 
@@ -108,6 +110,7 @@ class GroupController extends Controller
             'admin_id' =>      $data ['admin_id'],
         ]);
         $group->tags()->sync($request->tag);
+        Alert::success('Edit Completed', 'Group '.$group->name .' Changed Successfully');
         return back();
         // return redirect(route('admin.group.index'));
     }
@@ -117,7 +120,9 @@ class GroupController extends Controller
     {
         $imgName = Group::findOrfail($id)->image;
         Storage::disk('uploads')->delete('Groups/'. $imgName);
-        Group::findOrfail($id)->delete();
+        $group = Group::findOrfail($id);
+        $group->delete();
+        Alert::success('Delete Completed', 'Group '.$group->name .' Deleted Successfully');
         return redirect(route('admin.group.index'));
     }
 }

@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Exception;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 
 class CatController extends Controller
@@ -40,9 +43,46 @@ class CatController extends Controller
         }
 
 
-        Category::create($data);
+        $ca = Category::create($data);
+        Alert::success('Success Add', 'Category '.$ca->name .' Add Successfully');
+
         return redirect(route('admin.cat.index'));
     }
+
+
+    public function doCreate2(Request $request)
+    {
+        dd($request->all());
+        // foreach($request->group_a as $r)
+        // {
+
+        // }
+
+
+        try{
+            $list = $request->group_a;
+            foreach($list as $cat)
+            {
+                $Cate = new Category();
+                $Cate->admin_id = $request->admin_id;
+                $Cate->name = $cat['name'];
+                    // Create Image In The Storage
+                    $newImgName = $cat['image']->hashName();
+                    Image::make($cat['image'])->save(public_path('uploads/Categories/' . $newImgName));
+                $Cate->image = $newImgName;
+                $Cate->save();
+            }
+            return redirect(route('admin.cat.index'));
+        }
+        catch(Exception $e)
+        {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+
+        return redirect(route('admin.cat.index'));
+    }
+
+
 
     public function edit($id)
     {
@@ -59,6 +99,7 @@ class CatController extends Controller
             'id' => 'required|exists:categories,id',
             'image' => 'nullable|image|mimes:png,jpg,jpeg',
         ]);
+
         $OldImg = Category::find($request->id);
         if ($OldImg == null) {
             $newImgName = $request->image->hashName();
@@ -79,7 +120,10 @@ class CatController extends Controller
                 }
         }
 
-        Category::findOrFail($request->id)->update($data);
+         Category::findOrFail($request->id)->update($data);
+         $ca = Category::find($request->id);
+        Alert::success('Edit Completed', 'Category '.$ca->name .' Changed Successfully');
+
         return back();
         // return redirect(route('admin.cat.index'));
     }
@@ -87,7 +131,10 @@ class CatController extends Controller
 
     public function delete($id)
     {
-        Category::findOrfail($id)->delete();
+        $ca = Category::findOrfail($id);
+        Alert::success('Delete Completed', 'Category '.$ca->name .' Deleted Successfully');
+
+        $ca->delete();
         return redirect(route('admin.cat.index'));
     }
 }

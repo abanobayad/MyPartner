@@ -36,6 +36,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
             Route::get('/', 'CatController@index')->name('admin.cat.index');
             Route::get('/create', 'CatController@create')->name('admin.cat.create');
             Route::post('/do-create', 'CatController@doCreate')->name('admin.cat.doCreate');
+            Route::post('/do-create2', 'CatController@doCreate2')->name('admin.cat.doCreate2');
             Route::get('/edit/{id}', 'CatController@edit')->name('admin.cat.edit');
             Route::post('/do-edit', 'CatController@doEdit')->name('admin.cat.doEdit');
             Route::get('/delete/{id}', 'CatController@delete')->name('admin.cat.delete');
