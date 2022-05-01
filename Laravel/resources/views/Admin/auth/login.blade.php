@@ -47,9 +47,12 @@
                     @csrf
                     <div class="form-group">
                       <input type="email" class="form-control form-control-lg" name="email" id="exampleInputEmail1" placeholder="Username">
+                              @error('email')<span class="text-danger">{{$message}}</span>@enderror
                     </div>
                     <div class="form-group">
                       <input type="password" class="form-control form-control-lg"  name="password" id="exampleInputPassword1" placeholder="Password">
+                      @error('password')<span class="text-danger">{{$message}}</span>@enderror
+
                     </div>
                     <div class="mt-3">
                       <input type="submit" class="btn btn-block btn-dark btn-lg font-weight-medium auth-form-btn" value="SIGN IN" >
