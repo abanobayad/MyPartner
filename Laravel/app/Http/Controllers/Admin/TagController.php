@@ -27,6 +27,8 @@ class TagController extends Controller
 
     public function doCreate(Request $request)
     {
+        $data = $request->all();
+        $data = $request->validate(['name' => 'required|unique:tags,name']);
         try{
             for($i = 0 ; $i < count($request->name);$i++ )
             {
