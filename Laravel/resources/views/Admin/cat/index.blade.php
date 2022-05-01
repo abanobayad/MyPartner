@@ -39,10 +39,10 @@
                             </td>
                         @endif
                         <td>
-                            <a href="{{ route('admin.cat.edit', $cat->id) }}"
-                                class="btn btn-sm btn-dark text-white">Edit</a>
-                            <a href="{{ route('admin.cat.delete', $cat->id) }}"
-                                class="btn btn-sm btn-danger text-white ">Delete</a>
+                            <a href="{{ route('admin.cat.edit', $cat->id) }}" class="btn-lg text-dark"><i
+                                class="menu-icon mdi mdi-border-color"></i></a>
+                        <a href="{{ route('admin.cat.delete', $cat->id) }}" class="btn-lg text-danger"><i
+                                class="menu-icon mdi mdi-delete-sweep"></i></a>
                         </td>
                     </tr>
                 @endforeach

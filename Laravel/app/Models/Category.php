@@ -24,7 +24,7 @@ class Category extends Model
 
     public function tags()
     {
-        return $this->hasMany(Tag::class);
+        return $this->hasMany(Tag::class , 'cat_id');
     }
 
     public function groups()

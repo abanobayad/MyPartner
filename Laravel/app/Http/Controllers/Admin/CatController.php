@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Tag;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -32,7 +33,7 @@ class CatController extends Controller
         // dd($request);
         $data = $request->validate([
             'admin_id' => 'required|exists:admins,id',
-            'name' => 'required|max:20',
+            'name' => 'required|max:20|unique:categories,name',
             'image' => 'required|image|mimes:jpg,jpeg,png',
         ]);
 
@@ -52,26 +53,24 @@ class CatController extends Controller
 
     public function doCreate2(Request $request)
     {
-        dd($request->all());
-        // foreach($request->group_a as $r)
-        // {
 
-        // }
-
-
+        $data = $request->validate([
+            'admin_id' => 'required|exists:admins,id',
+            'name' => 'required|max:20|unique:categories,name',
+        ]);
         try{
-            $list = $request->group_a;
-            foreach($list as $cat)
+            for($i = 0 ; $i < count($request->name);$i++ )
             {
+                // dd($request->image[$i]);
                 $Cate = new Category();
                 $Cate->admin_id = $request->admin_id;
-                $Cate->name = $cat['name'];
-                    // Create Image In The Storage
-                    $newImgName = $cat['image']->hashName();
-                    Image::make($cat['image'])->save(public_path('uploads/Categories/' . $newImgName));
+                $Cate->name = $request->name[$i];
+                $newImgName = $request->image[$i]->hashName();
+                    Image::make($request->image[$i])->save(public_path('uploads/Categories/' . $newImgName));
                 $Cate->image = $newImgName;
                 $Cate->save();
             }
+            Alert::success('Add Completed' , 'Categories Added Successfully');
             return redirect(route('admin.cat.index'));
         }
         catch(Exception $e)
@@ -79,7 +78,6 @@ class CatController extends Controller
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
 
-        return redirect(route('admin.cat.index'));
     }
 
 

@@ -1,12 +1,7 @@
 @extends('Admin.layout')
 
 @section('content')
-<div class="row mb-0">
-<div class="col-12">
-<a  class="btn btn-sm btn-secondary mb-5" style="float: right" href="{{route('admin.report.index')}}">Back</a>
 
-</div>
-</div>
 
         <div class="card bg-light col-lg-6  col-md-12 m-auto mt-0">
             <div class="card-body">

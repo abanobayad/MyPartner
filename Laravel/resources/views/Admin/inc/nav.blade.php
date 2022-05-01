@@ -1,4 +1,6 @@
-        <!-- partial:partials/_navbar.html -->
+
+
+    <!-- partial:partials/_navbar.html -->
         <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
                 <div class="me-3">
@@ -289,7 +291,7 @@
                     <div class="collapse" id="groups">
                         <ul class="nav flex-column sub-menu">
                             <li class="nav-item"> <a class="nav-link"
-                                    href="{{ route('admin.group.create') }}">Add Group</a></li>
+                                    href="{{ route('admin.group.create1') }}">Add Group</a></li>
                             <li class="nav-item"> <a class="nav-link"
                                     href="{{ route('admin.group.index') }}">Edit Group</a></li>
                             <li class="nav-item"> <a class="nav-link"

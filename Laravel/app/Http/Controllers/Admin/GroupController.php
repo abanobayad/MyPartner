@@ -10,9 +10,10 @@ use App\Models\Tag;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Alert;
+use RealRashid\SweetAlert\Facades\Alert;
 class GroupController extends Controller
 {
+
     public function index()
     {
         $data['groups'] = Group::select()->orderBy('id', 'desc')->get();
@@ -28,10 +29,29 @@ class GroupController extends Controller
     }
 
 
+    public function create1()
+    {
+        $categories = Category::all();
+        return view('Admin.group.addGroup1', compact('categories'));
+    }
+
+    public function doCreate1($category_id)
+    {
+        $category = Category::find($category_id);
+        $tags = $category->tags()->get();
+        return view('Admin.group.addGroup2', compact('category' , 'tags'));
+
+    }
+
+
+
+
     public function doCreate(Request $request)
     {
 
         $data = $request->all();
+        $search_tag = $request->has('tag') ? $request->get('tag'):[];
+        // dd($search_tag);
 
         $s = Validator::make($data , [
             'name' => 'required|max:50',
@@ -41,8 +61,7 @@ class GroupController extends Controller
             'image' => 'required|image|mimes:jpg,jpeg,png',
             'admin_id' => 'required|exists:admins,id',
         ]);
-
-        if($s ->fails()){return back()->withErrors($s->errors())->withInput();}
+        if($s ->fails()){return back()->with('search_tag' , $search_tag)->withErrors($s->errors())->withInput();}
 
         $new_name =  $data['image']->hashName();
         Image::make($data['image'])->save(public_path('uploads/Groups/' . $new_name)); //To store Image on the server

@@ -1,8 +1,9 @@
 @extends('Admin.layout')
 
 @section('content')
-    <a class="btn btn-sm btn-secondary mb-5" style="float: right" href="{{ route('admin.cat.index') }}">Back</a>
-    <form method="POST" action="{{ route('admin.cat.doCreate') }}" enctype="multipart/form-data">
+
+
+    {{-- <form method="POST" action="{{ route('admin.cat.doCreate') }}" enctype="multipart/form-data">
         @csrf
         @include('Admin.inc.errors')
         <h6 class="mb-3">Categories / Add New Category</h6>
@@ -19,15 +20,13 @@
 
 
         <button style="float:right" type="submit" class="btn btn-secondary">Add</button>
-    </form>
+    </form> --}}
 
 
 
 
 
-
-
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-12">
             <form class="form repeater-default" method="POST" action="{{ route('admin.cat.doCreate2') }}"
                 enctype="multipart/form-data">
@@ -47,7 +46,7 @@
                             </div>
 
 
-                            {{-- Delete Button --}}
+                            {{-- Delete Button //Old End OF Comment
                             <div class="col-md-2 col-sm-12 form-group d-flex align-items-center pt-2">
                                 <button class="btn btn-danger" data-repeater-delete type="button"> <i
                                         class="mdi mdi-x"></i>
@@ -73,6 +72,47 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div> --}}
 
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <form role="form" class="form repeater-default" action="{{ route('admin.cat.doCreate2') }}" method="POST"
+                enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="admin_id" value="{{ auth()->guard('admin')->user()->id }}">
+
+
+                <div id="myRepeatingFields">
+                    <div class="entry input-group  col-lg-12 col-xs-3">
+                        <div class="row justify-content-between">
+                            <div class="col-md-4 col-sm-12 form-group">
+                                <label class="control-label" for="ourField">Category Name</label>
+                                <input class="form-control" name="name[]" type="text" placeholder="Enter Name" required />
+                            </div>
+
+                            <div class="col-md-6 col-sm-12 form-group">
+                                <label class="control-label" for="ourField">Image</label>
+                                <input class="form-control" name="image[]" type="file"  accept="image/png, image/jpg, image/jpeg" required />
+                            </div>
+
+                            <div class="col-md-2 col-sm-12 form-group d-flex align-items-center pt-2">
+                                <span class="input-group-btn pt-3">
+                                    <button type="button" class=" btn-success btn-sm btn-add">
+                                        <i class="mdi mdi-plus sm" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <input type="submit" value="Done" class="btn btn-dark sm text-light">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection

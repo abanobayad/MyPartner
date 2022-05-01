@@ -2,7 +2,6 @@
 
 @section('content')
 
-<a  class="btn btn-sm btn-secondary mb-5" style="float: right" href="{{route('admin.group.index')}}">Back</a>
 <form method="POST" action="{{route('admin.group.doCreate')}}" enctype="multipart/form-data" >
     @csrf
     @include('Admin.inc.errors')
@@ -12,11 +11,14 @@
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Enter Group Name</label>
       <input type="text" name="name" class="form-control" value="{{old('name')}}">
+      @error('name')<span class="text-danger">Group Name is required</span>@enderror
     </div>
 
     <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Enter Group Description</label>
         <input type="text" name="description" class="form-control" value="{{old('description')}}">
+        @error('description')<span class="text-danger">{{$message}}</span>@enderror
+
       </div>
 
     <div class="mb-3">
@@ -27,12 +29,16 @@
             <option class="btn btn-outline-dark" value="{{$category->id}}" > {{$category->name}} </option>
             @endforeach
         </select>
+        @error('category_id')<span class="text-danger">{{$message}}</span>@enderror
+
     </div>
 
 
     <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Upload Group Image</label>
         <input type="file" alt="Group-image" class="form-control"  name="image">
+        @error('image')<span class="text-danger">{{$message}}</span>@enderror
+
     </div>
 
 
@@ -47,6 +53,8 @@
             </div>
         @endforeach
         </div>
+        @error('tag[]')<span class="text-danger">{{$message}}</span>@enderror
+
       </div>
 
     <button style="float:right" type="submit" class="btn btn-sm btn-outline-secondary">Add</button>

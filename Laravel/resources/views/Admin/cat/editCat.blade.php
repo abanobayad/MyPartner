@@ -2,7 +2,6 @@
 
 @section('content')
 
-<a  class="btn btn-sm btn-secondary mb-5" style="float: right" href="{{route('admin.cat.index')}}">Back</a>
 <form method="POST" action="{{route('admin.cat.doEdit')}}" enctype="multipart/form-data" >
     @csrf
     @include('Admin.inc.errors')
@@ -12,13 +11,15 @@
         <input type="hidden" name="admin_id" value="{{ auth()->guard('admin')->user()->id}}">
       <label for="exampleInputEmail1" class="form-label">Enter Category Name</label>
       <input type="text" name="name" class="form-control" value="{{$cat->name}}">
+      @error('name')<span class="text-danger">Category name is required </span>@enderror
     </div>
 
     <div class="mb-3">
             <label  class="form-label">Category Current Image</label>
             <div class="col-4  mb-5">
                 <img src="{{asset('uploads/Categories').'/'.$cat->image}}" alt="{{$cat->name}}" class="mb-3 col-12">
-                <div style="float: right"><input class="form-control"  type="file" name="image" value="{{$cat->name}}"></div>
+                <div style="float: right"><input class="form-control"  type="file" name="image" accept="image/png, image/jpg, image/jpeg" value="{{$cat->name}}"></div>
+                @error('image')<span class="text-danger">{{ $message }}</span>@enderror
             </div>
     </div>
 

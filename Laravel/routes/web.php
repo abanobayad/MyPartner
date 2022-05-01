@@ -37,6 +37,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
             Route::get('/create', 'CatController@create')->name('admin.cat.create');
             Route::post('/do-create', 'CatController@doCreate')->name('admin.cat.doCreate');
             Route::post('/do-create2', 'CatController@doCreate2')->name('admin.cat.doCreate2');
+
             Route::get('/edit/{id}', 'CatController@edit')->name('admin.cat.edit');
             Route::post('/do-edit', 'CatController@doEdit')->name('admin.cat.doEdit');
             Route::get('/delete/{id}', 'CatController@delete')->name('admin.cat.delete');
@@ -60,6 +61,14 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
             Route::get('/', 'GroupController@index')->name('admin.group.index');
             Route::get('/create', 'GroupController@create')->name('admin.group.create');
             Route::post('/do-create', 'GroupController@doCreate')->name('admin.group.doCreate');
+
+
+            Route::get('/create1', 'GroupController@create1')->name('admin.group.create1');
+            Route::get('/do-create1/{id}', 'GroupController@doCreate1')->name('admin.group.doCreate1');
+
+
+
+
             Route::get('/edit/{id}', 'GroupController@edit')->name('admin.group.edit');
             Route::post('/do-edit', 'GroupController@doEdit')->name('admin.group.doEdit');
             Route::get('/delete/{id}', 'GroupController@delete')->name('admin.group.delete');
