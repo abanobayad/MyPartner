@@ -34,10 +34,10 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
         //category routes
         Route::prefix('/cat')->group(function () {
             Route::get('/', 'CatController@index')->name('admin.cat.index');
+            Route::get('/show/{id}', 'CatController@show')->name('admin.cat.show');
             Route::get('/create', 'CatController@create')->name('admin.cat.create');
             Route::post('/do-create', 'CatController@doCreate')->name('admin.cat.doCreate');
             Route::post('/do-create2', 'CatController@doCreate2')->name('admin.cat.doCreate2');
-
             Route::get('/edit/{id}', 'CatController@edit')->name('admin.cat.edit');
             Route::post('/do-edit', 'CatController@doEdit')->name('admin.cat.doEdit');
             Route::get('/delete/{id}', 'CatController@delete')->name('admin.cat.delete');
@@ -48,6 +48,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
         //tag routes
         Route::prefix('/tag')->group(function () {
             Route::get('/', 'TagController@index')->name('admin.tag.index');
+            Route::get('/show/{id}', 'TagController@show')->name('admin.tag.show');
             Route::get('/create', 'TagController@create')->name('admin.tag.create');
             Route::post('/do-create', 'TagController@doCreate')->name('admin.tag.doCreate');
             Route::get('/edit/{id}', 'TagController@edit')->name('admin.tag.edit');
@@ -59,16 +60,11 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
         //group routes
         Route::prefix('/group')->group(function () {
             Route::get('/', 'GroupController@index')->name('admin.group.index');
+            Route::get('/show/{id}', 'GroupController@show')->name('admin.group.show');
             Route::get('/create', 'GroupController@create')->name('admin.group.create');
             Route::post('/do-create', 'GroupController@doCreate')->name('admin.group.doCreate');
-
-
             Route::get('/create1', 'GroupController@create1')->name('admin.group.create1');
             Route::get('/do-create1/{id}', 'GroupController@doCreate1')->name('admin.group.doCreate1');
-
-
-
-
             Route::get('/edit/{id}', 'GroupController@edit')->name('admin.group.edit');
             Route::post('/do-edit', 'GroupController@doEdit')->name('admin.group.doEdit');
             Route::get('/delete/{id}', 'GroupController@delete')->name('admin.group.delete');

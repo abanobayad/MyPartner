@@ -26,7 +26,7 @@
             newEntry.find('input').val('');
             controlForm.find('.entry:not(:first) .btn-add')
                 .removeClass('btn-add').addClass('btn-remove')
-                .removeClass('btn-success').addClass('btn-danger')
+                .removeClass('btn-success').addClass('btn-danger').addClass('btn.lg').addClass('btn')
                 .html('');
         }).on('click', '.btn-remove', function(e) {
             e.preventDefault();

@@ -30,23 +30,37 @@
             <form role="form" action="{{ route('admin.tag.doCreate') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="admin_id" value="{{ auth()->guard('admin')->user()->id }}">
-                <div id="myRepeatingFields">
+                <div id="myRepeatingFields" >
                     <div class="entry input-group  col-lg-12 col-xs-3">
                         <div class="row justify-content-between">
                             <div class="col-md-4 col-sm-12 form-group">
                                 <label class="control-label" for="ourField">Tag Name</label>
                                 <input class="form-control" name="name[]" type="text" placeholder="Enter Name" required />
+                                @error('name')<span class="text-danger">{{$message}}</span>@enderror
+
                             </div>
 
-                            <div class="col-md-6 col-sm-12 form-group">
+                            <div class="col-md-3 mb-3">
+                                <label for="exampleInputEmail1" class="form-label ">Select Group Category</label>
+                                <select name="category_id" class="alert-dark mx-2">
+                                    @foreach ($categories as $category)
+                                    <option class="btn btn-outline-dark" value="{{$category->id}}" > {{$category->name}} </option>
+                                    @endforeach
+                                </select>
+                                @error('category_id')<span class="text-danger">{{$message}}</span>@enderror
+
+                            </div>
+
+                            <div class="col-md-3 col-sm-12 form-group">
                                 <label class="control-label" for="ourField">Image</label>
                                 <input class="form-control" name="image[]" type="file"  accept="image/png, image/jpg, image/jpeg" required />
+                                @error('image')<span class="text-danger">{{$message}}</span>@enderror
                             </div>
 
-                            <div class="col-md-2 col-sm-12 form-group d-flex align-items-center pt-2">
-                                <span class="input-group-btn pt-3">
+                            <div class="col-md-3 col-sm-12 form-group d-flex align-items-center pt-2">
+                                <span class="input-group-btn ">
                                     <button type="button" class=" btn-success btn-sm btn-add">
-                                        <i class="mdi mdi-plus sm" aria-hidden="true"></i>
+                                        <i class="mdi mdi-plus sm" ></i>
                                     </button>
                                 </span>
                             </div>

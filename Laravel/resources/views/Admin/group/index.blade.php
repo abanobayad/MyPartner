@@ -44,6 +44,8 @@
                                             class="menu-icon mdi mdi-border-color"></i></a>
                                     <a href="{{ route('admin.group.delete', $group->id) }}" class="btn-lg text-danger"><i
                                             class="menu-icon mdi mdi-delete-sweep"></i></a>
+                                    <a href="{{ route('admin.group.show', $group->id) }}" class="btn-lg text-primary"><i
+                                            class="menu-icon mdi mdi-eye"></i></a>
                                 </td>
                             </tr>
                         @endforeach

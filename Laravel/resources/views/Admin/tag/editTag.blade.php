@@ -13,6 +13,20 @@
       <label for="exampleInputEmail1" class="form-label">Enter Tag Name</label>
       <input type="text" name="name" class="form-control" value="{{$tag->name}}">
     </div>
+
+
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label ">Select Group Category</label>
+        <select name="category_id" class="alert-dark mx-2">
+            <option value="{{$tag->category->id}}">{{$tag->category->name}}</option>
+            @foreach ($categories as $category)
+            <option class="btn btn-outline-dark" value="{{$category->id}}" > {{$category->name}} </option>
+            @endforeach
+        </select>
+        @error('category_id')<span class="text-danger">{{$message}}</span>@enderror
+
+    </div>
+
     <div class="mb-3">
         <label  class="form-label">Tag Current Image</label>
         <div class="col-4  mb-5">

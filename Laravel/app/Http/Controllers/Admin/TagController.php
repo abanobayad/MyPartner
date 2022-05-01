@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Tag;
 use Exception;
@@ -19,9 +20,16 @@ class TagController extends Controller
     }
 
 
+    public function show($id)
+    {
+        $tag = Tag::find($id);
+        return view('Admin.tag.showTag' , compact('tag'));
+    }
+
     public function create()
     {
-        return view('Admin.tag.addTag');
+        $categories = Category::all();
+        return view('Admin.tag.addTag' , compact('categories'));
     }
 
 
@@ -35,6 +43,7 @@ class TagController extends Controller
                 // dd($request->image[$i]);
                 $tag = new Tag();
                 $tag->admin_id = $request->admin_id;
+                $tag->cat_id = $request->category_id;
                 $tag->name = $request->name[$i];
                 $newImgName = $request->image[$i]->hashName();
                     Image::make($request->image[$i])->save(public_path('uploads/Tags/' . $newImgName));
@@ -52,8 +61,9 @@ class TagController extends Controller
 
     public function edit($id)
     {
+        $categories  = Category::all();
         $data['tag'] = Tag::findOrfail($id);
-        return view('Admin.tag.editTag')->with($data);
+        return view('Admin.tag.editTag' , compact('categories'))->with($data);
     }
 
 
@@ -63,6 +73,7 @@ class TagController extends Controller
             'name' => 'required|max:20',
             'id' => 'required|exists:tags,id',
             'admin_id' => 'required|exists:admins,id',
+            'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|image|mimes:png,jpg,jpeg',
         ]);
 
@@ -86,6 +97,7 @@ class TagController extends Controller
                 }
         }
 
+        $data['cat_id'] = $data['category_id'];
         Tag::findOrFail($request->id)->update($data);
         return back();
         // return redirect(route('admin.tag.index'));

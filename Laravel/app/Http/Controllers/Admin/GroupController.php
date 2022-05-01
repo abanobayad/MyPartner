@@ -21,6 +21,13 @@ class GroupController extends Controller
     }
 
 
+    public function show($id)
+    {
+        $group = Group::find($id);
+        return view('Admin.group.showGroup' , compact('group'));
+    }
+
+
     public function create()
     {
         $categories = Category::all();
@@ -31,7 +38,15 @@ class GroupController extends Controller
 
     public function create1()
     {
-        $categories = Category::all();
+        $cats = Category::all();
+
+        //filter categories with no tags
+        $categories =[];
+        foreach ($cats as $cat) {
+            if($cat->tags()->first() != null)
+                array_push($categories , $cat);
+        }
+        // dd($categories);
         return view('Admin.group.addGroup1', compact('categories'));
     }
 

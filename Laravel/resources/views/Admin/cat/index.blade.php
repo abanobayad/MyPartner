@@ -15,6 +15,8 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
+                    <th scope="col">No. of related tags</th>
+                    <th scope="col">No. of related groups</th>
                     <th scope="col">Created By</th>
                     <th scope="col">Image</th>
                     <th scope="col">Actions</th>
@@ -27,6 +29,8 @@
                     <tr>
                         <th scope="row">{{ $loop->iteration }}</th>
                         <td>{{ $cat->name }}</td>
+                        <td class=" fw-bold {{$cat->tags->count() == 0 ? 'text-danger' : 'text-success'}}">{{ $cat->tags->count() }}</td>
+                        <td class=" fw-bold {{$cat->tags->count() == 0 ? 'text-danger' : 'text-success'}}">{{ $cat->groups->count() }}</td>
                         <td>{{ $cat->admin->name }}</td>
 
                         @if ($cat->image == null)
@@ -43,6 +47,8 @@
                                 class="menu-icon mdi mdi-border-color"></i></a>
                         <a href="{{ route('admin.cat.delete', $cat->id) }}" class="btn-lg text-danger"><i
                                 class="menu-icon mdi mdi-delete-sweep"></i></a>
+                        <a href="{{ route('admin.cat.show', $cat->id) }}" class="btn-lg text-primary"><i
+                                    class="menu-icon mdi mdi-eye"></i></a>
                         </td>
                     </tr>
                 @endforeach

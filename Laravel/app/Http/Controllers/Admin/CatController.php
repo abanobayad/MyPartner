@@ -27,6 +27,12 @@ class CatController extends Controller
         return view('Admin.cat.addCat');
     }
 
+    public function show($id)
+    {
+        $category = Category::find($id);
+        return view('Admin.cat.showCat' , compact('category'));
+    }
+
 
     public function doCreate(Request $request)
     {
