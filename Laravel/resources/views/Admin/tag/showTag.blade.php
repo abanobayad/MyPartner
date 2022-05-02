@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="row">
-        <div class="col-8 m-auto">
+        <div class="col-lg-8 col-md-12  m-auto">
             <div class="row">
                 <div class=" col-12 m-auto">
                     <div class="card m-auto">
                         <div class="card-body">
-                            <img class="card-img-top img-lg" style="height: 300px"
+                            <img class="card-img-top img-lg" style="height: 100%"
                                 src="{{ asset('uploads/Tags' . '/' . $tag->image) }}">
                             <h5 class="card-title">{{ $tag->name }}</h5>
                             <h6 class="card-text">Category :
@@ -17,17 +17,19 @@
                             </h6>
                             <h6 class="card-text">Number of related groups : <span
                                     class="text-success fw-bold">{{ $tag->groups->count() }}</span></h6>
+                            <a href="{{ route('admin.tag.edit', $tag->id) }}" style="float: right"
+                                class="d-flex btn btn-sm btn-outline-dark">Edit</a>
+
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12">
 
-                    <div class="card">
-                        <div class="card-body">
-
-                            @if ($tag->groups->count() != 0)
+            @if ($tag->groups->count() != 0)
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
                                 <div class="row">
                                     <h5 class="card-title">
                                         <span>
@@ -48,18 +50,13 @@
                                             </div>
                                         </div>
                                     @endforeach
-
                                 </div>
-                            @endif
-
-
+                            </div>
                         </div>
                     </div>
-
-
-
                 </div>
-            </div>
+            @endif
+
         </div>
     </div>
 @endsection

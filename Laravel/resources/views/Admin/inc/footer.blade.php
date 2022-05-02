@@ -60,8 +60,12 @@
 <footer class="footer">
     <div class="d-sm-flex justify-content-center justify-content-sm-between">
         <span class="text-muted text-center text-sm-left d-block d-sm-inline-block"> <a
-                href="https://www.bootstrapdash.com/" target="_blank" style="text-decoration: none"> <i
-                    class="mdi mdi-account-multiple">MyPartner</i> </a> </span>
+                href="http://mypartner.test/" target="_blank" style="text-decoration: none">
+                   <i class="mdi mdi-account-multiple">MyPartner</i>
+
+                   {{-- <img class="img" style="d-block ; width:10%; height:30%; object-fit:cover; float:left"
+                   src="{{ asset('images/logo/P.svg') }}" alt="Logo"> --}}
+                  </a> </span>
         <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2021. All rights
             reserved.</span>
     </div>

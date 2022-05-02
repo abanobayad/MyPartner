@@ -2,15 +2,22 @@
 
 
 @section('content')
-    <div class="row">
-        <div class="col-12">
-            <div class="text-center ">
+    <div class="row m-auto">
+        <div class="col-6 m-auto">
+
+            <div class="image mb-0 m-auto">
+                <img class="img m-auto" style="width:100%; height:100%; object-fit:cover; margin:auto"
+                    src="{{ asset('images/logo/P.svg') }}" alt="Logo">
+            </div>
+
+            {{-- <div class="text-center ">
+
                 <div class="col-lg-4 mx-auto">
                     <i class="mdi mdi-account-multiple d-block align-self-center  text-dark" style="font-size: 30px">My<span
                             style="color: darkblue">Partner</span> </i>
                     <span>Find Your Partner</span>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 
@@ -100,7 +107,8 @@
                                             <a style="text-decoration: none ; color:brown" href="#reportss">
                                                 <p class="statistics-title">Total Reports</p>
                                                 <h3 class="rate-percentage">{{ $data['reports_count'] }}</h3>
-                                                <p class="text-danger d-flex"><i class="mdi mdi-comment-question-outline"></i>
+                                                <p class="text-danger d-flex"><i
+                                                        class="mdi mdi-comment-question-outline"></i>
                                             </a>
                                             </p>
                                         </div>
@@ -155,7 +163,8 @@
                                         <div class="card bg-success card-rounded pb-2">
                                             <div class="card-body pb-0">
                                                 <h4 class="card-title card-title-dash text-white mb-4">{{ $cat->name }}
-                                                    <i class="mdi mdi-chart-pie"></i></h4>
+                                                    <i class="mdi mdi-chart-pie"></i>
+                                                </h4>
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <p class="status-summary-ight-white mb-1">
@@ -163,7 +172,8 @@
                                                         </p>
                                                         <p class="status-summary-ight-white mb-1 d-inline">Number of Groups
                                                             :</p>
-                                                        <h2 class="text-light d-inline mb-2 "> {{ $cat->groups->count() }}
+                                                        <h2 class="text-light d-inline mb-2 ">
+                                                            {{ $cat->groups->count() }}
                                                         </h2>
                                                     </div>
                                                 </div>
@@ -202,7 +212,8 @@
                                         <div class="card bg-dark card-rounded pb-2">
                                             <div class="card-body pb-0">
                                                 <h4 class="card-title card-title-dash text-white mb-4">{{ $tag->name }}
-                                                    <i class="mdi mdi-chart-pie"></i></h4>
+                                                    <i class="mdi mdi-chart-pie"></i>
+                                                </h4>
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <p class="status-summary-ight-white mb-1">
@@ -210,7 +221,8 @@
                                                         </p>
                                                         <p class="status-summary-ight-white mb-1 d-inline">Number of Groups
                                                             with this tag :</p>
-                                                        <h2 class="text-light d-inline mb-2 "> {{ $tag->groups->count() }}
+                                                        <h2 class="text-light d-inline mb-2 ">
+                                                            {{ $tag->groups->count() }}
                                                         </h2>
                                                     </div>
                                                 </div>
@@ -247,8 +259,10 @@
                                     <div class="col-md-6 col-lg-4 grid-margin stretch-card">
                                         <div class="card bg-primary card-rounded pb-2">
                                             <div class="card-body pb-0">
-                                                <h4 class="card-title card-title-dash text-white mb-4">{{ $group->name }}
-                                                    <i class="mdi mdi-group"></i></h4>
+                                                <h4 class="card-title card-title-dash text-white mb-4">
+                                                    {{ $group->name }}
+                                                    <i class="mdi mdi-group"></i>
+                                                </h4>
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <p class="status-summary-ight-white mb-1">
@@ -256,7 +270,8 @@
                                                         </p>
                                                         <p class="status-summary-ight-white mb-1 d-inline">Number of Posts
                                                             :</p>
-                                                        <h2 class="text-info d-inline mb-2 "> {{ $group->posts->count() }}
+                                                        <h2 class="text-info d-inline mb-2 ">
+                                                            {{ $group->posts->count() }}
                                                         </h2>
                                                     </div>
                                                 </div>
@@ -279,7 +294,8 @@
                                         <div class="card card-body bg-light ">
                                             <p class="statistics-title">Total Reports</p>
                                             <h3 class="rate-percentage">{{ $data['reports_count'] }}</h3>
-                                            <p class="text-warning text-center pt-2"><i class="mdi  mdi-comment-question-outline"></i></p>
+                                            <p class="text-warning text-center pt-2"><i
+                                                    class="mdi  mdi-comment-question-outline"></i></p>
                                         </div>
                                     </div>
                                 </div>
@@ -291,11 +307,14 @@
                                     <div class="card bg-primary card-rounded pb-2">
                                         <div class="card-body pb-0">
                                             <h4 class="card-title card-title-dash text-white mb-4">All Reports
-                                                <i class="mdi  mdi-comment-question-outline"></i></h4>
+                                                <i class="mdi  mdi-comment-question-outline"></i>
+                                            </h4>
                                             <div class="row">
                                                 <div class="col-sm-12">
-                                                    <p class="status-summary-ight-white mb-1 d-inline">Number of Reports: </p>
-                                                    <h2 class="text-info text-center d-inline mb-2 "> {{$data['reports_count'] }}
+                                                    <p class="status-summary-ight-white mb-1 d-inline">Number of Reports:
+                                                    </p>
+                                                    <h2 class="text-info text-center d-inline mb-2 ">
+                                                        {{ $data['reports_count'] }}
                                                     </h2>
                                                 </div>
                                             </div>
@@ -307,11 +326,14 @@
                                     <div class="card bg-danger card-rounded pb-2">
                                         <div class="card-body pb-0">
                                             <h4 class="card-title card-title-dash text-white mb-4">Not Handled
-                                                <i class="mdi  mdi-comment-question-outline"></i></h4>
+                                                <i class="mdi  mdi-comment-question-outline"></i>
+                                            </h4>
                                             <div class="row">
                                                 <div class="col-sm-12">
-                                                    <p class="status-summary-ight-white mb-1 d-inline">Number of Reports: </p>
-                                                    <h2 class="text-light d-inline mb-2 "> {{$data['not_h_reports']->count() }}
+                                                    <p class="status-summary-ight-white mb-1 d-inline">Number of Reports:
+                                                    </p>
+                                                    <h2 class="text-light d-inline mb-2 ">
+                                                        {{ $data['not_h_reports']->count() }}
                                                     </h2>
                                                 </div>
                                             </div>
@@ -323,11 +345,14 @@
                                     <div class="card bg-success card-rounded pb-2">
                                         <div class="card-body pb-0">
                                             <h4 class="card-title card-title-dash text-white mb-4">Handled
-                                                <i class="mdi  mdi-comment-question-outline"></i></h4>
+                                                <i class="mdi  mdi-comment-question-outline"></i>
+                                            </h4>
                                             <div class="row">
                                                 <div class="col-sm-12">
-                                                    <p class="status-summary-ight-white mb-1 d-inline">Number of Reports: </p>
-                                                    <h2 class="text-light d-inline mb-2 "> {{$data['h_reports']->count() }}
+                                                    <p class="status-summary-ight-white mb-1 d-inline">Number of Reports:
+                                                    </p>
+                                                    <h2 class="text-light d-inline mb-2 ">
+                                                        {{ $data['h_reports']->count() }}
                                                     </h2>
                                                 </div>
                                             </div>
@@ -348,8 +373,8 @@
                                     <div class="statistics-details d-flex align-items-center justify-content-between">
                                         <div class="card card-body bg-light ">
                                             <p class="statistics-title">
-                                                <a href="{{route('admin.contact.index')}}" style="text-decoration: none">
-                                                Total Contacts
+                                                <a href="{{ route('admin.contact.index') }}" style="text-decoration: none">
+                                                    Total Contacts
                                                 </a>
                                             </p>
                                             <h3 class="rate-percentage">{{ $data['contacts_count'] }}</h3>
@@ -366,19 +391,24 @@
                                         <div class="card bg-warning card-rounded pb-2">
                                             <div class="card-body pb-0">
                                                 <h4 class="card-title card-title-dash text-white mb-4">
-                                                    <a href="{{route('admin.user.show' , $contact->user->id)}}" style="text-decoration: none">
+                                                    <a href="{{ route('admin.user.show', $contact->user->id) }}"
+                                                        style="text-decoration: none">
                                                         {{ $contact->user->name }}
                                                     </a>
-                                                    <i class="mdi mdi-phone"></i></h4>
+                                                    <i class="mdi mdi-phone"></i>
+                                                </h4>
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <p class="status-summary-ight-white mb-1">
                                                             {{ $contact->created_at->diffForHumans() }}
                                                         </p>
-                                                        <a href="{{route('admin.contact.show' , $contact->id)}}" style="text-decoration: none">
-                                                        <p class="status-summary-ight-white mb-1 d-inline">Subject of Contact: </p>
-                                                        <p class="text-dark d-inline mb-2 "> {{ $contact->subject }}    </p>
-                                                    </a>
+                                                        <a href="{{ route('admin.contact.show', $contact->id) }}"
+                                                            style="text-decoration: none">
+                                                            <p class="status-summary-ight-white mb-1 d-inline">Subject of
+                                                                Contact: </p>
+                                                            <p class="text-dark d-inline mb-2 "> {{ $contact->subject }}
+                                                            </p>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -391,7 +421,7 @@
                         </div>
 
 
-                        {{-- Users  --}}
+                        {{-- Users --}}
                         <div class="tab-pane fade show " id="userss" role="tabpanel" aria-labelledby="userss">
                             <h4 class="text-muted pb-1">Users</h4>
                             <div class="row">
@@ -399,8 +429,8 @@
                                     <div class="statistics-details d-flex align-items-center justify-content-between">
                                         <div class="card card-body bg-light ">
                                             <p class="statistics-title">
-                                                <a href="{{route('admin.user.index')}}" style="text-decoration: none">
-                                                Total Users
+                                                <a href="{{ route('admin.user.index') }}" style="text-decoration: none">
+                                                    Total Users
                                                 </a>
                                             </p>
                                             <h3 class="rate-percentage">{{ $data['users_count'] }}</h3>
@@ -417,10 +447,12 @@
                                         <div class="card bg-info card-rounded pb-2">
                                             <div class="card-body pb-0">
                                                 <h4 class="card-title card-title-dash text-white mb-4">
-                                                    <a href="{{route('admin.user.show' , $user->id)}}" style="text-decoration: none">
+                                                    <a href="{{ route('admin.user.show', $user->id) }}"
+                                                        style="text-decoration: none">
                                                         {{ $user->name }}
                                                     </a>
-                                                    <i class="mdi mdi-account"></i></h4>
+                                                    <i class="mdi mdi-account"></i>
+                                                </h4>
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <p class="status-summary-ight-white mb-1">

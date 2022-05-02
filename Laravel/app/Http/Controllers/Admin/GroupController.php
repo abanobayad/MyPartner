@@ -155,8 +155,9 @@ class GroupController extends Controller
         $imgName = Group::findOrfail($id)->image;
         Storage::disk('uploads')->delete('Groups/'. $imgName);
         $group = Group::findOrfail($id);
+        $group_name = Group::findOrfail($id)->name;
         $group->delete();
-        Alert::success('Delete Completed', 'Group '.$group->name .' Deleted Successfully');
+        Alert::success('Delete Completed', 'Group '.$group_name .' Deleted Successfully');
         return redirect(route('admin.group.index'));
     }
 }

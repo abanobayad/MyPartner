@@ -135,10 +135,12 @@ class CatController extends Controller
 
     public function delete($id)
     {
-        $ca = Category::findOrfail($id);
-        Alert::success('Delete Completed', 'Category '.$ca->name .' Deleted Successfully');
+        $cat = Category::findOrfail($id);
+        $cat_name = Category::findOrfail($id);
+        $cat->delete();
 
-        $ca->delete();
+        Alert::success('Delete Completed', 'Category '.$cat_name .' Deleted Successfully');
+
         return redirect(route('admin.cat.index'));
     }
 }

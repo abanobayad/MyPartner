@@ -98,7 +98,10 @@ class TagController extends Controller
         }
 
         $data['cat_id'] = $data['category_id'];
-        Tag::findOrFail($request->id)->update($data);
+        $tag = Tag::findOrFail($request->id)->update($data);
+        $tag = Tag::findOrFail($request->id);
+        Alert::success('Edit Completed', 'Tag '.$tag->name .' Edit Successfully');
+
         return back();
         // return redirect(route('admin.tag.index'));
     }
@@ -106,8 +109,9 @@ class TagController extends Controller
 
     public function delete($id)
     {
-
+        $tag_name = Tag::findOrfail($id)->name;
         Tag::findOrfail($id)->delete();
+        Alert::success('Delete Completed', 'Tag '. $tag_name .' Deleted Successfully');
         return redirect(route('admin.tag.index'));
     }
 }

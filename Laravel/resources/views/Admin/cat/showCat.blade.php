@@ -2,29 +2,34 @@
 
 @section('content')
     <div class="row">
-        <div class="col-8 m-auto">
+        <div class="col-lg-8 col-md-12  m-auto">
             <div class="row">
                 <div class=" col-12 m-auto">
                     <div class="card m-auto">
                         <div class="card-body">
-                            <img class="card-img-top img-lg" style="height: 300px"
+
+
+                            <img class="card-img-top img-lg" style="height: 100%"
                                 src="{{ asset('uploads/Categories' . '/' . $category->image) }}">
                             <h5 class="card-title">{{ $category->name }}</h5>
                             <h6 class="card-text">Number of related tags : <span
                                     class="text-success fw-bold">{{ $category->tags->count() }}</span></h6>
                             <h6 class="card-text">Number of related groups : <span
                                     class="text-primary fw-bold">{{ $category->groups->count() }}</span></h6>
+                            <a href="{{ route('admin.cat.edit', $category->id) }}" style="float: right"
+                                class="d-flex btn btn-sm btn-outline-dark">Edit</a>
+
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12">
+            @if ($category->groups->count() != 0)
+                <div class="row">
+                    <div class="col-12">
 
-                    <div class="card">
-                        <div class="card-body">
+                        <div class="card">
+                            <div class="card-body">
 
-                            @if ($category->groups->count() != 0)
                                 <div class="row">
                                     <h5 class="card-title">
                                         <span>
@@ -49,51 +54,51 @@
                                     @endforeach
 
                                 </div>
-                            @endif
 
 
+
+                            </div>
                         </div>
-                    </div>
+            @endif
+            @if ($category->tags->count() != 0)
+                <div class="card">
+                    <div class="card-body">
 
+                        <div class="row">
+                            <h5 class="card-title">
+                                <span>
+                                    <i class="mdi mdi-tag text-success"> Related Tags :</i>
+                                </span>
+                            </h5>
+                            {{-- Fetch tags --}}
+                            @foreach ($category->tags as $tag)
+                                <div class="col-lg-4 col-xs-6 mb-2">
+                                    <div class="card h-70 my-0 ">
+                                        <div class="card-body my-0">
+                                            <a href="{{ route('admin.tag.show', $tag->id) }}"
+                                                style="text-decoration: none">
 
-                    <div class="card">
-                        <div class="card-body">
+                                                <p class="card-text text-success ">{{ $tag->name }}</p>
 
-                            @if ($category->tags->count() != 0)
-                                <div class="row">
-                                    <h5 class="card-title">
-                                        <span>
-                                            <i class="mdi mdi-tag text-success"> Related Tags :</i>
-                                        </span>
-                                    </h5>
-                                    {{-- Fetch tags --}}
-                                    @foreach ($category->tags as $tag)
-                                        <div class="col-lg-4 col-xs-6 mb-2">
-                                            <div class="card h-70 my-0 ">
-                                                <div class="card-body my-0">
-                                                    <a href="{{ route('admin.tag.show', $tag->id) }}"
-                                                        style="text-decoration: none">
+                                            </a>
 
-                                                        <p class="card-text text-success ">{{ $tag->name }}</p>
-
-                                                    </a>
-
-                                                </div>
-                                            </div>
                                         </div>
-                                    @endforeach
-
+                                    </div>
                                 </div>
-                            @endif
-
+                            @endforeach
 
                         </div>
+
+
                     </div>
-
-
-
                 </div>
-            </div>
+
+
+
         </div>
+    </div>
+    @endif
+
+    </div>
     </div>
 @endsection

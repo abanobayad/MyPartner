@@ -9,6 +9,7 @@
             <div class="col-md-12">
                 <input class="form-control opacity-50 " id="myInput" type="text" placeholder="Search Table">
                 <br>
+                <div class="table-responsive">
                 <table class="table text-center">
                     <thead>
                         <tr>
@@ -52,6 +53,7 @@
                         {{-- End Fetch Data --}}
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
     </div>

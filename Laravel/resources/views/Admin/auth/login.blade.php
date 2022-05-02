@@ -35,10 +35,14 @@
                     <div class="brand-logo text-center">
                     @include('Admin.inc.errors')
                     </div>
-                  <div class="brand-logo text-center">
-                    <i class="mdi mdi-account-multiple">MyPartner</i>
+                  <div class="brand-logo text-center mb-0">
+                    <div class="image mb-0">
+                        <img class="img" style="d-block ; width:100%; height:100%; object-fit:cover;"
+                            src="{{ asset('images/logo/P.svg') }}" alt="Logo">
+                    </div>
+                    {{-- <i class="mdi mdi-account-multiple">MyPartner</i>
                     <br>
-                    <span>Find Your Partner</span>
+                    <span>Find Your Partner</span> --}}
 
                   </div>
                   <h4>Hello! let's get started</h4>

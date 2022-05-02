@@ -11,12 +11,12 @@
                 </div>
                 <div>
                     <a class="navbar-brand brand-logo" href="{{ route('admin.home') }}">
-                        {{-- <img src="{{ asset('images') }}/logo.svg" alt="logo" /> --}}
-                        <i class="mdi mdi-account-search"><span class="text-dark">My</span>Partner</i>
+                        <img src="{{ asset('images/logo/P.svg') }}" alt="logo"  style="width: 100%; height: 100%; object-fit: cover;"/>
+                        {{-- <i class="mdi mdi-account-search"><span class="text-dark">My</span>Partner</i> --}}
                     </a>
                     <a class="navbar-brand brand-logo-mini" href="{{ route('admin.home') }}">
                         {{-- <i>MyPartner</i> --}}
-                        <img src="{{ asset('images/back.png') }}" alt="logo" />
+                        <img src="{{ asset('images/logo/B.png')}}" style="width: 100%; height: 100%; object-fit: cover;" alt="logo" />
                     </a>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                 <ul class="navbar-nav ms-auto">
 
                     {{-- Select Box Start --}}
-                    <li class="nav-item dropdown d-none d-lg-block">
+                    {{-- <li class="nav-item dropdown d-none d-lg-block">
                         <a class="nav-link dropdown-bordered dropdown-toggle dropdown-toggle-split" id="messageDropdown"
                             href="#" data-bs-toggle="dropdown" aria-expanded="false"> Select Category </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0"
@@ -70,7 +70,12 @@
                                 </div>
                             </a>
                         </div>
-                    </li>
+                    </li> --}}
+                    {{-- <li class="nav-item dropdown d-none d-lg-block">
+
+                        <img class="img" style="d-block ; width:30%; height:50%; object-fit:cover;float:right"
+                            src="{{ asset('images/logo/P.svg') }}" alt="Logo">
+                    </li> --}}
                     {{-- Select Box End --}}
 
                     {{-- Search Icon Start --}}
