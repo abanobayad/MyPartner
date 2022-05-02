@@ -44,6 +44,18 @@ class User extends Authenticatable
      return $this->hasMany(Post::class);
     }
 
+    public function interests()
+    {
+     return $this->hasMany(Interest::class  , 'user_id');
+    }
+
+    public function intrest_cat()
+    {
+        return $this->belongsToMany(Category::class , 'interests' ,  'user_id' ,'category_id'  );
+    }
+
+
+
 
     public function contacts()
     {

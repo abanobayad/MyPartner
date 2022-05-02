@@ -5,16 +5,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::namespace('App\Http\Controllers\API')->group(function () {
 
-//Auth Routes "without middleware of sanctum Auth"
+    //Auth Routes "without middleware of sanctum Auth"
     Route::post('/register', 'AuthController@register')->name('reg');
     Route::post('/login', 'AuthController@login')->name('login');
     Route::post('password/email', 'ForgotPasswordController@forgot');
     Route::post('password/reset', 'ForgotPasswordController@reset');
 
 
-//Start Middlewares
+    //Start Middlewares
     Route::middleware(['auth:sanctum', 'api'])->group(function () {      //Middleware of Auth and Ban
-//Profile
+        //Profile
         Route::prefix('/profile')->group(function () {
             Route::get('/', 'ProfileController@index');                 //Show All Profiles for handle
             Route::get('/show/{id}', 'ProfileController@GET');          //Show Profile of Specific User with his ID
@@ -23,13 +23,20 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
             Route::get('/delete/{id}', 'ProfileController@DELETE');     //Delete Profile of Specific User with his user ID
             Route::get('/{id}', 'ProfileController@UserAcc');   //Show Profile & Posts of  User with his user ID
         });
-//Account
-Route::prefix('/account')->group(function () {
-    Route::get('/', 'AccountController@myAccount');
-    Route::get('/{user_id}', 'AccountController@guestAccount');
-});
+        //Account
+        Route::prefix('/account')->group(function () {
+            Route::get('/', 'AccountController@myAccount');
+            Route::get('/{user_id}', 'AccountController@guestAccount');
+        });
 
-//Post
+        //Interests
+        Route::prefix('/interest')->group(function () {
+            Route::post('/make', 'InterestController@make');
+            Route::get('/show', 'InterestController@show');
+        });
+
+
+        //Post
         Route::prefix('/post')->group(function () {
             Route::get('/', 'PostController@index');                //Show All Posts For Handle
             Route::post('/add', 'PostController@ADD');              //Add new Post
@@ -40,7 +47,9 @@ Route::prefix('/account')->group(function () {
             Route::get('/unsave-post/{id}', 'PostController@UnSavePost');         //Show Post and comments and replies with its ID
             Route::get('/show-saved-posts', 'PostController@showSaved');         //Show Post and comments and replies with its ID
         });
-//group
+
+
+        //group
         Route::prefix('/group')->group(function () {
             Route::get('/', 'GroupController@index');                //Show All Posts For Handle
             Route::get('/show/{id}', 'GroupController@show')->name('showGroup');         //Show Post and comments and replies with its ID
@@ -48,11 +57,17 @@ Route::prefix('/account')->group(function () {
             Route::get('/unfav-group/{id}', 'GroupController@UnFavGroup');         //Show Post and comments and replies with its ID
             Route::get('/show-fav-group', 'GroupController@showFav');         //Show Post and comments and replies with its ID
         });
-//Search
+
+
+        //Search
         Route::prefix('/search')->group(function () {
-        Route::post('/groups', 'SearchBarController@GroupSearch');              //Add new Post
+            Route::post('/homepage', 'SearchBarController@HomepageSearch');
+            Route::post('/profile/{id}', 'SearchBarController@ProfilePostSearch'); //Add User Id
+            Route::post('/group/{id}', 'SearchBarController@GroupPostSearch');     //Add Group Id
         });
-//Req
+
+
+        //Request
         Route::prefix('/request')->group(function () {
             Route::get('/', 'ReqController@index');                   //show all requests of Auth user
             Route::get('/show/{p_id}/{r_id}', 'ReqController@showReq')->name('showRequest');
@@ -61,32 +76,42 @@ Route::prefix('/account')->group(function () {
             Route::get('rejectRequest/{post_id}/{requester_id}', 'ReqController@rejectRequest')->name('rejectRequest');
             Route::get('deleteRequest/{post_id}/{requester_id}', 'ReqController@deleteRequest')->name('deleteRequest');
         });
-//Notifications
+
+
+        //Notifications
         Route::prefix('/notify')->group(function () {
             Route::get('/markAllRead', 'NotificationController@readAll');
             Route::get('/markRead/{id}', 'NotificationController@read');
             Route::get('/get', 'NotificationController@GET');
             Route::get('/getAll', 'NotificationController@GetAll');
         });
-//Comments
+
+
+        //Comments
         Route::prefix('/comment')->group(function () {
             Route::post('/add', 'CommentController@comment');                   //add NEW comment
             Route::post('/edit/{c_id}', 'CommentController@edit');              //Edit OLD Comment "Send Comment ID"
             Route::post('/delete/{c_id}', 'CommentController@DELETE');          //delete Comment "Send Comment ID"
         });
-//Replies
+
+
+        //Replies
         Route::prefix('/reply')->group(function () {
             Route::post('/add', 'ReplyController@make');                      //add NEW Reply
             Route::post('/edit/{r_id}', 'ReplyController@edit');              //Edit OLD Reply "Send Reply ID"
             Route::post('/delete/{r_id}', 'ReplyController@DELETE');          //delete Reply "Send Reply ID"
         });
-//Category
+
+
+        //Category
         Route::prefix('/category')->group(function () {
             Route::get('/show', 'CategoryController@show');
-            Route::get('/getByCat/{id}', 'CategoryController@GetGroupsByCategory');              //Add new Post
+            Route::get('/getByCat/{id}', 'CategoryController@GetGroupsByCategory');
 
         });
-//Rate
+
+
+        //Rate
         Route::prefix('/rate')->group(function () {
             Route::get('/myRate', 'RateController@myRate');              //Show user rates
             Route::get('/get/{id}', 'RateController@GET');               //Show rates of Specific User with his ID
@@ -96,17 +121,23 @@ Route::prefix('/account')->group(function () {
             Route::get('/delete/{id}', 'RateController@DELETE');     //Delete specific rate
             Route::get('/make/{id}', 'RateController@make');
         });
-//Report
+
+
+        //Report
         Route::prefix('/report')->group(function () {
             Route::post('/add', 'ReportController@ADD');                        //make new report
             Route::post('/edit/{id}', 'ReportController@EDIT');                 //Edit Specific report
             Route::get('/delete/{id}', 'ReportController@DELETE');              //Delete specific report
         });
-//Contact
+
+
+        //Contact
         Route::prefix('/contact')->group(function () {
             Route::post('/add', 'ContactController@ADD');                        //make new report
         });
-//Chat
+
+
+        //Chat
         Route::prefix('/chat')->group(function () {
             Route::get('/conversation/{user_id}', 'ChatController@conversation')->name('conversation');
             Route::post('/send_message/{user_id}', 'ChatController@send_message')->name('send_message');
@@ -114,7 +145,9 @@ Route::prefix('/account')->group(function () {
             Route::get('/delete_conversation/{user_id}', 'ChatController@delete_conversation')->name('delete_conversation');
             Route::get('/my_chats', 'ChatController2@my_chats')->name('my_chats');
         });
-//Logout
+
+
+        //Logout
         Route::post('/logout', 'AuthController@logout');
     });
 });
