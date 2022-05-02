@@ -80,7 +80,7 @@
                                     <div class="statistics-details d-flex align-items-center justify-content-between">
 
                                         <div>
-                                            <a style="text-decoration: none ; color:brown" href="#catss">
+                                            <a href="{{ route('admin.cat.index') }}" style="text-decoration: none">
                                                 <p class="statistics-title">Total Categories</p>
                                                 <h3 class="rate-percentage">{{ $data['categories_count'] }}</h3>
                                                 <p class="text-danger d-flex"><i class="mdi mdi-chart-pie"></i></p>
@@ -88,7 +88,7 @@
                                         </div>
 
                                         <div>
-                                            <a style="text-decoration: none ; color:brown" href="#tagss">
+                                            <a href="{{ route('admin.tag.index') }}" style="text-decoration: none">
                                                 <p class="statistics-title">Total Tags</p>
                                                 <h3 class="rate-percentage">{{ $data['tags_count'] }}</h3>
                                                 <p class="text-danger d-flex"><i class="mdi mdi-tag-multiple"></i></p>
@@ -96,26 +96,25 @@
                                         </div>
 
                                         <div>
-                                            <a style="text-decoration: none ; color:brown" href="#groupss">
+                                            <a href="{{ route('admin.group.index') }}" style="text-decoration: none">
                                                 <p class="statistics-title">Total Groups</p>
                                                 <h3 class="rate-percentage">{{ $data['groups_count'] }}</h3>
                                                 <p class="text-danger d-flex"><i class="mdi mdi-group"></i></p>
                                             </a>
                                         </div>
 
+
                                         <div>
-                                            <a style="text-decoration: none ; color:brown" href="#reportss">
+                                            <a href="{{ route('admin.report.index') }}" style="text-decoration: none">
                                                 <p class="statistics-title">Total Reports</p>
-                                                <h3 class="rate-percentage">{{ $data['reports_count'] }}</h3>
+                                                <h3 class="rate-percentage">{{ $data['groups_count'] }}</h3>
                                                 <p class="text-danger d-flex"><i
-                                                        class="mdi mdi-comment-question-outline"></i>
+                                                        class="mdi mdi-comment-question-outline"></i></p>
                                             </a>
-                                            </p>
                                         </div>
 
-
                                         <div>
-                                            <a style="text-decoration: none ; color:brown" href="#contactss">
+                                            <a href="{{ route('admin.contact.index') }}" style="text-decoration: none">
                                                 <p class="statistics-title">Total Contacts</p>
                                                 <h3 class="rate-percentage">{{ $data['contacts_count'] }}</h3>
                                                 <p class="text-danger d-flex"><i class="mdi mdi-star-outline"></i></p>
@@ -125,7 +124,7 @@
 
 
                                         <div>
-                                            <a style="text-decoration: none ; color:brown" href="#userss">
+                                            <a href="{{ route('admin.user.index') }}" style="text-decoration: none">
                                                 <p class="statistics-title">Total Users</p>
                                                 <h3 class="rate-percentage">{{ $data['users_count'] }}</h3>
                                                 <p class="text-danger d-flex"><i class="mdi mdi-account"></i></p>
@@ -146,7 +145,9 @@
                                 <div class="col-lg-3 m-auto text-center col-sm-12">
                                     <div class="statistics-details d-flex align-items-center justify-content-between">
                                         <div class="card card-body bg-light ">
-                                            <p class="statistics-title">Total Categories</p>
+                                            <a href="{{ route('admin.cat.index') }}" style="text-decoration: none">
+                                                <p class="statistics-title">Total Categories</p>
+                                            </a>
                                             <h3 class="rate-percentage">{{ $data['categories_count'] }}</h3>
                                             <p class="text-success text-center pt-2"><i class="mdi mdi-chart-pie"></i></p>
                                         </div>
@@ -162,9 +163,13 @@
                                     <div class="col-md-6 col-lg-4 grid-margin stretch-card">
                                         <div class="card bg-success card-rounded pb-2">
                                             <div class="card-body pb-0">
-                                                <h4 class="card-title card-title-dash text-white mb-4">{{ $cat->name }}
-                                                    <i class="mdi mdi-chart-pie"></i>
-                                                </h4>
+                                                <a href="{{ route('admin.cat.show', $cat->id) }}"
+                                                    style="text-decoration: none">
+                                                    <h4 class="card-title card-title-dash text-white mb-4">
+                                                        {{ $cat->name }}
+                                                        <i class="mdi mdi-chart-pie"></i>
+                                                    </h4>
+                                                </a>
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <p class="status-summary-ight-white mb-1">
@@ -195,7 +200,9 @@
                                 <div class="col-lg-3 m-auto text-center col-sm-12">
                                     <div class="statistics-details d-flex align-items-center justify-content-between">
                                         <div class="card card-body bg-light ">
-                                            <p class="statistics-title">Total Tags</p>
+                                            <a href="{{ route('admin.tag.index') }}" style="text-decoration: none">
+                                                <p class="statistics-title">Total Tags</p>
+                                            </a>
                                             <h3 class="rate-percentage">{{ $data['tags_count'] }}</h3>
                                             <p class="text-dark text-center pt-2"><i class="mdi mdi-tag"></i></p>
                                         </div>
@@ -211,9 +218,13 @@
                                     <div class="col-md-6 col-lg-4 grid-margin stretch-card">
                                         <div class="card bg-dark card-rounded pb-2">
                                             <div class="card-body pb-0">
-                                                <h4 class="card-title card-title-dash text-white mb-4">{{ $tag->name }}
-                                                    <i class="mdi mdi-chart-pie"></i>
-                                                </h4>
+                                                <a href="{{ route('admin.tag.show', $tag->id) }}"
+                                                    style="text-decoration: none">
+                                                    <h4 class="card-title card-title-dash text-white mb-4">
+                                                        {{ $tag->name }}
+                                                        <i class="mdi mdi-chart-pie"></i>
+                                                    </h4>
+                                                </a>
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <p class="status-summary-ight-white mb-1">
@@ -245,7 +256,10 @@
                                 <div class="col-lg-3 m-auto text-center col-sm-12">
                                     <div class="statistics-details d-flex align-items-center justify-content-between">
                                         <div class="card card-body bg-light ">
-                                            <p class="statistics-title">Total Groups</p>
+
+                                            <a href="{{ route('admin.group.index') }}" style="text-decoration: none">
+                                                <p class="statistics-title">Total Groups</p>
+                                            </a>
                                             <h3 class="rate-percentage">{{ $data['groups_count'] }}</h3>
                                             <p class="text-info text-center pt-2"><i class="mdi mdi-group"></i></p>
                                         </div>
@@ -259,10 +273,13 @@
                                     <div class="col-md-6 col-lg-4 grid-margin stretch-card">
                                         <div class="card bg-primary card-rounded pb-2">
                                             <div class="card-body pb-0">
-                                                <h4 class="card-title card-title-dash text-white mb-4">
-                                                    {{ $group->name }}
-                                                    <i class="mdi mdi-group"></i>
-                                                </h4>
+                                                <a href="{{ route('admin.group.show', $group->id) }}"
+                                                    style="text-decoration: none">
+                                                    <h4 class="card-title card-title-dash text-white mb-4">
+                                                        {{ $group->name }}
+                                                        <i class="mdi mdi-group"></i>
+                                                    </h4>
+                                                </a>
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <p class="status-summary-ight-white mb-1">
@@ -292,7 +309,9 @@
                                 <div class="col-lg-3 m-auto text-center col-sm-12">
                                     <div class="statistics-details d-flex align-items-center justify-content-between">
                                         <div class="card card-body bg-light ">
-                                            <p class="statistics-title">Total Reports</p>
+                                            <a href="{{ route('admin.report.index') }}" style="text-decoration: none">
+                                                <p class="statistics-title">Total Reports</p>
+                                            </a>
                                             <h3 class="rate-percentage">{{ $data['reports_count'] }}</h3>
                                             <p class="text-warning text-center pt-2"><i
                                                     class="mdi  mdi-comment-question-outline"></i></p>
@@ -306,9 +325,11 @@
                                 <div class="col-md-6 col-lg-4 grid-margin stretch-card">
                                     <div class="card bg-primary card-rounded pb-2">
                                         <div class="card-body pb-0">
-                                            <h4 class="card-title card-title-dash text-white mb-4">All Reports
-                                                <i class="mdi  mdi-comment-question-outline"></i>
-                                            </h4>
+                                            <a href="{{ route('admin.report.index') }}" style="text-decoration: none">
+                                                <h4 class="card-title card-title-dash text-white mb-4">All Reports
+                                                    <i class="mdi  mdi-comment-question-outline"></i>
+                                                </h4>
+                                            </a>
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <p class="status-summary-ight-white mb-1 d-inline">Number of Reports:
@@ -373,7 +394,8 @@
                                     <div class="statistics-details d-flex align-items-center justify-content-between">
                                         <div class="card card-body bg-light ">
                                             <p class="statistics-title">
-                                                <a href="{{ route('admin.contact.index') }}" style="text-decoration: none">
+                                                <a href="{{ route('admin.contact.index') }}"
+                                                    style="text-decoration: none">
                                                     Total Contacts
                                                 </a>
                                             </p>

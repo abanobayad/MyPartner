@@ -23,6 +23,8 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
             Route::get('/delete/{id}', 'ProfileController@DELETE');     //Delete Profile of Specific User with his user ID
             Route::get('/{id}', 'ProfileController@UserAcc');   //Show Profile & Posts of  User with his user ID
         });
+
+        
         //Account
         Route::prefix('/account')->group(function () {
             Route::get('/', 'AccountController@myAccount');

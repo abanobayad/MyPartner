@@ -7,9 +7,13 @@
                 <div class=" col-12 m-auto">
                     <div class="card m-auto">
                         <div class="card-body">
+
+                            <h4 class="fw-bold text-muted mb-3">
+                                <i class="mdi mdi-group"></i>
+                                {{ $group->name }}</h4>
+
                             <img class="card-img-top img-lg" style="height: 100%"
                                 src="{{ asset('uploads/Groups' . '/' . $group->image) }}">
-                            <h5 class="card-title">{{ $group->name }}</h5>
                             <h6 class="card-text">Category :
                                 <a href="{{ route('admin.cat.show', $group->category->id) }}"
                                     style="text-decoration: none">
@@ -18,17 +22,17 @@
                             </h6>
                             <h6 class="card-text">Number of related tags : <span
                                     class="text-success fw-bold">{{ $group->tags->count() }}</span></h6>
-                                    <a href="{{route('admin.group.edit' , $group->id)}}" style="float: right" class="d-flex btn btn-sm btn-outline-dark">Edit</a>
+                            <a href="{{ route('admin.group.edit', $group->id) }}" style="float: right"
+                                class="d-flex btn btn-sm btn-outline-dark">Edit</a>
                         </div>
                     </div>
                 </div>
             </div>
             @if ($group->tags->count() != 0)
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
                                 <div class="row">
                                     <h5 class="card-title">
                                         <span>
@@ -42,7 +46,6 @@
                                                 <div class="card-body my-0">
                                                     <a href="{{ route('admin.tag.show', $tag->id) }}"
                                                         style="text-decoration: none">
-
                                                         <p class="card-text text-success ">{{ $tag->name }}</p>
                                                     </a>
 
@@ -50,14 +53,13 @@
                                             </div>
                                         </div>
                                     @endforeach
-
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             @endif
-{{-- End Card --}}
+            {{-- End Card --}}
 
         </div>
     </div>

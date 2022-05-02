@@ -8,10 +8,12 @@
                     <div class="card m-auto">
                         <div class="card-body">
 
+                            <h4 class="fw-bold text-muted mb-3">
+                                <i class="mdi mdi-chart-pie"></i>
+                                {{ $category->name }}</h4>
 
                             <img class="card-img-top img-lg" style="height: 100%"
                                 src="{{ asset('uploads/Categories' . '/' . $category->image) }}">
-                            <h5 class="card-title">{{ $category->name }}</h5>
                             <h6 class="card-text">Number of related tags : <span
                                     class="text-success fw-bold">{{ $category->tags->count() }}</span></h6>
                             <h6 class="card-text">Number of related groups : <span

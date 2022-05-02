@@ -7,9 +7,12 @@
                 <div class=" col-12 m-auto">
                     <div class="card m-auto">
                         <div class="card-body">
+                            <h4 class="fw-bold text-muted mb-3">
+                                <i class="mdi mdi-tag"></i>
+                                {{ $tag->name }}</h4>
+
                             <img class="card-img-top img-lg" style="height: 100%"
                                 src="{{ asset('uploads/Tags' . '/' . $tag->image) }}">
-                            <h5 class="card-title">{{ $tag->name }}</h5>
                             <h6 class="card-text">Category :
                                 <a href="{{ route('admin.cat.show', $tag->category->id) }}" style="text-decoration: none">
                                     <span class="text-primary fw-bold">{{ $tag->category->name }}</span>
