@@ -22,12 +22,17 @@ class ReportController extends BaseController
         $input = $request->all();
         $input['user_id']= Auth::id();
         $post = Post::find($input['post_id']);
+
+        if($post==null)
+        return $this->SendError('Post Not Found');
+
         $old_rep = Report::select()->where('user_id' , $input['user_id'])->where('post_id' , $input['post_id'])->first();
 
         if($old_rep != null)
         {
             return $this->SendError('You report this post before....please wait until admins take an action');
         }
+
         if($input['user_id'] == $post->user_id)
         {
             return $this->SendError('You Cannot report your post');

@@ -1,38 +1,37 @@
+<!-- partial:partials/_navbar.html -->
+<nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
+    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+        <div class="me-3">
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
+                <span class="icon-menu"></span>
+            </button>
+        </div>
+        <div>
+            <a class="navbar-brand brand-logo" href="{{ route('admin.home') }}">
+                <img src="{{ asset('images/logo/P.svg') }}" alt="logo"
+                    style="width: 100%; height: 100%; object-fit: cover;" />
+                {{-- <i class="mdi mdi-account-search"><span class="text-dark">My</span>Partner</i> --}}
+            </a>
+            <a class="navbar-brand brand-logo-mini" href="{{ route('admin.home') }}">
+                {{-- <i>MyPartner</i> --}}
+                <img src="{{ asset('images/logo/B.png') }}" style="width: 100%; height: 100%; object-fit: cover;"
+                    alt="logo" />
+            </a>
+        </div>
+    </div>
+    <div class="navbar-menu-wrapper d-flex align-items-top">
+        <ul class="navbar-nav">
+            <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
+                <h1 class="welcome-text">Good Morning, <span
+                        class="text-black fw-bold">{{ auth()->guard('admin')->user()->name }}
+                    </span></h1>
+                <h3 class="welcome-sub-text">Your performance summary this week </h3>
+            </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
 
-
-    <!-- partial:partials/_navbar.html -->
-        <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
-            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
-                <div class="me-3">
-                    <button class="navbar-toggler navbar-toggler align-self-center" type="button"
-                        data-bs-toggle="minimize">
-                        <span class="icon-menu"></span>
-                    </button>
-                </div>
-                <div>
-                    <a class="navbar-brand brand-logo" href="{{ route('admin.home') }}">
-                        <img src="{{ asset('images/logo/P.svg') }}" alt="logo"  style="width: 100%; height: 100%; object-fit: cover;"/>
-                        {{-- <i class="mdi mdi-account-search"><span class="text-dark">My</span>Partner</i> --}}
-                    </a>
-                    <a class="navbar-brand brand-logo-mini" href="{{ route('admin.home') }}">
-                        {{-- <i>MyPartner</i> --}}
-                        <img src="{{ asset('images/logo/B.png')}}" style="width: 100%; height: 100%; object-fit: cover;" alt="logo" />
-                    </a>
-                </div>
-            </div>
-            <div class="navbar-menu-wrapper d-flex align-items-top">
-                <ul class="navbar-nav">
-                    <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-                        <h1 class="welcome-text">Good Morning, <span
-                                class="text-black fw-bold">{{ auth()->guard('admin')->user()->name }}
-                            </span></h1>
-                        <h3 class="welcome-sub-text">Your performance summary this week </h3>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ms-auto">
-
-                    {{-- Select Box Start --}}
-                    {{-- <li class="nav-item dropdown d-none d-lg-block">
+            {{-- Select Box Start --}}
+            {{-- <li class="nav-item dropdown d-none d-lg-block">
                         <a class="nav-link dropdown-bordered dropdown-toggle dropdown-toggle-split" id="messageDropdown"
                             href="#" data-bs-toggle="dropdown" aria-expanded="false"> Select Category </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0"
@@ -71,74 +70,101 @@
                             </a>
                         </div>
                     </li> --}}
-                    {{-- <li class="nav-item dropdown d-none d-lg-block">
+            {{-- <li class="nav-item dropdown d-none d-lg-block">
 
                         <img class="img" style="d-block ; width:30%; height:50%; object-fit:cover;float:right"
                             src="{{ asset('images/logo/P.svg') }}" alt="Logo">
                     </li> --}}
-                    {{-- Select Box End --}}
+            {{-- Select Box End --}}
 
-                    {{-- Search Icon Start --}}
-                    <li class="nav-item d-none d-lg-block">
-                    <li class="nav-item">
-                        <form class="search-form" action="#">
-                            <i class="icon-search"></i>
-                            <input type="search" class="form-control" placeholder="Search Here" title="Search here">
-                        </form>
-                    </li>
-                    {{-- Search Icon End --}}
+            {{-- Search Icon Start --}}
+            <li class="nav-item d-none d-lg-block">
+            <li class="nav-item">
+                <form class="search-form" action="#">
+                    <i class="icon-search"></i>
+                    <input type="search" class="form-control" placeholder="Search Here" title="Search here">
+                </form>
+            </li>
+            {{-- Search Icon End --}}
 
 
-                    {{-- Try --}}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link count-indicator" id="notificationDropdown" href="#"
-                            data-bs-toggle="dropdown">
-                            <i class="icon-bell icon-lg"></i>
+            {{-- Try --}}
+            <li class="nav-item dropdown">
+                <a class="nav-link count-indicator" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
+                    <i class="icon-bell icon-lg"></i>
 
-                            @if (auth()->guard('admin')->user()->unreadNotifications->count() > 0)
-                                <span class="count "></span>
-                                <span class=" badge badge-danger text-warning"
-                                    id="noti_count">{{ auth()->guard('admin')->user()->unreadNotifications->count() }}
-                                </span>
-                            @else
-                                <span class=" badge badge-dark text-dark "
-                                    id="noti_count">{{ auth()->guard('admin')->user()->unreadNotifications->count() }}
-                                </span>
-                            @endif
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0"
-                            aria-labelledby="notificationDropdown">
-                            <a  href="{{ route('markAllRead') }}" class="dropdown-item py-3 border-bottom">
+                    @if (auth()->guard('admin')->user()->unreadNotifications->count() > 0)
+                        <span class="count "></span>
+                        <span class=" badge badge-danger text-warning"
+                            id="noti_count">{{ auth()->guard('admin')->user()->unreadNotifications->count() }}
+                        </span>
+                    @else
+                        <span class=" badge badge-dark text-dark "
+                            id="noti_count">{{ auth()->guard('admin')->user()->unreadNotifications->count() }}
+                        </span>
+                    @endif
+                </a>
+                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0 " style="width: 400px;"
+                    aria-labelledby="notificationDropdown">
+                    <a href="{{ route('markAllRead') }}" class="dropdown-item py-2 border-bottom">
+                        <div class="row">
+                            <div class="col-8">
                                 <p class="mb-0 font-weight-medium float-left">
                                     You have
                                     {{ auth()->guard('admin')->user()->unreadNotifications->count() }}
                                     new notifications
                                 </p>
-                                <span class="badge badge-pill badge-primary float-right text-primary">View all</span>
-                            </a>
-                            @foreach (auth()->guard('admin')->user()->unreadNotifications as $notification)
-                                <a class="dropdown-item  preview-item py-3" href="{{ route('markRead', $notification->id) }}">
-                                    <div class="preview-item-content">
-                                            <h6 class="preview-subject fw-normal text-dark mb-1">
-                                                <div class="preview-item-content flex-grow py-2 col-md-12">
-                                                    <span class="preview-subject ellipsis font-weight-medium text-dark">
-                                                        {{ $notification->data['data']['title'] }}</span>
-                                                    <p class="fw-light small-text mb-0">
-                                                        {{ $notification->data['data']['body'] }} </p>
-                                                </div>
-                                            </h6>
-                                            <p class="fw-light small-text mb-0">
-                                                {{ $notification->updated_at->diffForHumans()}}
-                                            </p>
-                                        </div>
-                                    </a>
-                            @endforeach
+                            </div>
+                            <div class="col-4" style="float: right">
+                                <span class="badge badge-pill badge-primary  text-primary ">Mark all</span>
+                            </div>
                         </div>
-                    </li>
+                    </a>
+                    @foreach (auth()->guard('admin')->user()->unreadNotifications->take(3) as $notification)
+                        <a class="dropdown-item  preview-item py-3" href="{{ route('markRead', $notification->id) }}">
+                            <div class="preview-item-content">
+                                <h6 class="preview-subject fw-normal text-dark mb-1">
+                                    <div class="preview-item-content flex-grow py-2 col-md-12">
+                                        <div class="row mb-1">
+                                            <div class="col-8">
+                                                <span class="preview-subject ellipsis font-weight-medium text-dark">
+                                                    {{ $notification->data['data']['title'] }}</span>
+                                            </div>
+                                            <div class="col-4 ">
+                                                {{-- Icon Cond --}}
+                                                @if ($notification->type == 'App\Notifications\MakeContact')
+                                                    <i class="mdi mdi-phone-incoming px-5 mx-3  text-success"></i>
+                                                @elseif ($notification->type == 'App\Notifications\AdminPostReported')
+                                                    <i class="mdi mdi-alert-circle-outline px-5 mx-3 text-danger"></i>
+                                                @endif
+                                                {{-- End Icon Cond --}}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <p class="fw-light small-text mb-0">
+                                                {{ $notification->data['data']['body'] }} </p>
+                                        </div>
+                                    </div>
+                                </h6>
+                                <p class="fw-light small-text mb-0">
+                                    {{ $notification->updated_at->diffForHumans() }}
+                                </p>
+                            </div>
+                        </a>
+                    @endforeach
+                    <div class="row">
+                        <div class="col-12">
+                          <a href="{{ route('showAll') }}" class="dropdown-item py-3 border-bottom">
+                                <span class=" m-auto   text-muted ">Show All</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </li>
 
-                    {{-- End Try --}}
-                    {{-- Notiy Comented --}}
-                    {{-- {{-- Notifications Start
+            {{-- End Try --}}
+            {{-- Notiy Comented --}}
+            {{-- {{-- Notifications Start
                     <li class="nav-item dropdown">
                         <a class="nav-link count-indicator" id="countDropdown" href="#" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -187,198 +213,196 @@
                     </li>
                 {{-- Notifications End --}}
 
-                    {{-- Admin Account Start --}}
-                    <li class="nav-item dropdown  d-lg-block user-dropdown">
-                        <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            <img class="img-xs rounded-circle"
-                                src="{{ asset('uploads/Admins') .'/' .auth()->guard('admin')->user()->image }}"
-                                alt="Profile image">
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-                            <div class="dropdown-header text-center ">
-                                <img class="img-md rounded-circle"
-                                    src="{{ asset('uploads/Admins') .'/' .auth()->guard('admin')->user()->image }}"
-                                    alt="Profile image" width="60px" height="60px">
-                                <p class="mb-1 mt-3 font-weight-semibold">{{ auth()->guard('admin')->user()->name }}
-                                </p>
-                                <p class="fw-light text-muted mb-0">{{ auth()->guard('admin')->user()->email }}</p>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12 m-auto">
-                                    <a class="dropdown-item " href="{{ route('admin.edit') }}"><i
-                                            class="dropdown-item-icon mdi mdi-lead-pencil text-primary me-2"></i>Edit
-                                        Account</a>
-                                    <a class="dropdown-item" href="{{ route('admin.logout') }}"><i
-                                            class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign
-                                        Out</a>
-                                </div>
-                            </div>
-
+            {{-- Admin Account Start --}}
+            <li class="nav-item dropdown  d-lg-block user-dropdown">
+                <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img class="img-xs rounded-circle"
+                        src="{{ asset('uploads/Admins') .'/' .auth()->guard('admin')->user()->image }}"
+                        alt="Profile image">
+                </a>
+                <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+                    <div class="dropdown-header text-center ">
+                        <img class="img-md rounded-circle"
+                            src="{{ asset('uploads/Admins') .'/' .auth()->guard('admin')->user()->image }}"
+                            alt="Profile image" width="60px" height="60px">
+                        <p class="mb-1 mt-3 font-weight-semibold">{{ auth()->guard('admin')->user()->name }}
+                        </p>
+                        <p class="fw-light text-muted mb-0">{{ auth()->guard('admin')->user()->email }}</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 m-auto">
+                            <a class="dropdown-item " href="{{ route('admin.edit') }}"><i
+                                    class="dropdown-item-icon mdi mdi-lead-pencil text-primary me-2"></i>Edit
+                                Account</a>
+                            <a class="dropdown-item" href="{{ route('admin.logout') }}"><i
+                                    class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign
+                                Out</a>
                         </div>
-                    </li>
-                    {{-- Admin Account End --}}
+                    </div>
+
+                </div>
+            </li>
+            {{-- Admin Account End --}}
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+            data-bs-toggle="offcanvas">
+            <span class="mdi mdi-menu"></span>
+        </button>
+    </div>
+</nav>
+<!-- partial -->
+<!-- partial:partials/_sidebar.html -->
+<nav class="sidebar sidebar-offcanvas p-0 m-0" id="sidebar">
+    <ul class="nav">
+
+        {{-- SideBar --}}
+
+        {{-- Dashboard --}}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.home') }}">
+                <i class="mdi mdi-grid-large menu-icon"></i>
+                <span class="menu-title">Dashboard</span>
+            </a>
+        </li>
+
+        {{-- Cats --}}
+        <li class="nav-item nav-category">Categories</li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#categories" aria-expanded="false"
+                aria-controls="categories">
+                <i class="menu-icon mdi mdi-floor-plan"></i>
+                <span class="menu-title">Categories Actions</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="categories">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('admin.cat.create') }}">Add
+                            Category</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('admin.cat.index') }}">Edit
+                            Category</a></li>
+                    <li class="nav-item"> <a class="nav-link"
+                            href="{{ route('admin.cat.index') }}">Delete Category</a></li>
                 </ul>
-                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
-                    data-bs-toggle="offcanvas">
-                    <span class="mdi mdi-menu"></span>
-                </button>
             </div>
-        </nav>
-        <!-- partial -->
-        <!-- partial:partials/_sidebar.html -->
-        <nav class="sidebar sidebar-offcanvas p-0 m-0" id="sidebar">
-            <ul class="nav">
+        </li>
 
-                {{-- SideBar --}}
+        {{-- Tags --}}
+        <li class="nav-item nav-category">TAGS</li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#tags" aria-expanded="false" aria-controls="tags">
+                <i class="menu-icon mdi mdi-tag-multiple"></i>
+                <span class="menu-title">TAG Actions</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="tags">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('admin.tag.create') }}">Add
+                            Tag</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('admin.tag.index') }}">Edit
+                            Tag</a></li>
+                    <li class="nav-item"> <a class="nav-link"
+                            href="{{ route('admin.tag.index') }}">Delete Tag</a></li>
+                </ul>
+            </div>
+        </li>
 
-                {{-- Dashboard --}}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.home') }}">
-                        <i class="mdi mdi-grid-large menu-icon"></i>
-                        <span class="menu-title">Dashboard</span>
-                    </a>
-                </li>
-
-                {{-- Cats --}}
-                <li class="nav-item nav-category">Categories</li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#categories" aria-expanded="false"
-                        aria-controls="categories">
-                        <i class="menu-icon mdi mdi-floor-plan"></i>
-                        <span class="menu-title">Categories Actions</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="categories">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{{ route('admin.cat.create') }}">Add Category</a></li>
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{{ route('admin.cat.index') }}">Edit Category</a></li>
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{{ route('admin.cat.index') }}">Delete Category</a></li>
-                        </ul>
-                    </div>
-                </li>
-
-                {{-- Tags --}}
-                <li class="nav-item nav-category">TAGS</li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#tags" aria-expanded="false"
-                        aria-controls="tags">
-                        <i class="menu-icon mdi mdi-tag-multiple"></i>
-                        <span class="menu-title">TAG Actions</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="tags">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{{ route('admin.tag.create') }}">Add Tag</a></li>
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{{ route('admin.tag.index') }}">Edit Tag</a></li>
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{{ route('admin.tag.index') }}">Delete Tag</a></li>
-                        </ul>
-                    </div>
-                </li>
-
-                {{-- Groups --}}
-                <li class="nav-item nav-category">Groups</li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#groups" aria-expanded="false"
-                        aria-controls="groups">
-                        <i class="menu-icon mdi mdi-microsoft"></i>
-                        <span class="menu-title">Groups Actions</span>
-                        <i class="menu-arrow"></i>
-                    </a>
+        {{-- Groups --}}
+        <li class="nav-item nav-category">Groups</li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#groups" aria-expanded="false"
+                aria-controls="groups">
+                <i class="menu-icon mdi mdi-microsoft"></i>
+                <span class="menu-title">Groups Actions</span>
+                <i class="menu-arrow"></i>
+            </a>
 
 
-                    <div class="collapse" id="groups">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{{ route('admin.group.create1') }}">Add Group</a></li>
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{{ route('admin.group.index') }}">Edit Group</a></li>
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{{ route('admin.group.index') }}">Delete Group</a></li>
-                        </ul>
-                    </div>
-                </li>
+            <div class="collapse" id="groups">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link"
+                            href="{{ route('admin.group.create1') }}">Add Group</a></li>
+                    <li class="nav-item"> <a class="nav-link"
+                            href="{{ route('admin.group.index') }}">Edit Group</a></li>
+                    <li class="nav-item"> <a class="nav-link"
+                            href="{{ route('admin.group.index') }}">Delete Group</a></li>
+                </ul>
+            </div>
+        </li>
 
 
-                {{-- Contacts --}}
-                <li class="nav-item nav-category">Contacts</li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#contact" aria-expanded="false"
-                        aria-controls="contact">
-                        <i class="menu-icon mdi mdi mdi-voice"></i>
-                        <span class="menu-title">Contacts Actions</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="contact">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{{ route('admin.contact.index') }}">All Contacts </a></li>
-                        </ul>
-                    </div>
-                </li>
+        {{-- Contacts --}}
+        <li class="nav-item nav-category">Contacts</li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#contact" aria-expanded="false"
+                aria-controls="contact">
+                <i class="menu-icon mdi mdi mdi-voice"></i>
+                <span class="menu-title">Contacts Actions</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="contact">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link"
+                            href="{{ route('admin.contact.index') }}">All Contacts </a></li>
+                </ul>
+            </div>
+        </li>
 
 
-                {{-- Rates --}}
-                <li class="nav-item nav-category">Rates</li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#rates" aria-expanded="false"
-                        aria-controls="rates">
-                        <i class="menu-icon mdi mdi mdi-star-half"></i>
-                        <span class="menu-title">Rates Actions</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="rates">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{{ route('admin.rate.index') }}">All Rates </a></li>
+        {{-- Rates --}}
+        <li class="nav-item nav-category">Rates</li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#rates" aria-expanded="false"
+                aria-controls="rates">
+                <i class="menu-icon mdi mdi mdi-star-half"></i>
+                <span class="menu-title">Rates Actions</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="rates">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link"
+                            href="{{ route('admin.rate.index') }}">All Rates </a></li>
 
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{{ route('admin.rate.low') }}">low Rates </a></li>
-                        </ul>
-                    </div>
-                </li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('admin.rate.low') }}">low
+                            Rates </a></li>
+                </ul>
+            </div>
+        </li>
 
-                {{-- reports --}}
-                <li class="nav-item nav-category">Reports</li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#reports" aria-expanded="false"
-                        aria-controls="reports">
-                        <i class="menu-icon mdi mdi mdi-alert-outline"></i>
-                        <span class="menu-title">Reports Actions</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="reports">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{{ route('admin.report.index') }}">All reports</a></li>
+        {{-- reports --}}
+        <li class="nav-item nav-category">Reports</li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#reports" aria-expanded="false"
+                aria-controls="reports">
+                <i class="menu-icon mdi mdi mdi-alert-outline"></i>
+                <span class="menu-title">Reports Actions</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="reports">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link"
+                            href="{{ route('admin.report.index') }}">All reports</a></li>
 
-                        </ul>
-                    </div>
-                </li>
+                </ul>
+            </div>
+        </li>
 
-                {{-- Users --}}
-                <li class="nav-item nav-category">Users</li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#users" aria-expanded="false"
-                        aria-controls="users">
-                        <i class="menu-icon mdi mdi-account"></i>
-                        <span class="menu-title">Users Actions</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="users">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link"
-                                    href="{{ route('admin.user.index') }}">Show Users</a></li>
+        {{-- Users --}}
+        <li class="nav-item nav-category">Users</li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#users" aria-expanded="false"
+                aria-controls="users">
+                <i class="menu-icon mdi mdi-account"></i>
+                <span class="menu-title">Users Actions</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="users">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link"
+                            href="{{ route('admin.user.index') }}">Show Users</a></li>
 
-                        </ul>
-                    </div>
-                </li>
+                </ul>
+            </div>
+        </li>
 
-        </nav>
-        <!-- partial -->
+</nav>
+<!-- partial -->

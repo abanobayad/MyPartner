@@ -28,6 +28,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
         Route::post('do-editAdmin', 'AdminsController@doEdit')->name('do-editAdmin');
         // Notitifications
         Route::get('/markAllRead' , 'NotificationController@readAll')->name('markAllRead');
+        Route::get('/showAll' , 'NotificationController@showAll')->name('showAll');
         Route::get('/markRead/{id}' , 'NotificationController@read')->name('markRead');
 
 

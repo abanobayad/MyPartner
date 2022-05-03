@@ -7,11 +7,9 @@
                 <div class=" col-12 m-auto">
                     <div class="card m-auto">
                         <div class="card-body">
-
                             <h4 class="fw-bold text-muted mb-3">
                                 <i class="mdi mdi-group"></i>
                                 {{ $group->name }}</h4>
-
                             <img class="card-img-top img-lg" style="height: 100%"
                                 src="{{ asset('uploads/Groups' . '/' . $group->image) }}">
                             <h6 class="card-text">Category :
@@ -23,7 +21,8 @@
                             <h6 class="card-text">Number of related tags : <span
                                     class="text-success fw-bold">{{ $group->tags->count() }}</span></h6>
                             <a href="{{ route('admin.group.edit', $group->id) }}" style="float: right"
-                                class="d-flex btn btn-sm btn-outline-dark">Edit</a>
+                                class="d-flex btn btn-sm btn-outline-dark">Edit
+                            </a>
                         </div>
                     </div>
                 </div>
