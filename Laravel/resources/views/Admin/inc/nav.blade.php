@@ -90,28 +90,34 @@
 
             {{-- Try --}}
             <li class="nav-item dropdown">
+
                 <a class="nav-link count-indicator" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
                     <i class="icon-bell icon-lg"></i>
-
+                    <span id="noti_count" >
                     @if (auth()->guard('admin')->user()->unreadNotifications->count() > 0)
                         <span class="count "></span>
                         <span class=" badge badge-danger text-warning"
                             id="noti_count">{{ auth()->guard('admin')->user()->unreadNotifications->count() }}
                         </span>
                     @else
-                        <span class=" badge badge-dark text-dark "
-                            id="noti_count">{{ auth()->guard('admin')->user()->unreadNotifications->count() }}
+                        <span class=" badge badge-dark text-dark ">
+                                {{ auth()->guard('admin')->user()->unreadNotifications->count() }}
+
                         </span>
                     @endif
+                    </span>
+
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0 " style="width: 400px;"
                     aria-labelledby="notificationDropdown">
                     <a href="{{ route('markAllRead') }}" class="dropdown-item py-2 border-bottom">
                         <div class="row">
                             <div class="col-8">
-                                <p class="mb-0 font-weight-medium float-left">
+                                <p class="mb-0 font-weight-medium float-left" >
                                     You have
-                                    {{ auth()->guard('admin')->user()->unreadNotifications->count() }}
+                                    <span id="noti_countt">
+                                        {{ auth()->guard('admin')->user()->unreadNotifications->count() }}
+                                    </span>
                                     new notifications
                                 </p>
                             </div>
@@ -120,38 +126,40 @@
                             </div>
                         </div>
                     </a>
-                    @foreach (auth()->guard('admin')->user()->unreadNotifications->take(3) as $notification)
-                        <a class="dropdown-item  preview-item py-3" href="{{ route('markRead', $notification->id) }}">
-                            <div class="preview-item-content">
-                                <h6 class="preview-subject fw-normal text-dark mb-1">
-                                    <div class="preview-item-content flex-grow py-2 col-md-12">
-                                        <div class="row mb-1">
-                                            <div class="col-8">
-                                                <span class="preview-subject ellipsis font-weight-medium text-dark">
-                                                    {{ $notification->data['data']['title'] }}</span>
+                    <div id="noti_content">
+                        @foreach (auth()->guard('admin')->user()->unreadNotifications->sortByDesc('updated_at')->take(3) as $notification)
+                            <a class="dropdown-item  preview-item py-3" href="{{ route('markRead', $notification->id) }}">
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject fw-normal text-dark mb-1">
+                                        <div class="preview-item-content flex-grow py-2 col-md-12">
+                                            <div class="row mb-1">
+                                                <div class="col-8">
+                                                    <span class="preview-subject ellipsis font-weight-medium text-dark">
+                                                        {{ $notification->data['data']['title'] }}</span>
+                                                </div>
+                                                <div class="col-4 ">
+                                                    {{-- Icon Cond --}}
+                                                    @if ($notification->type == 'App\Notifications\MakeContact')
+                                                        <i class="mdi mdi-phone-incoming px-5 mx-3  text-success"></i>
+                                                    @elseif ($notification->type == 'App\Notifications\AdminPostReported')
+                                                        <i class="mdi mdi-alert-circle-outline px-5 mx-3 text-danger"></i>
+                                                    @endif
+                                                    {{-- End Icon Cond --}}
+                                                </div>
                                             </div>
-                                            <div class="col-4 ">
-                                                {{-- Icon Cond --}}
-                                                @if ($notification->type == 'App\Notifications\MakeContact')
-                                                    <i class="mdi mdi-phone-incoming px-5 mx-3  text-success"></i>
-                                                @elseif ($notification->type == 'App\Notifications\AdminPostReported')
-                                                    <i class="mdi mdi-alert-circle-outline px-5 mx-3 text-danger"></i>
-                                                @endif
-                                                {{-- End Icon Cond --}}
+                                            <div class="row">
+                                                <p class="fw-light small-text mb-0">
+                                                    {{ $notification->data['data']['body'] }} </p>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <p class="fw-light small-text mb-0">
-                                                {{ $notification->data['data']['body'] }} </p>
-                                        </div>
-                                    </div>
-                                </h6>
-                                <p class="fw-light small-text mb-0">
-                                    {{ $notification->updated_at->diffForHumans() }}
-                                </p>
-                            </div>
-                        </a>
-                    @endforeach
+                                    </h6>
+                                    <p class="fw-light small-text mb-0">
+                                        {{ $notification->updated_at->diffForHumans() }}
+                                    </p>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
                     <div class="row">
                         <div class="col-12">
                           <a href="{{ route('showAll') }}" class="dropdown-item py-3 border-bottom">
