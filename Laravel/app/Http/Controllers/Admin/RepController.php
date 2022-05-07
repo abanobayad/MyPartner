@@ -105,7 +105,7 @@ class RepController extends Controller
         ];
         $reporter->notify(new PostReportRejectToReportOwner($details2reporter));
 
-        return redirect()->back();
+        return redirect(route('admin.report.index'));
     }
 
     public function GetAll($id)

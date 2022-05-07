@@ -8,11 +8,19 @@
           <div class="home-tab">
 <div class="tab-content tab-content-basic">
 
-    @if (Route::current()->methods[0] == 'GET')
-    <a class="btn btn-sm btn-primary " href="{{ url()->previous() }}">Back</a>
-    @else
-    <a class="btn btn-sm btn-primary " href="{{ route('admin.home') }}">Back</a>
-    @endif
+    <div class="row">
+        <div class="col-2 text-center">
+            @if (Route::current()->methods[0] == 'GET')
+            <a  class="btn btn-primary text-white me-0" href="{{ (url()->previous()) }}">
+                <i class="mdi mdi-arrow-left-bold-hexagon-outline"></i>
+                Back</a>
+            @else
+            <a class="btn btn-primary text-white me-0 " href="{{ route('admin.home') }}">
+                <i class="mdi mdi-arrow-left-bold-hexagon-outline"></i>
+                Back</a>
+            @endif
+        </div>
+    </div>
 
 
 

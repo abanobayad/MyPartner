@@ -14,7 +14,7 @@
 
                             <img class="card-img-top img-lg" style="height: 100%"
                                 src="{{ asset('uploads/Categories' . '/' . $category->image) }}">
-                            <h6 class="card-text">Number of related tags : <span
+                            <h6 class="card-text mt-4">Number of related tags : <span
                                     class="text-success fw-bold">{{ $category->tags->count() }}</span></h6>
                             <h6 class="card-text">Number of related groups : <span
                                     class="text-primary fw-bold">{{ $category->groups->count() }}</span></h6>
@@ -26,7 +26,7 @@
                 </div>
             </div>
             @if ($category->groups->count() != 0)
-                <div class="row">
+                <div class="row ">
                     <div class="col-12">
 
                         <div class="card">
@@ -41,13 +41,13 @@
                                     {{-- Fetch Groups --}}
                                     @foreach ($category->groups as $group)
                                         <div class="col-lg-4 col-xs-6 mb-2">
-                                            <div class="card h-100 ">
+                                            <div class="card h-70 my-0 ">
                                                 <div class="card-body">
                                                     <a href="{{ route('admin.group.show', $group->id) }}"
                                                         style="text-decoration: none">
 
-                                                        <h5 class="card-title">{{ $group->name }}</h5>
-                                                        <p class="card-text text-dark">{{ $group->description }}</p>+
+                                                        {{-- <h5 class="card-title">{{ $group->name }}</h5> --}}
+                                                        <p class="card-text text-dark">{{ $group->name }}</p>
                                                     </a>
 
                                                 </div>

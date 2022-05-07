@@ -42,9 +42,9 @@
 
                             <div class="col-md-3 mb-3">
                                 <label for="exampleInputEmail1" class="form-label ">Select Group Category</label>
-                                <select name="category_id" class="alert-dark mx-2">
+                                <select name="category_id[]" class="alert-dark mx-2">
                                     @foreach ($categories as $category)
-                                    <option class="btn btn-outline-dark" value="{{$category->id}}" > {{$category->name}} </option>
+                                    <option class="btn btn-outline-dark" name="category[]" value="{{$category->id}}" > {{$category->name}} </option>
                                     @endforeach
                                 </select>
                                 @error('category_id')<span class="text-danger">{{$message}}</span>@enderror

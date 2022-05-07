@@ -36,6 +36,7 @@ class TagController extends Controller
     public function doCreate(Request $request)
     {
         $data = $request->all();
+        // dd($data);
         $data = $request->validate(['name' => 'required|unique:tags,name']);
         try{
             for($i = 0 ; $i < count($request->name);$i++ )
@@ -43,7 +44,7 @@ class TagController extends Controller
                 // dd($request->image[$i]);
                 $tag = new Tag();
                 $tag->admin_id = $request->admin_id;
-                $tag->cat_id = $request->category_id;
+                $tag->cat_id = $request->category_id[$i];
                 $tag->name = $request->name[$i];
                 $newImgName = $request->image[$i]->hashName();
                     Image::make($request->image[$i])->save(public_path('uploads/Tags/' . $newImgName));
@@ -110,6 +111,8 @@ class TagController extends Controller
     public function delete($id)
     {
         $tag_name = Tag::findOrfail($id)->name;
+        Alert::success('Delete Completed', 'Tag '. $tag_name .' Deleted Successfully');
+
         Tag::findOrfail($id)->delete();
         Alert::success('Delete Completed', 'Tag '. $tag_name .' Deleted Successfully');
         return redirect(route('admin.tag.index'));

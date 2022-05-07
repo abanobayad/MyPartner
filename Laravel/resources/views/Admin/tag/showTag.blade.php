@@ -13,7 +13,7 @@
 
                             <img class="card-img-top img-lg" style="height: 100%"
                                 src="{{ asset('uploads/Tags' . '/' . $tag->image) }}">
-                            <h6 class="card-text">Category :
+                            <h6 class="card-text mt-4">Category :
                                 <a href="{{ route('admin.cat.show', $tag->category->id) }}" style="text-decoration: none">
                                     <span class="text-primary fw-bold">{{ $tag->category->name }}</span>
                                 </a>
@@ -42,12 +42,12 @@
                                     {{-- Fetch Groups --}}
                                     @foreach ($tag->groups as $group)
                                         <div class="col-lg-4 col-xs-6 mb-2">
-                                            <div class="card h-100 ">
+                                            <div class="card h-70 my-0 ">
                                                 <div class="card-body">
                                                     <a href="{{ route('admin.group.show', $group->id) }}"
                                                         style="text-decoration: none">
-                                                        <h5 class="card-title">{{ $group->name }}</h5>
-                                                        <p class="card-text text-dark">{{ $group->description }}</p>
+                                                        {{-- <h5 class="card-title">{{ $group->name }}</h5> --}}
+                                                        <p class="card-text text-dark">{{ $group->name }}</p>
                                                     </a>
                                                 </div>
                                             </div>

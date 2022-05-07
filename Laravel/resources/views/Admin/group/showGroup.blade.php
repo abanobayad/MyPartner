@@ -12,7 +12,7 @@
                                 {{ $group->name }}</h4>
                             <img class="card-img-top img-lg" style="height: 100%"
                                 src="{{ asset('uploads/Groups' . '/' . $group->image) }}">
-                            <h6 class="card-text">Category :
+                            <h6 class="card-text mt-4">Category :
                                 <a href="{{ route('admin.cat.show', $group->category->id) }}"
                                     style="text-decoration: none">
                                     <span class="text-primary fw-bold">{{ $group->category->name }}</span>

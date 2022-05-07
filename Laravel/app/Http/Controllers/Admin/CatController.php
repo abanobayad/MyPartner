@@ -136,7 +136,7 @@ class CatController extends Controller
     public function delete($id)
     {
         $cat = Category::findOrfail($id);
-        $cat_name = Category::findOrfail($id);
+        $cat_name = Category::findOrfail($id)->name;
         $cat->delete();
 
         Alert::success('Delete Completed', 'Category '.$cat_name .' Deleted Successfully');
