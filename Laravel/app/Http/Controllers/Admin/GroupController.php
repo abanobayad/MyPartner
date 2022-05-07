@@ -10,13 +10,21 @@ use App\Models\Tag;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-
+use RealRashid\SweetAlert\Facades\Alert;
 class GroupController extends Controller
 {
+
     public function index()
     {
         $data['groups'] = Group::select()->orderBy('id', 'desc')->get();
         return view('Admin.group.index')->with($data);
+    }
+
+
+    public function show($id)
+    {
+        $group = Group::find($id);
+        return view('Admin.group.showGroup' , compact('group'));
     }
 
 
@@ -28,10 +36,37 @@ class GroupController extends Controller
     }
 
 
+    public function create1()
+    {
+        $cats = Category::all();
+
+        //filter categories with no tags
+        $categories =[];
+        foreach ($cats as $cat) {
+            if($cat->tags()->first() != null)
+                array_push($categories , $cat);
+        }
+        // dd($categories);
+        return view('Admin.group.addGroup1', compact('categories'));
+    }
+
+    public function doCreate1($category_id)
+    {
+        $category = Category::find($category_id);
+        $tags = $category->tags()->get();
+        return view('Admin.group.addGroup2', compact('category' , 'tags'));
+
+    }
+
+
+
+
     public function doCreate(Request $request)
     {
 
         $data = $request->all();
+        $search_tag = $request->has('tag') ? $request->get('tag'):[];
+        // dd($search_tag);
 
         $s = Validator::make($data , [
             'name' => 'required|max:50',
@@ -41,8 +76,7 @@ class GroupController extends Controller
             'image' => 'required|image|mimes:jpg,jpeg,png',
             'admin_id' => 'required|exists:admins,id',
         ]);
-
-        if($s ->fails()){return back()->withErrors($s->errors())->withInput();}
+        if($s ->fails()){return back()->with('search_tag' , $search_tag)->withErrors($s->errors())->withInput();}
 
         $new_name =  $data['image']->hashName();
         Image::make($data['image'])->save(public_path('uploads/Groups/' . $new_name)); //To store Image on the server
@@ -56,6 +90,8 @@ class GroupController extends Controller
             'admin_id'      => $request->admin_id,
         ]);
         $group->tags()->attach($request->tag);
+        Alert::success('Add Completed', 'Group '.$group->name .' Added Successfully');
+
         return redirect(route('admin.group.index'));
     }
 
@@ -108,6 +144,7 @@ class GroupController extends Controller
             'admin_id' =>      $data ['admin_id'],
         ]);
         $group->tags()->sync($request->tag);
+        Alert::success('Edit Completed', 'Group '.$group->name .' Changed Successfully');
         return back();
         // return redirect(route('admin.group.index'));
     }
@@ -117,7 +154,10 @@ class GroupController extends Controller
     {
         $imgName = Group::findOrfail($id)->image;
         Storage::disk('uploads')->delete('Groups/'. $imgName);
-        Group::findOrfail($id)->delete();
+        $group = Group::findOrfail($id);
+        $group_name = Group::findOrfail($id)->name;
+        $group->delete();
+        Alert::success('Delete Completed', 'Group '.$group_name .' Deleted Successfully');
         return redirect(route('admin.group.index'));
     }
 }

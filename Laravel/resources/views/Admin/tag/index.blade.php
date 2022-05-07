@@ -14,6 +14,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
+                    <th scope="col">Category</th>
                     <th scope="col">Created by</th>
                     <th scope="col">Image</th>
                     <th scope="col">Actions</th>
@@ -25,6 +26,7 @@
                     <tr>
                         <th scope="row">{{ $loop->iteration }}</th>
                         <td>{{ $tag->name }}</td>
+                        <td>{{ $tag->category->name }}</td>
                         <td>{{ $tag->admin->name }}</td>
                         @if ($tag->image == null)
                             <td>
@@ -41,6 +43,8 @@
                                     class="menu-icon mdi mdi-border-color"></i></a>
                             <a href="{{ route('admin.tag.delete', $tag->id) }}" class="btn-lg text-danger"><i
                                     class="menu-icon mdi mdi-delete-sweep"></i></a>
+                            <a href="{{ route('admin.tag.show', $tag->id) }}" class="btn-lg text-primary"><i
+                                    class="menu-icon mdi mdi-eye"></i></a>
                         </td>
                     </tr>
                 @endforeach

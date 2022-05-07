@@ -16,13 +16,30 @@ class NotificationController extends Controller
         // dd($Notifi);
         $Notifi->markAsRead();
         $type = $Notifi->type;
-        if($type == 'App\Notifications\MakeComment' )
+        // if($type == 'App\Notifications\MakeComment' )
+        // {
+        //     return redirect(route('showPost' ,$Notifi->data['data']['post_id']));
+        // }
+        // elseif($type == 'App\Notifications\PostRequested')
+        // {
+        //     return redirect(route('showRequest' ,[$Notifi->data['data']['post_id'],$Notifi->data['data']['requester_id']]));
+        // }
+        if($type == 'App\Notifications\MakeContact')
         {
-            return redirect(route('showPost' ,$Notifi->data['data']['post_id']));
-        }
-        elseif($type == 'App\Notifications\PostRequested')
-        {
-            return redirect(route('showRequest' ,[$Notifi->data['data']['post_id'],$Notifi->data['data']['requester_id']]));
+
+            $other_admins_notification = DatabaseNotification::select()
+            // ->where('type' ,'App\Notifications\AdminPostReported')
+            ->where('data->data->contact_id' ,$Notifi->data['data']['contact_id'])
+            ->where('data->data->reporter_id' ,$Notifi->data['data']['reporter_id'])
+            ->get();
+            foreach($other_admins_notification as $noti)
+            {
+                $noti->markAsRead();
+            }
+
+            return redirect(route('admin.contact.show' ,$Notifi->data['data']['contact_id']));
+
+
         }
         elseif($type == 'App\Notifications\AdminPostReported')
         {
@@ -50,5 +67,14 @@ class NotificationController extends Controller
 
         }
         return back();
+    }
+
+    public function showAll()
+    {
+        $uestUnreadNotifi = auth()->guard('admin')->user()->unreadNotifications->sortByDesc('updated_at');
+        $uestReadNotifi = auth()->guard('admin')->user()->readNotifications->sortByDesc('updated_at');
+        $uestAllNotifi = auth()->guard('admin')->user()->Notifications-> sortByDesc('updated_at');
+
+        return view('Admin.admin.notifications' , compact('uestUnreadNotifi' , 'uestReadNotifi' , 'uestAllNotifi'));
     }
 }

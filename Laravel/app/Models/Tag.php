@@ -11,6 +11,7 @@ class Tag extends Model
     protected $fillable = [
         'name',
         'admin_id',
+        'cat_id',
         'image',
     ];
 
@@ -22,7 +23,7 @@ class Tag extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Category::class, 'cat_id');
     }
 
     public function groups()

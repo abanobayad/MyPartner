@@ -25,7 +25,7 @@
     <!-- inject:css -->
     <link rel="stylesheet" href="{{ asset('css') }}/vertical-layout-light/style.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href="{{ asset('images/back.png') }}" />
+    <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" />
 
     {{-- End --}}
 
@@ -43,5 +43,8 @@
     <div class="container-fluid page-body-wrapper">
 
         @include('Admin.inc.nav')
+
+
+
 
 

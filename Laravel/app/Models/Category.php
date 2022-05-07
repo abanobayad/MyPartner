@@ -24,11 +24,28 @@ class Category extends Model
 
     public function tags()
     {
-        return $this->hasMany(Tag::class);
+        return $this->hasMany(Tag::class , 'cat_id');
     }
 
     public function groups()
     {
         return $this->hasMany(Group::class);
     }
+
+
+    public function interests()
+    {
+     return $this->hasMany(Interest::class);
+    }
+
+
+
+
+    public function intrest_user()
+    {
+        return $this->belongsToMany(User::class , 'interests' , 'category_id' , 'user_id' );
+    }
+
+
+
 }

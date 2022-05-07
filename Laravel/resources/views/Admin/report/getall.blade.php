@@ -1,13 +1,6 @@
 @extends('Admin.layout')
 
 @section('content')
-    <div class="row mb-0">
-        <div class="col-12">
-            <a class="btn btn-sm btn-secondary mb-5" style="float: right"
-                href="{{ route('admin.user.show', $user->id) }}">Back</a>
-
-        </div>
-    </div>
 
 
     <div class="row">

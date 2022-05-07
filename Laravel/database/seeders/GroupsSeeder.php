@@ -21,7 +21,7 @@ class GroupsSeeder extends Seeder
             'description' => 'PHP Group For Php PHP' ,
             'admin_id' => 1 ,
             'category_id' => 1 ,
-            'image'=> 'defult.png',
+            'image'=> 'default.png',
             'created_at'=> now(),
             'updated_at'=> now(),
         ]
@@ -34,7 +34,7 @@ class GroupsSeeder extends Seeder
             'description' => 'CSS Group For CSS CSS' ,
             'admin_id' => 1 ,
             'category_id' => 1 ,
-            'image'=> 'defult.png',
+            'image'=> 'default.png',
             'created_at'=> now(),
             'updated_at'=> now(),
         ]
@@ -47,7 +47,7 @@ class GroupsSeeder extends Seeder
             'description' => 'VSS Group For VSS VSS' ,
             'admin_id' => 1 ,
             'category_id' => 1 ,
-            'image'=> 'defult.png',
+            'image'=> 'default.png',
             'created_at'=> now(),
             'updated_at'=> now(),
         ]
@@ -59,7 +59,7 @@ class GroupsSeeder extends Seeder
             'description' => 'HTML Group For HTML HTML' ,
             'admin_id' => 1 ,
             'category_id' => 1 ,
-            'image'=> 'defult.png',
+            'image'=> 'default.png',
             'created_at'=> now(),
             'updated_at'=> now(),
         ]
@@ -72,7 +72,7 @@ class GroupsSeeder extends Seeder
             'description' => 'Flutter Group For Flutter Flutter' ,
             'admin_id' => 1 ,
             'category_id' => 1 ,
-            'image'=> 'defult.png',
+            'image'=> 'default.png',
             'created_at'=> now(),
             'updated_at'=> now(),
         ]
@@ -85,7 +85,7 @@ class GroupsSeeder extends Seeder
             'description' => 'React Group For React CSS' ,
             'admin_id' => 1 ,
             'category_id' => 1 ,
-            'image'=> 'defult.png',
+            'image'=> 'default.png',
             'created_at'=> now(),
             'updated_at'=> now(),
         ]
@@ -99,7 +99,7 @@ class GroupsSeeder extends Seeder
             'description' => 'Python Group For Python CSS' ,
             'admin_id' => 1 ,
             'category_id' => 1 ,
-            'image'=> 'defult.png',
+            'image'=> 'default.png',
             'created_at'=> now(),
             'updated_at'=> now(),
         ]

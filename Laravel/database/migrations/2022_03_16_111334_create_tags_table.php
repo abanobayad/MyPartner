@@ -18,6 +18,7 @@ class CreateTagsTable extends Migration
             $table->string('name');
             $table->string('image')->nullable()->default('default.png');
             $table->foreignId('admin_id')->constrained('admins','id');
+            $table->foreignId('cat_id')->constrained('categories','id');
             $table->timestamps();
         });
     }

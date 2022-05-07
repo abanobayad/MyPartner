@@ -4,10 +4,6 @@
 
 <div class="row">
     <div class="container">
-
-        <div>
-            <a  class="btn btn-sm btn-secondary" style="float: right" href="{{route('admin.group.index')}}">Back</a>
-        </div>
         <form method="POST" action="{{route('admin.group.doEdit')}}" enctype="multipart/form-data">
             @csrf
         <input type="hidden" name="admin_id" value="{{ auth()->guard('admin')->user()->id}}">

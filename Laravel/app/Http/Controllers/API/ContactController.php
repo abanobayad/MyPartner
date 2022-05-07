@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Resources\ContactResource;
+use App\Models\Admin;
+use App\Notifications\MakeContact;
+use Illuminate\Support\Facades\Notification;
 
 class ContactController extends BaseController
 {
@@ -18,8 +21,10 @@ class ContactController extends BaseController
         $validator = Validator::make(
             $input,
             [
-                'subject' => 'required',
-                'content' => 'required',
+
+                'subject' => 'required|string',
+                'reason' => 'required|in:Create New Group,Create New Category,other',
+                'content' => 'required|string',
             ]
             );
         if ($validator->fails()) {
@@ -27,7 +32,28 @@ class ContactController extends BaseController
         }else{
 
             $input['user_id'] = Auth::id();
+
+            // dd($input);
+
             $contact = Contact::create($input);
+            // dd($contact);
+
+
+            //Notification part start
+           $Admins = Admin::all();
+           $reporter =Auth::user();
+           $details = [
+            'contact_id'    => $contact->id,
+            'reporter_id'   => $reporter->id,
+            'title'         => $reporter->name.' contact admins',
+            'body'          => $reporter->name. ' contact for this reason : ' .$contact->reason,
+            ];
+           Notification::send($Admins , new MakeContact($details));
+           //notification part end
+
+
+
+
 
             $js_contact = ContactResource::make($contact);
             return $this->SendResponse($js_contact, "contact send");
