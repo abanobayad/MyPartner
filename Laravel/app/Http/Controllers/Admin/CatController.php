@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Tag;
 use Exception;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -72,7 +73,8 @@ class CatController extends Controller
                 $Cate->admin_id = $request->admin_id;
                 $Cate->name = $request->name[$i];
                 $newImgName = $request->image[$i]->hashName();
-                    Image::make($request->image[$i])->save(public_path('uploads/Categories/' . $newImgName));
+                $request->file('image')[$i]->move('uploads/Categories/', $newImgName);
+                // Image::make($request->image[$i])->save(public_path('uploads/Categories/' . $newImgName));
                 $Cate->image = $newImgName;
                 $Cate->save();
             }
@@ -104,24 +106,28 @@ class CatController extends Controller
             'image' => 'nullable|image|mimes:png,jpg,jpeg',
         ]);
 
-        $OldImg = Category::find($request->id);
-        if ($OldImg == null) {
-            $newImgName = $request->image->hashName();
-            Image::make($data['image'])->save(public_path('uploads/Categories/' . $newImgName));
-            $data['image'] = $newImgName;
-        } else {
-            $OldImgName = Category::find($request->id)->image;
-                if ($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
 
-                    Storage::disk('uploads')->delete('Categories/' . $OldImgName);
-                    $newImgName = $request->image->hashName();
-                    Image::make($data['image'])->save(public_path('uploads/Categories/' . $newImgName));
-                    $data['image'] = $newImgName;
+            //check old image
+            $OldImg = Category::find($request->id)->image;
+
+            //has no old image
+            if ($OldImg == null) {
+                $newImgName = $request->image->hashName();
+                $request->file('image')->move('uploads/Categories/', $newImgName);
+                $data['image'] = $newImgName;
+            }
+            //has old image
+            else {
+                $cat = Category::find($request->id);
+                $dest = 'uploads/Categories/' . $cat->image;
+                if (File::exists($dest)) {
+                    File::delete($dest);
                 }
-                else
-                {
-                    $data['image'] = $OldImgName;
-                }
+                $newImgName = $request->image->hashName();
+                $request->file('image')->move('uploads/Categories/', $newImgName);
+                $data['image'] = $newImgName;
+            }
         }
 
          Category::findOrFail($request->id)->update($data);
@@ -137,10 +143,15 @@ class CatController extends Controller
     {
         $cat = Category::findOrfail($id);
         $cat_name = Category::findOrfail($id)->name;
+
+        $dest = 'uploads/Categories/' . $cat->image;
+        if (File::exists($dest)) {
+            File::delete($dest);
+        }
+
         $cat->delete();
 
         Alert::success('Delete Completed', 'Category '.$cat_name .' Deleted Successfully');
-
         return redirect(route('admin.cat.index'));
     }
 }
