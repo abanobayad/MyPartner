@@ -108,7 +108,7 @@
                     </span>
 
                 </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0 " style="width: 400px;"
+                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0 " style="width: 400px;" style="overflow-y: auto;"
                     aria-labelledby="notificationDropdown">
                     <a href="{{ route('markAllRead') }}" class="dropdown-item py-2 border-bottom">
                         <div class="row">

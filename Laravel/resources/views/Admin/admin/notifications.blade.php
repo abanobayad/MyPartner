@@ -28,13 +28,13 @@
             <div class="row">
                 <div class="m-auto col-lg-6 col-md-12">
                     @foreach ($uestUnreadNotifi as $notification)
-                        <div class="card mb-3">
-                            <div class="card-body">
+                        <div class="card  mb-3" style="overflow-y: auto;">
+                            <div class="card-body" style="overflow-y: auto;">
                                 <a class="dropdown-item  " href="{{ route('markRead', $notification->id) }}">
-                                    <h5 class="card-title">
+                                    <h5 class="card-title" style="text-overflow: clip;">
                                         <div class="row mb-1">
                                             <div class="col-8">
-                                                <span class="preview-subject ellipsis font-weight-medium text-dark">
+                                                <span class="preview-subject ellipsis font-weight-medium text-dark" >
                                                     {{ $notification->data['data']['title'] }}</span>
                                             </div>
                                             <div class="col-4 ">
@@ -48,7 +48,7 @@
                                             </div>
                                         </div>
                                     </h5>
-                                    <p class="card-text">
+                                    <p class="card-text" style="text-overflow: clip;">
                                         <div class="row">
                                             <p class="fw-light small-text mb-0">
                                                 {{ $notification->data['data']['body'] }} </p>
@@ -73,7 +73,7 @@
             <div class="row">
                 <div class="m-auto col-lg-6 col-md-12">
                     @foreach ($uestReadNotifi as $notification)
-                        <div class="card mb-3">
+                        <div class="card mb-3" style="overflow-y: auto;">
                             <div class="card-body">
                                 <a class="dropdown-item  " href="{{ route('markRead', $notification->id) }}">
                                     <h5 class="card-title">
@@ -118,21 +118,21 @@
             <div class="row">
                 <div class="m-auto col-lg-6 col-md-12">
                     @foreach ($uestAllNotifi as $notification)
-                        <div class="card mb-3">
+                        <div class="card mb-3" style="overflow-y: auto;">
                             <div class="card-body">
                                 <a class="dropdown-item  " href="{{ route('markRead', $notification->id) }}">
                                     <h5 class="card-title">
                                         <div class="row mb-1">
-                                            <div class="col-8">
+                                            <div class="col-lg-8 col-md-10">
                                                 <span class="preview-subject ellipsis font-weight-medium text-dark">
                                                     {{ $notification->data['data']['title'] }}</span>
                                             </div>
-                                            <div class="col-4 ">
+                                            <div class="col-lg-4  col-md-2">
                                                 {{-- Icon Cond --}}
                                                 @if ($notification->type == 'App\Notifications\MakeContact')
                                                     <i class="mdi mdi-phone-incoming px-5 mx-3  text-success"></i>
                                                 @elseif ($notification->type == 'App\Notifications\AdminPostReported')
-                                                    <i class="mdi mdi-alert-circle-outline px-5 mx-3 text-danger"></i>
+                                                    <i class="mdi mdi-alert-circle-outline px-1 mx-3 text-danger"></i>
                                                 @endif
                                                 {{-- End Icon Cond --}}
                                             </div>
