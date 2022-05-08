@@ -9,6 +9,7 @@ use App\Models\Tag;
 use Exception;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class TagController extends Controller
@@ -37,7 +38,11 @@ class TagController extends Controller
     {
         $data = $request->all();
         // dd($data);
-        $data = $request->validate(['name' => 'required|unique:tags,name']);
+
+        // $data = $request->validate(['name' => 'required|unique:tags,name']);
+        $validator = Validator::make($request->all() , ['name' => 'required|unique:tags,name']);
+        if($validator->fails())
+        {return back()->withErrors($validator->errors())->withInput();}
         try{
             for($i = 0 ; $i < count($request->name);$i++ )
             {
