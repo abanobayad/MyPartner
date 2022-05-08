@@ -17,10 +17,10 @@ class CreateMessagesTable extends Migration
             $table->bigIncrements('id');
             $table->string('body');
             $table->string('attachment')->nullable();
-            $table->foreignId('user1_id')->constrained('users','id');
-            $table->foreignId('user2_id')->constrained('chats','id');
-            $table->enum('v_s',[1,0])->default(1); //1 means visable
-            $table->enum('v_r',[1,0])->default(1); //1 means visable
+            $table->foreignId('sender_id')->constrained('users','id');
+            $table->foreignId('chat_id')->constrained('chats','id');
+            $table->enum('v_user1',[1,0])->default(1); //1 means visable
+            $table->enum('v_user2',[1,0])->default(1); //1 means visable
             $table->integer('seen')->default(0);
             $table->timestamps();
         });

@@ -21,6 +21,9 @@ class ChatController extends BaseController
 
         $chat = chat::select()->where([['user1_id',$user1],['user2_id',$user2]])->orWhere([['user1_id',$user2],['user2_id',$user1]])->first();
 
+        if(is_null($chat)){
+            return $this->SendError('there in no conversation with this user');
+        }
         if( $chat->user1_id == Auth::id()){
             $messages = message::select()->where([ ['chat_id',$chat->id] , ['v_user1',1] ])->get();
         }else{

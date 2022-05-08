@@ -46,9 +46,9 @@ class TagController extends Controller
                 $tag->admin_id = $request->admin_id;
                 $tag->cat_id = $request->category_id[$i];
                 $tag->name = $request->name[$i];
-                $newImgName = $request->image[$i]->hashName();
+                /*$newImgName = $request->image[$i]->hashName();
                     Image::make($request->image[$i])->save(public_path('uploads/Tags/' . $newImgName));
-                $tag->image = $newImgName;
+                $tag->image = $newImgName;*/
                 $tag->save();
             }
             Alert::success('Add Completed' , 'Tags Added Successfully');

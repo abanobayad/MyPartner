@@ -66,27 +66,25 @@ class GroupController extends Controller
 
         $data = $request->all();
         $search_tag = $request->has('tag') ? $request->get('tag'):[];
-        // dd($search_tag);
 
         $s = Validator::make($data , [
             'name' => 'required|max:50',
             'description' => 'required|max:255',
             'category_id' => 'required|exists:categories,id',
             'tag' => 'required',
-            'image' => 'required|image|mimes:jpg,jpeg,png',
+            //'image' => 'required|image|mimes:jpg,jpeg,png',
             'admin_id' => 'required|exists:admins,id',
         ]);
         if($s ->fails()){return back()->with('search_tag' , $search_tag)->withErrors($s->errors())->withInput();}
 
-        $new_name =  $data['image']->hashName();
-        Image::make($data['image'])->save(public_path('uploads/Groups/' . $new_name)); //To store Image on the server
-        //  dd($new_name);
+        //$new_name =  $data['image']->hashName();
+        //Image::make($data['image'])->save(public_path('uploads/Groups/' . $new_name)); //To store Image on the server
 
         $group = Group::create([
             'name'          => $request->name,
             'description'   => $request->description,
             'category_id'   => $request->category_id,
-            'image'         => $new_name,
+            //'image'         => $new_name,
             'admin_id'      => $request->admin_id,
         ]);
         $group->tags()->attach($request->tag);
