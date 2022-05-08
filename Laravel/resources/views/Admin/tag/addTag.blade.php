@@ -35,14 +35,14 @@
                         <div class="row justify-content-between">
                             <div class="col-md-4 col-sm-12 form-group">
                                 <label class="control-label" for="ourField">Tag Name</label>
-                                <input class="form-control" name="name[]" type="text" placeholder="Enter Name" required />
+                                <input class="form-control" name="name[]" type="text" placeholder="Enter Name" required  />
                                 @error('name')<span class="text-danger">{{$message}}</span>@enderror
 
                             </div>
 
                             <div class="col-md-3 mb-3">
                                 <label for="exampleInputEmail1" class="form-label ">Select Group Category</label>
-                                <select name="category_id[]" class="alert-dark mx-2">
+                                <select name="category_id[]" class="alert-dark mx-2" >
                                     @foreach ($categories as $category)
                                     <option class="btn btn-outline-dark" name="category[]" value="{{$category->id}}" > {{$category->name}} </option>
                                     @endforeach

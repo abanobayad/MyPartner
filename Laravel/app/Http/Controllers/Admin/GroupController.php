@@ -7,10 +7,12 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Group;
 use App\Models\Tag;
+use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
+
 class GroupController extends Controller
 {
 
@@ -24,7 +26,7 @@ class GroupController extends Controller
     public function show($id)
     {
         $group = Group::find($id);
-        return view('Admin.group.showGroup' , compact('group'));
+        return view('Admin.group.showGroup', compact('group'));
     }
 
 
@@ -41,10 +43,10 @@ class GroupController extends Controller
         $cats = Category::all();
 
         //filter categories with no tags
-        $categories =[];
+        $categories = [];
         foreach ($cats as $cat) {
-            if($cat->tags()->first() != null)
-                array_push($categories , $cat);
+            if ($cat->tags()->first() != null)
+                array_push($categories, $cat);
         }
         // dd($categories);
         return view('Admin.group.addGroup1', compact('categories'));
@@ -54,8 +56,7 @@ class GroupController extends Controller
     {
         $category = Category::find($category_id);
         $tags = $category->tags()->get();
-        return view('Admin.group.addGroup2', compact('category' , 'tags'));
-
+        return view('Admin.group.addGroup2', compact('category', 'tags'));
     }
 
 
@@ -65,30 +66,34 @@ class GroupController extends Controller
     {
 
         $data = $request->all();
-        $search_tag = $request->has('tag') ? $request->get('tag'):[];
+        $search_tag = $request->has('tag') ? $request->get('tag') : [];
+        // dd($search_tag);
 
-        $s = Validator::make($data , [
+        $s = Validator::make($data, [
             'name' => 'required|max:50',
             'description' => 'required|max:255',
             'category_id' => 'required|exists:categories,id',
             'tag' => 'required',
-            //'image' => 'required|image|mimes:jpg,jpeg,png',
+            'image' => 'required|image|mimes:jpg,jpeg,png',
             'admin_id' => 'required|exists:admins,id',
         ]);
-        if($s ->fails()){return back()->with('search_tag' , $search_tag)->withErrors($s->errors())->withInput();}
+        if ($s->fails()) {
+            return back()->with('search_tag', $search_tag)->withErrors($s->errors())->withInput();
+        }
 
-        //$new_name =  $data['image']->hashName();
-        //Image::make($data['image'])->save(public_path('uploads/Groups/' . $new_name)); //To store Image on the server
+        $new_name =  $data['image']->hashName();
+        Image::make($data['image'])->save(public_path('uploads/Groups/' . $new_name)); //To store Image on the server
+        //  dd($new_name);
 
         $group = Group::create([
             'name'          => $request->name,
             'description'   => $request->description,
             'category_id'   => $request->category_id,
-            //'image'         => $new_name,
+            'image'         => $new_name,
             'admin_id'      => $request->admin_id,
         ]);
         $group->tags()->attach($request->tag);
-        Alert::success('Add Completed', 'Group '.$group->name .' Added Successfully');
+        Alert::success('Add Completed', 'Group ' . $group->name . ' Added Successfully');
 
         return redirect(route('admin.group.index'));
     }
@@ -124,25 +129,40 @@ class GroupController extends Controller
         $group = Group::whereId($request->id)->first();
 
 
-        $OldImgName = Group::findOrfail($request->id)->image;
-        // dd($OldImgName);
-
         if ($request->hasFile('image')) {
-            Storage::disk('uploads')->delete('Groups/' . $OldImgName);
-            $newImgName = $request->image->hashName();
-            Image::make($data['image'])->save(public_path('uploads/Groups/' . $newImgName));
-            $data['image'] = $newImgName;
-        } else    $data['image'] = $OldImgName;
+
+            //check old image
+            $OldImg = Group::find($request->id)->image;
+
+            //has no old image
+            if ($OldImg == null) {
+                $newImgName = $request->image->hashName();
+                $request->file('image')->move('uploads/Groups/', $newImgName);
+                $data['image'] = $newImgName;
+            }
+            //has old image
+            else {
+                $group = Group::find($request->id);
+                $dest = 'uploads/Groups/' . $group->image;
+                if (File::exists($dest)) {
+                    File::delete($dest);
+                }
+                $newImgName = $request->image->hashName();
+                $request->file('image')->move('uploads/Groups/', $newImgName);
+                $data['image'] = $newImgName;
+            }
+        }
+
 
         $group->update([
             'name'          => $request->name,
             'description'   => $request->description,
             'category_id'   => $request->category_id,
             'image'         => $data['image'],
-            'admin_id' =>      $data ['admin_id'],
+            'admin_id' =>      $data['admin_id'],
         ]);
         $group->tags()->sync($request->tag);
-        Alert::success('Edit Completed', 'Group '.$group->name .' Changed Successfully');
+        Alert::success('Edit Completed', 'Group ' . $group->name . ' Changed Successfully');
         return back();
         // return redirect(route('admin.group.index'));
     }
@@ -150,12 +170,15 @@ class GroupController extends Controller
 
     public function delete($id)
     {
-        $imgName = Group::findOrfail($id)->image;
-        Storage::disk('uploads')->delete('Groups/'. $imgName);
-        $group = Group::findOrfail($id);
-        $group_name = Group::findOrfail($id)->name;
+
+        $group = Group::find($id);
+        $group_name = $group->name;
+        $dest = 'uploads/Groups/' . $group->image;
+        if (File::exists($dest)) {
+            File::delete($dest);
+        }
         $group->delete();
-        Alert::success('Delete Completed', 'Group '.$group_name .' Deleted Successfully');
+        Alert::success('Delete Completed', 'Group ' . $group_name . ' Deleted Successfully');
         return redirect(route('admin.group.index'));
     }
 }
