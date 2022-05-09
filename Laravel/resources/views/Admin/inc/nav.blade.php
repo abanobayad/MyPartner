@@ -143,6 +143,8 @@
                                                         <i class="mdi mdi-phone-incoming px-5 mx-3  text-success"></i>
                                                     @elseif ($notification->type == 'App\Notifications\AdminPostReported')
                                                         <i class="mdi mdi-alert-circle-outline px-5 mx-3 text-danger"></i>
+                                                    @elseif ($notification->type == 'App\Notifications\PostAdded')
+                                                        <i class="mdi mdi-flag px-5 mx-3 text-primary"></i>
                                                     @endif
                                                     {{-- End Icon Cond --}}
                                                 </div>
@@ -336,6 +338,25 @@
                 </ul>
             </div>
         </li>
+
+               {{-- Posts --}}
+               <li class="nav-item nav-category">Posts</li>
+               <li class="nav-item">
+                   <a class="nav-link" data-bs-toggle="collapse" href="#posts" aria-expanded="false"
+                       aria-controls="posts">
+                       <i class="menu-icon mdi mdi-cards-outline"></i>
+                       <span class="menu-title">Posts Actions</span>
+                       <i class="menu-arrow"></i>
+                   </a>
+
+
+                   <div class="collapse" id="posts">
+                       <ul class="nav flex-column sub-menu">
+                           <li class="nav-item"> <a class="nav-link"
+                                   href="{{ route('admin.group.index') }}">Show Posts</a></li>
+                       </ul>
+                   </div>
+               </li>
 
 
         {{-- Contacts --}}

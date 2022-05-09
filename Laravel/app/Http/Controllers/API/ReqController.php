@@ -115,11 +115,22 @@ class ReqController extends BaseController
     {
 
         $post = Post::find($post_id);
+        if($post == null)
+        {
+            return $this->SendError("Post Not Found");
+        }
 
         if(Auth::id() != $post->user_id)
         {
             return $this->SendError("You Are Not Allowed To Edit This Request");
         }
+            $q  =DB::table('requests')->where('post_id', $post_id)->where('requester_id', $requester_id)->first();
+
+            if($q == null)
+        {
+            return $this->SendError("Request Not Found");
+        }
+
         // DB::table('course_student')->where('student_id',$id)->where('course_id', $c_id)->update(['status'=>'approve']);
         DB::table('requests')->where('post_id', $post_id)->where('requester_id', $requester_id)->update(['status' => 'accept']);
         return $this->SendResponse('Done' , "Request Accepted");
@@ -127,12 +138,21 @@ class ReqController extends BaseController
 
     public function rejectRequest($post_id, $requester_id)
     {
-
         $post = Post::find($post_id);
+        if($post == null)
+        {
+            return $this->SendError("Post Not Found");
+        }
 
         if(Auth::id() != $post->user_id)
         {
             return $this->SendError("You Are Not Allowed To Edit This Request");
+        }
+            $q  =DB::table('requests')->where('post_id', $post_id)->where('requester_id', $requester_id)->first();
+
+            if($q == null)
+        {
+            return $this->SendError("Request Not Found");
         }
         // DB::table('course_student')->where('student_id',$id)->where('course_id', $c_id)->update(['status'=>'approve']);
         DB::table('requests')->where('post_id', $post_id)->where('requester_id', $requester_id)->update(['status' => 'reject']);

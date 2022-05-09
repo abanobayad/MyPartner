@@ -17,7 +17,7 @@ class AccountController extends BaseController
         $user = User::find(Auth::id());
         $profile = $user->profile()->first();
         // dd($profile->user()->first()->name);
-        $posts = $user->posts()->get();
+        $posts = $user->posts()->where('visible','yes')->get();
         $rate = Rate::select()->where('receiver_id', $user->id)->get();
         $sum = 0;
         if ($rate->count() ==0) {

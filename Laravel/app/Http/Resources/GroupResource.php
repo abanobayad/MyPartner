@@ -14,12 +14,24 @@ class GroupResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'id'                => $this->id,
-            'name'              =>$this->name,
-            'description'       =>$this->description,
-            'image'             => public_path('uploads/Groups/').$this->image,
-            'updated_at'        =>$this->updated_at->diffForhumans(),
-        ];
+        if($this->image ==null)
+        {
+            return [
+                'id'                => $this->id,
+                'name'              =>$this->name,
+                'description'       =>$this->description,
+                'updated_at'        =>$this->updated_at->diffForhumans(),
+            ];
+        }
+        else
+        {
+            return [
+                'id'                => $this->id,
+                'name'              =>$this->name,
+                'description'       =>$this->description,
+                'image'             => public_path('uploads/Groups/').$this->image,
+                'updated_at'        =>$this->updated_at->diffForhumans(),
+            ];
+        }
     }
 }
