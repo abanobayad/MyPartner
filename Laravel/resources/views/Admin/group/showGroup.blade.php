@@ -2,16 +2,16 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-8 col-md-12  m-auto">
+        <div class="col-lg-6 col-md-12  m-auto">
             <div class="row">
                 <div class=" col-12 m-auto">
                     <div class="card m-auto">
-                        <div class="card-body">
+                        <div class="card-body m-auto">
                             <h4 class="fw-bold text-muted mb-3">
                                 <i class="mdi mdi-group"></i>
                                 {{ $group->name }}</h4>
-                            <img class="card-img-top img-lg" style="height: 100%"
-                                src="{{ asset('uploads/Groups' . '/' . $group->image) }}">
+                                        <img class="card-img-top img-lg m-auto" style="height: 25% ;  object-fit:contain"
+                                            src="{{ asset('uploads/Groups' . '/' . $group->image) }}">
                             <h6 class="card-text mt-4">Category :
                                 <a href="{{ route('admin.cat.show', $group->category->id) }}"
                                     style="text-decoration: none">

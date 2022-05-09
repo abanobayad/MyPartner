@@ -93,27 +93,27 @@
 
                 <a class="nav-link count-indicator" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
                     <i class="icon-bell icon-lg"></i>
-                    <span id="noti_count" >
-                    @if (auth()->guard('admin')->user()->unreadNotifications->count() > 0)
-                        <span class="count "></span>
-                        <span class=" badge badge-danger text-warning"
-                            id="noti_count">{{ auth()->guard('admin')->user()->unreadNotifications->count() }}
-                        </span>
-                    @else
-                        <span class=" badge badge-dark text-dark ">
+                    <span id="noti_count">
+                        @if (auth()->guard('admin')->user()->unreadNotifications->count() > 0)
+                            <span class="count "></span>
+                            <span class=" badge badge-danger text-warning"
+                                id="noti_count">{{ auth()->guard('admin')->user()->unreadNotifications->count() }}
+                            </span>
+                        @else
+                            <span class=" badge badge-dark text-dark ">
                                 {{ auth()->guard('admin')->user()->unreadNotifications->count() }}
 
-                        </span>
-                    @endif
+                            </span>
+                        @endif
                     </span>
 
                 </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0 " style="width: 400px;" style="overflow-y: auto;"
-                    aria-labelledby="notificationDropdown">
+                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0 " style="width: 400px;"
+                    style="overflow-y: auto;" aria-labelledby="notificationDropdown">
                     <a href="{{ route('markAllRead') }}" class="dropdown-item py-2 border-bottom">
                         <div class="row">
                             <div class="col-8">
-                                <p class="mb-0 font-weight-medium float-left" >
+                                <p class="mb-0 font-weight-medium float-left">
                                     You have
                                     <span id="noti_countt">
                                         {{ auth()->guard('admin')->user()->unreadNotifications->count() }}
@@ -127,10 +127,23 @@
                         </div>
                     </a>
                     <div id="noti_content">
-                        @foreach (auth()->guard('admin')->user()->unreadNotifications->sortByDesc('updated_at')->take(3) as $notification)
-                            <a class="dropdown-item  preview-item py-3" href="{{ route('markRead', $notification->id) }}">
+                        @foreach (auth()->guard('admin')->user()->unreadNotifications->sortByDesc('updated_at')->take(3)
+    as $notification)
+                            <a class="dropdown-item  preview-item py-3"
+                                href="{{ route('markRead', $notification->id) }}">
                                 <div class="preview-item-content">
                                     <h6 class="preview-subject fw-normal text-dark mb-1">
+
+                                        {{-- <div class="preview-thumbnail">
+                                            @if ($notification->type == 'App\Notifications\MakeContact')
+                                                <i class="mdi mdi-phone-incoming m-auto text-success"></i>
+                                            @elseif ($notification->type == 'App\Notifications\AdminPostReported')
+                                                <i class="mdi mdi-alert m-auto text-danger"></i>
+                                            @elseif ($notification->type == 'App\Notifications\PostAdded')
+                                                <i class="mdi mdi-flag m-auto text-primary"></i>
+                                            @endif
+                                        </div> --}}
+
                                         <div class="preview-item-content flex-grow py-2 col-md-12">
                                             <div class="row mb-1">
                                                 <div class="col-8">
@@ -142,9 +155,10 @@
                                                     @if ($notification->type == 'App\Notifications\MakeContact')
                                                         <i class="mdi mdi-phone-incoming px-5 mx-3  text-success"></i>
                                                     @elseif ($notification->type == 'App\Notifications\AdminPostReported')
-                                                        <i class="mdi mdi-alert-circle-outline px-5 mx-3 text-danger"></i>
+                                                        <i
+                                                            class="mdi mdi-alert-circle-outline px-5 mx-3 text-danger"></i>
                                                     @elseif ($notification->type == 'App\Notifications\PostAdded')
-                                                        <i class="mdi mdi-flag px-5 mx-3 text-primary"></i>
+                                                        <i class="mdi mdi-flag px-5 mx-4  text-primary"></i>
                                                     @endif
                                                     {{-- End Icon Cond --}}
                                                 </div>
@@ -161,10 +175,32 @@
                                 </div>
                             </a>
                         @endforeach
+                        {{-- @foreach (auth()->guard('admin')->user()->unreadNotifications->sortByDesc('updated_at')->take(3) as $notification)
+                            <a class="dropdown-item preview-item py-3"
+                                href="{{ route('markRead', $notification->id) }}">
+                                <div class="preview-thumbnail">
+                                    @if ($notification->type == 'App\Notifications\MakeContact')
+                                        <i class="mdi mdi-phone-incoming m-auto text-success"></i>
+                                    @elseif ($notification->type == 'App\Notifications\AdminPostReported')
+                                        <i class="mdi mdi-alert m-auto text-danger"></i>
+                                    @elseif ($notification->type == 'App\Notifications\PostAdded')
+                                        <i class="mdi mdi-flag m-auto text-primary"></i>
+                                    @endif
+                                </div>
+                                <div class="preview-item-content flex-grow">
+                                    <h6 class="preview-subject fw-normal text-dark mb-1">
+                                        {{ $notification->data['data']['title'] }}</h6>
+                                    <p class="fw-bold small-text mb-0"> {{ $notification->data['data']['body'] }}
+                                    </p>
+                                    <p class="fw-light small-text mb-0">
+                                        {{ $notification->updated_at->diffForHumans() }} </p>
+                                </div>
+                            </a>
+                        @endforeach --}}
                     </div>
                     <div class="row">
                         <div class="col-12">
-                          <a href="{{ route('showAll') }}" class="dropdown-item py-3 border-bottom">
+                            <a href="{{ route('showAll') }}" class="dropdown-item py-3 border-bottom">
                                 <span class=" m-auto   text-muted ">Show All</span>
                             </a>
                         </div>
@@ -299,16 +335,19 @@
         {{-- Tags --}}
         <li class="nav-item nav-category">TAGS</li>
         <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#tags" aria-expanded="false" aria-controls="tags">
+            <a class="nav-link" data-bs-toggle="collapse" href="#tags" aria-expanded="false"
+                aria-controls="tags">
                 <i class="menu-icon mdi mdi-tag-multiple"></i>
                 <span class="menu-title">TAG Actions</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="tags">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('admin.tag.create') }}">Add
+                    <li class="nav-item"> <a class="nav-link"
+                            href="{{ route('admin.tag.create') }}">Add
                             Tag</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('admin.tag.index') }}">Edit
+                    <li class="nav-item"> <a class="nav-link"
+                            href="{{ route('admin.tag.index') }}">Edit
                             Tag</a></li>
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('admin.tag.index') }}">Delete Tag</a></li>
@@ -339,24 +378,24 @@
             </div>
         </li>
 
-               {{-- Posts --}}
-               <li class="nav-item nav-category">Posts</li>
-               <li class="nav-item">
-                   <a class="nav-link" data-bs-toggle="collapse" href="#posts" aria-expanded="false"
-                       aria-controls="posts">
-                       <i class="menu-icon mdi mdi-cards-outline"></i>
-                       <span class="menu-title">Posts Actions</span>
-                       <i class="menu-arrow"></i>
-                   </a>
+        {{-- Posts --}}
+        <li class="nav-item nav-category">Posts</li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#posts" aria-expanded="false"
+                aria-controls="posts">
+                <i class="menu-icon mdi mdi-cards-outline"></i>
+                <span class="menu-title">Posts Actions</span>
+                <i class="menu-arrow"></i>
+            </a>
 
 
-                   <div class="collapse" id="posts">
-                       <ul class="nav flex-column sub-menu">
-                           <li class="nav-item"> <a class="nav-link"
-                                   href="{{ route('admin.group.index') }}">Show Posts</a></li>
-                       </ul>
-                   </div>
-               </li>
+            <div class="collapse" id="posts">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link"
+                            href="{{ route('admin.group.index') }}">Show Posts</a></li>
+                </ul>
+            </div>
+        </li>
 
 
         {{-- Contacts --}}
@@ -435,3 +474,6 @@
 
 </nav>
 <!-- partial -->
+
+
+

@@ -40,6 +40,12 @@
                                 <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#groupss" role="tab"
                                     aria-selected="false">Groups</a>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link border-0" id="more-tab" data-bs-toggle="tab" href="#postss" role="tab"
+                                    aria-selected="false">Posts</a>
+                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link border-0" id="more-tab" data-bs-toggle="tab" href="#tagss" role="tab"
                                     aria-selected="false">Tags</a>
@@ -116,7 +122,7 @@
                                         <div>
                                             <a href="{{ route('admin.post.index') }}" style="text-decoration: none">
                                                 <p class="statistics-title">Total Posts</p>
-                                                <h3 class="rate-percentage">{{ $data['contacts_count'] }}</h3>
+                                                <h3 class="rate-percentage">{{ $data['posts_count'] }}</h3>
                                                 <p class="text-danger d-flex"><i class="mdi mdi mdi-cards-outline"></i></p>
                                             </a>
                                         </div>
@@ -306,6 +312,76 @@
                                 @endforeach
 
                             </div>
+                            <hr>
+                        </div>
+
+
+
+                        {{-- Posts --}}
+                        <div class="tab-pane fade show " id="postss" role="tabpanel" aria-labelledby="postss">
+                            <h4 class="text-muted pb-1">Posts</h4>
+                            <div class="row">
+                                <div class="col-lg-3 m-auto text-center col-sm-12">
+                                    <div class="statistics-details d-flex align-items-center justify-content-between">
+                                        <div class="card card-body bg-light ">
+                                            <a href="{{ route('admin.tag.index') }}" style="text-decoration: none">
+                                                <p class="statistics-title">Total Posts</p>
+                                            </a>
+                                            <h3 class="rate-percentage">{{ $data['posts_count'] }}</h3>
+                                            <p class="text-dark text-center pt-2"><i class="mdi mdi-cards"></i></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                {{-- Details --}}
+                                <h5 class="text-muted pb-1">Latest Posts</h5>
+                                @foreach ($data['posts'] as $post)
+                                    <div class="col-md-6 col-lg-4 grid-margin stretch-card">
+                                        <div class="card bg-dark card-rounded pb-2">
+                                            <div class="card-body pb-0">
+                                                <a href="{{ route('admin.post.show', $post->id) }}"
+                                                    style="text-decoration: none">
+                                                    <h4 class="card-title card-title-dash text-white mb-2">
+                                                        {{ $post->title }}
+                                                        <i class="mdi mdi-cards-outline"></i>
+                                                    </h4>
+                                                </a>
+
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <p class="status-summary-ight-white mb-1 d-inline">
+                                                            By:
+                                                        </p>
+                                                        <p class=" d-inline mb-2 ">
+                                                            <a href="{{ route('admin.user.show', $post->user->id) }}" style="text-decoration: none" class="text-light">
+                                                                {{ $post->user->name }} <i class="mdi mdi-account-outline"></i>
+                                                            </a>
+                                                        </p>
+                                                        <br>
+                                                        {{-- Group det --}}
+                                                        <p class="status-summary-ight-white mb-1 d-inline">Group
+                                                            :</p>
+                                                        <p class=" d-inline mb-2 ">
+                                                            <a href="{{ route('admin.group.show', $post->group->id) }}" style="text-decoration: none" class="text-light">
+                                                                {{ $post->group->name }} <i class="mdi mdi-group"></i>
+                                                            </a>
+                                                        </p>
+                                                        <p class="status-summary-ight-white mb-1">
+                                                            {{ $post->created_at->diffForHumans() }}
+                                                        </p>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                            </div>
+
                             <hr>
                         </div>
 
