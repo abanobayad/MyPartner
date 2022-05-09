@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Resources\CategoryCollection;
+use App\Http\Resources\GroupCollection;
 use App\Http\Resources\InterCategoryCollection;
 use App\Http\Resources\ProfileResource;
 use App\Http\Resources\UserResource;
@@ -57,4 +58,13 @@ class InterestController extends BaseController
         $data = new InterCategoryCollection($user->intrest_cat()->orderBy('updated_at', 'desc')->get());
         return $this->SendResponse($data ,'Interests Sent');
     }
+
+    public function manyVgroups()
+    {
+        $user = User::find(Auth::id());
+        $groups = $user->group_visits()->orderBy('times','desc')->get()->take(5);
+        return $this->SendResponse( new GroupCollection($groups) ,'Many Visited Groups Sent');
+    }
+
+
 }

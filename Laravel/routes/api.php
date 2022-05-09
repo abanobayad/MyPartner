@@ -24,7 +24,7 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
             Route::get('/{id}', 'ProfileController@UserAcc');   //Show Profile & Posts of  User with his user ID
         });
 
-        
+
         //Account
         Route::prefix('/account')->group(function () {
             Route::get('/', 'AccountController@myAccount');
@@ -35,6 +35,9 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
         Route::prefix('/interest')->group(function () {
             Route::post('/make', 'InterestController@make');
             Route::get('/show', 'InterestController@show');
+            Route::get('/many-vistited-groups', 'InterestController@manyVgroups');
+
+
         });
 
 

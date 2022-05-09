@@ -44,10 +44,22 @@
                 <div class="col-lg-4 col-md-12">
                     <div class="card single_post">
                         <div class="header">
-                            <h2><strong>Latest</strong> Post</h2>
+                            @if($post->status == 'pending')
+                            <h2><strong>Pending</strong> Post <i class="mdi mdi-clock"></i> </h2>
+                            @elseif($post->status == 'reject')
+                            <h2 class="text-danger"><strong>Rejected</strong> Post
+                                <i class="mdi mdi-close-circle-outline"></i>
+
+                            </h2>
+                            @elseif($post->status == 'accept')
+                            <h2 class="text-success"><strong>Accepted</strong> Post
+                                <i class="mdi mdi-check-circle-outline"></i>
+
+                            </h2>
+                            @endif
                         </div>
                         <div class="body">
-                            <h3 class="m-t-0 m-b-5"><a href="blog-details.html">{{$post->title}}</a></h3>
+                            <h3 class="m-t-0 m-b-5"><a href="{{route('admin.post.show' , $post->id)}}">{{$post->title}}</a></h3>
                             <ul class="meta">
                                 <li><a href=""><i class="mdi mdi-account col-blue"></i>Posted By: {{$post->user->name}}</a></li>
                                 <br>

@@ -91,7 +91,7 @@
                                             <a href="{{ route('admin.tag.index') }}" style="text-decoration: none">
                                                 <p class="statistics-title">Total Tags</p>
                                                 <h3 class="rate-percentage">{{ $data['tags_count'] }}</h3>
-                                                <p class="text-danger d-flex"><i class="mdi mdi-tag-multiple"></i></p>
+                                                <p class="text-danger d-flex"><i class="mdi mdi-tag-outline"></i></p>
                                             </a>
                                         </div>
 
@@ -114,6 +114,14 @@
                                         </div>
 
                                         <div>
+                                            <a href="{{ route('admin.post.index') }}" style="text-decoration: none">
+                                                <p class="statistics-title">Total Posts</p>
+                                                <h3 class="rate-percentage">{{ $data['contacts_count'] }}</h3>
+                                                <p class="text-danger d-flex"><i class="mdi mdi mdi-cards-outline"></i></p>
+                                            </a>
+                                        </div>
+
+                                        <div>
                                             <a href="{{ route('admin.contact.index') }}" style="text-decoration: none">
                                                 <p class="statistics-title">Total Contacts</p>
                                                 <h3 class="rate-percentage">{{ $data['contacts_count'] }}</h3>
@@ -127,7 +135,7 @@
                                             <a href="{{ route('admin.user.index') }}" style="text-decoration: none">
                                                 <p class="statistics-title">Total Users</p>
                                                 <h3 class="rate-percentage">{{ $data['users_count'] }}</h3>
-                                                <p class="text-danger d-flex"><i class="mdi mdi-account"></i></p>
+                                                <p class="text-danger d-flex"><i class="mdi mdi-account-outline"></i></p>
                                             </a>
                                         </div>
                                     </div>
