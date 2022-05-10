@@ -7,13 +7,15 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Resources\PostResource;
 use App\Http\Resources\SavedPostsCollection;
+use App\Models\Admin;
 use App\Models\SavedPosts;
+use App\Notifications\PostAdded;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Notification;
 
 class PostController extends BaseController
 {
@@ -47,6 +49,7 @@ class PostController extends BaseController
             ]
         );
         $input['user_id'] = Auth::user()->id;
+        $input['visible'] = 'no';
 
         if ($validator->fails()) {
             return $this->SendError("Validate Input",  $validator->errors());
@@ -59,7 +62,20 @@ class PostController extends BaseController
 
             $post = Post::create($input);
             $js_prof = new PostResource($post);
-            return $this->SendResponse($js_prof, "Post Added");
+
+                       //Notification part start
+           $Admins = Admin::all();
+           $group = $post->group;
+           $details = [
+            'post_id' => $post->id,
+            'title' => Auth::user()->name. ' Add Post ',
+            'body' => Auth::user()->name. ' add ' .$post->title.' post in '.$group->name. ' group ....Take Action',
+            ];
+           Notification::send($Admins , new PostAdded($details));
+           //notification part end
+
+
+            return $this->SendResponse($js_prof, "Post Sent To Admins , please wait untile take an action");
         }
     }
 

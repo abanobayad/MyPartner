@@ -54,6 +54,18 @@ class User extends Authenticatable
         return $this->belongsToMany(Category::class , 'interests' ,  'user_id' ,'category_id'  );
     }
 
+    public function group_visits()
+    {
+        return $this->belongsToMany(Group::class , 'group_visits' ,  'user_id' ,'group_id'  );
+    }
+
+
+
+    public function vists()
+    {
+        return $this->hasMany(GroupVist::class, 'user_id');
+    }
+
 
 
 

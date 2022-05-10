@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Group;
+use App\Models\Post;
 use App\Models\Rate;
 use App\Models\Report;
 use App\Models\Tag;
@@ -23,6 +24,7 @@ class DashboardController extends Controller
             'users_count'       => User::all()->count(),
             'reports_count'     => Report::all()->count(),
             'contacts_count'       => Contact::all()->count(),
+            'posts_count'           => Post::all()->count(),
             'groups'            => Group::select()->latest('updated_at')->take(3)->get(),
             'categories'        => Category::select()->latest('updated_at')->take(3)->get(),
             'tags'              => Tag::select()->latest('updated_at')->take(3)->get(),
@@ -30,6 +32,7 @@ class DashboardController extends Controller
             'not_h_reports'           => Report::select()->where('is_handled' , 'no')->get(),
             'h_reports'           => Report::select()->where('is_handled' , 'yes')->get(),
             'contacts'             => Contact::select()->latest('updated_at')->take(3)->get(),
+            'posts'             => Post::select()->latest('updated_at')->take(3)->get(),
 
 
         ];

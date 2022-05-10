@@ -34,6 +34,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
 
         //category routes
         Route::prefix('/cat')->group(function () {
+            Route::get('/test', 'CatController@test');
             Route::get('/', 'CatController@index')->name('admin.cat.index');
             Route::get('/show/{id}', 'CatController@show')->name('admin.cat.show');
             Route::get('/create', 'CatController@create')->name('admin.cat.create');
@@ -103,7 +104,10 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
 
 //Posts
         Route::prefix('/post')->group(function () {
+            Route::any('/', 'PostController@index')->name('admin.post.index');
             Route::get('/show/{id}', 'PostController@show')->name('admin.post.show');
+            Route::get('/approve/{id}', 'PostController@approve')->name('admin.post.approve');
+            Route::get('/reject/{id}', 'PostController@reject')->name('admin.post.reject');
         });
 
 

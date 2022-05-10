@@ -53,4 +53,14 @@ class Group extends Model
     {
         return $this->hasMany(Post::class);
     }
+
+    public function group_visits()
+    {
+        return $this->belongsToMany(User::class , 'group_visits' ,'group_id', 'user_id');
+    }
+
+    public function vists()
+    {
+        return $this->hasMany(GroupVist::class, 'group_id');
+    }
 }

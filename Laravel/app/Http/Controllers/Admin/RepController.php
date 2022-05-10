@@ -78,15 +78,13 @@ class RepController extends Controller
         $reporter = User::find($user_id);
         $owner = User::find($post->user_id);
         $details2owner = [
-            'title' => $post->title . 'Post has been Reported',
-            'body' => 'Your Post '.$post->title.' in ' . $post->group->name . ' group is reported for reason'.$report->reason.'
-             \n  MyPartner team Delete Your Post'
+            'title' => $post->title . ' Post has been Reported',
+            'body' => 'Your Post '.$post->title.' in ' . $post->group->name . ' group is reported for reason'.$report->reason.' , MyPartner team Delete Your Post.'
         ];
 
         $details2reporter = [
             'title' => 'Report Accepted',
-            'body' => 'Your Report of ' .$post->title. 'Post in ' . $post->group->name . ' Group is Accepted By Myparnter Team
-            \n Thank You For Your Collaboration'
+            'body' => 'Your Report of ' .$post->title. ' Post in ' . $post->group->name . ' Group is Accepted By Myparnter Team , Thank You For Your Collaboration.'
         ];
         $reporter->notify(new PostReportApprovedToReportOwner($details2reporter));
         $owner->notify(new PostReportApprovedToPostOwner($details2owner));
@@ -101,7 +99,7 @@ class RepController extends Controller
         $reporter = User::find($user_id);
         $details2reporter = [
             'title' => 'Report Rejected',
-            'body' => 'Your Report of ' .$post->title. 'Post in ' . $post->group->name . ' Group is Rejected By Myparnter Team'
+            'body' => 'Your Report of ' .$post->title. ' Post in ' . $post->group->name . ' Group is Rejected By Myparnter Team'
         ];
         $reporter->notify(new PostReportRejectToReportOwner($details2reporter));
 
