@@ -20,7 +20,7 @@ class GroupCollection extends ResourceCollection
                     'id'                => $data->id,
                     'name'              =>$data->name,
                     'description'       =>$data->description,
-                    'image'             => public_path('uploads/Groups/').$data->image,
+                    'image'             => 'uploads/Groups/'.$data->image,
                     'updated_at'        =>$data->updated_at->diffForhumans(),
                 ];
             })

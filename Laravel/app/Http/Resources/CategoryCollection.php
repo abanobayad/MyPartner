@@ -19,7 +19,7 @@ class CategoryCollection extends ResourceCollection
                    return [
                        'id'                =>$data->id,
                        'name'              =>$data->name,
-                       'image'             => public_path('uploads/Categories/').$data->image,
+                       'image'             => 'uploads/Categories/'.$data->image,
                    ];
                })
        ];

@@ -16,7 +16,7 @@ class ProfileResource extends JsonResource
         [
             'user_id' => $this->user_id ,
             'name' => $this->user()->first()->name,
-            'image' => public_path('uploads/Users/').$this->image ,
+            'image' => 'uploads/Users/'.$this->image ,
             'address' =>$this->address ,
             'bio' =>$this->bio ,
             'phone' =>$this->phone ,

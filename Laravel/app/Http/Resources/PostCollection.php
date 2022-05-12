@@ -43,7 +43,7 @@ class PostCollection extends ResourceCollection
                         'title'             => $data->title,
                         'content'           => $data->content,
                         'location'          => $data->location,
-                        'image'             => public_path('uploads/Posts/') . $data->image,
+                        'image'             => 'uploads/Posts/' . $data->image,
                         'counter'           => $count,
                         'needed_persons'    => $data->needed_persons,
                         'price'             => $data->price,

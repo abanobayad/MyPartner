@@ -24,7 +24,7 @@ class PostController extends BaseController
     {
         $data = Post::all();
         foreach ($data as $d) {
-            $d->image =  public_path('uploads/Posts/') . $d->image;
+            $d->image =  'uploads/Posts/' . $d->image;
         }
         return $this->SendResponse($data, 'Data sent');
     }

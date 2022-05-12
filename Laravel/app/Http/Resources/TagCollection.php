@@ -20,7 +20,7 @@ class TagCollection extends ResourceCollection
                     'id'                =>$data->id,
                     'name'              =>$data->name,
                     'category'          =>$data->category->name,
-                    'image'             =>public_path('uploads/Tags/').$data->image,
+                    'image'             =>'uploads/Tags/'.$data->image,
                     'updated_at'        =>$data->updated_at->diffForhumans(),
                 ];
             })

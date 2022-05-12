@@ -15,11 +15,11 @@ class ReportResource extends JsonResource
         [
             'id' => $this->id,
 
-            'user ' => $this->user()->select('id' , 'name')->get(),
-            'post ' => $this->post()->select('id' , 'title')->get(),
+            'user' => $this->user()->select('id' , 'name')->get(),
+            'post' => $this->post()->select('id' , 'title')->get(),
 
-            'reason ' => $this->reason,
-            'feedback ' => $this->feedback,
+            'reason' => $this->reason,
+            'feedback' => $this->feedback,
             'updated_at' =>$this->updated_at->diffForhumans()
 
         ];

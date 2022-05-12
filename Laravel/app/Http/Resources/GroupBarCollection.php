@@ -17,7 +17,7 @@ class GroupBarCollection extends ResourceCollection
                         'id'                => $data->id,
                         'name'              =>$data->name,
                         'description'       =>$data->description,
-                        'image'             => public_path('uploads/Groups/').$data->image,
+                        'image'             => 'uploads/Groups/'.$data->image,
                         'created_at'        =>$data->created_at->format('d/m/Y'),
                         'updated_at'        =>$data->updated_at->format('d/m/Y'),
                         'Category'          =>[

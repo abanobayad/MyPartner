@@ -20,7 +20,7 @@ class CommentResource extends JsonResource
             [
                 'id' => $this->id,
                 'content' => $this->content,
-                'image' => public_path('uploads/Comments/').$this->image,
+                'image' => 'uploads/Comments/'.$this->image,
                 'created_at' =>$this->created_at->diffForhumans()
 
             ];

@@ -19,7 +19,7 @@ class RecentGroupsCollection extends ResourceCollection
                    return [
                        'id'                =>$data->id,
                        'name'              =>$data->name,
-                       'image'             => public_path('uploads/Groups/').$data->image,
+                       'image'             => 'uploads/Groups/'.$data->image,
                    ];
                })
        ];

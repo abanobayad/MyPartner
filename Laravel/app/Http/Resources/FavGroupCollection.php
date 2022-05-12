@@ -19,7 +19,7 @@ class FavGroupCollection extends ResourceCollection
                    return [
                        'id'                =>$data->groups->id,
                        'name'              =>$data->groups->name,
-                       'image'             => public_path('uploads/Groups/').$data->groups->image,
+                       'image'             => 'uploads/Groups/'.$data->groups->image,
                    ];
                })
        ];

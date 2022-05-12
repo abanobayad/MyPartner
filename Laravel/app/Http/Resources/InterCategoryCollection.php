@@ -20,12 +20,12 @@ class InterCategoryCollection extends ResourceCollection
                 return [
                        'id'                =>$data->id,
                        'name'              =>$data->name,
-                       'image'             => public_path('uploads/Categories/').$data->image,
+                       'image'             => 'uploads/Categories/'.$data->image,
                        'tags'             => new TagCollection($data->tags()->latest('updated_at')->take(3)->get()),
                        'groups'             =>  new GroupCollection($data->groups()->latest('updated_at')->take(3)->get()) ,
                    ];
 
-                   
+
                })
        ];
     }

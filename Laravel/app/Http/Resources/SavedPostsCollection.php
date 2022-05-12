@@ -19,7 +19,7 @@ class SavedPostsCollection extends ResourceCollection
                    return [
                        'id'                =>$data->post->id,
                        'title'              =>$data->post->title,
-                       'image'             => public_path('uploads/Posts/').$data->post->image,
+                       'image'             => 'uploads/Posts/'.$data->post->image,
                    ];
                })
        ];

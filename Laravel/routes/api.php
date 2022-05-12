@@ -63,6 +63,12 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
             Route::get('/show-fav-group', 'GroupController@showFav');         //Show Post and comments and replies with its ID
         });
 
+        //group
+        Route::prefix('/tag')->group(function () {
+
+            Route::get('/show/{id}', 'TagController@get')->name('showTag');         //Show Tag and Groups of this tag and some posts
+        });
+
 
         //Search
         Route::prefix('/search')->group(function () {

@@ -37,7 +37,7 @@ class PostResource extends JsonResource
                 'title'             => $this->title,
                 'content'           => $this->content,
                 'location'          => $this->location,
-                'image'             => public_path('uploads/Posts/').$this->image ,
+                'image'             => 'uploads/Posts/'.$this->image ,
                 'counter'           => $count,
                 'needed_persons'    => $this->needed_persons,
                 'price'             => $this->price,

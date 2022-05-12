@@ -15,7 +15,7 @@ class ReplyResource extends JsonResource
                 'id' => $this->id,
                 'content' => $this->content,
                 'username'=> $this->user->name,
-                'image' => public_path('uploads/Replies/').$this->image,
+                'image' => 'uploads/Replies/'.$this->image,
                 'created_at' =>$this->created_at->diffForhumans()
             ];
         }
