@@ -34,7 +34,7 @@
                                     </td>
                                 @else
                                     <td>
-                                        <img src="{{ asset('uploads/Groups') . '/' . $group->image }}"
+                                        <img style="object-fit: cover" src="{{ asset('uploads/Groups') . '/' . $group->image }}"
                                             alt="{{ $group->name }}">
                                     </td>
                                 @endif
@@ -51,6 +51,9 @@
                             </tr>
                         @endforeach
                         {{-- End Fetch Data --}}
+                        <div class="d-flex justify-content-center">
+                            {{ $groups->appends(request()->input())->links() }}
+                        </div>
                     </tbody>
                 </table>
                 </div>

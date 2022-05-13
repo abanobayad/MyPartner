@@ -20,7 +20,7 @@ class DashboardController extends Controller
         $data = [
             'groups_count'      => Group::all()->count(),
             'categories_count'  => Category::all()->count(),
-            'tags_count'        => Category::all()->count(),
+            'tags_count'        => Tag::all()->count(),
             'users_count'       => User::all()->count(),
             'reports_count'     => Report::all()->count(),
             'contacts_count'       => Contact::all()->count(),

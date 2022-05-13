@@ -39,7 +39,7 @@
                             </td>
                         @else
                             <td>
-                                <img src="{{ asset('uploads/Categories') . '/' . $cat->image }}">
+                                <img style="object-fit: cover" src="{{ asset('uploads/Categories') . '/' . $cat->image }}">
                             </td>
                         @endif
                         <td>
@@ -53,6 +53,9 @@
                     </tr>
                 @endforeach
                 {{-- End Fetch Data --}}
+                <div class="d-flex justify-content-center">
+                    {{ $cats->appends(request()->input())->links() }}
+                </div>
             </tbody>
         </table>
     </div>

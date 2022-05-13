@@ -1,7 +1,7 @@
 @extends('Admin.layout')
 
 @section('content')
-    <h4>Reports</h4>
+    <h4>Posts</h4>
 
     <div class="row">
         <div class="col-lg-8 col-sm-4 mb-1">

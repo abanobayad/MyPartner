@@ -68,6 +68,9 @@
                         </tr>
                     @endforeach
                     {{-- End Fetch Data --}}
+                    <div class="d-flex justify-content-center">
+                        {{ $reports->appends(request()->input())->links() }}
+                    </div>
                 </tbody>
             </table>
         </div>

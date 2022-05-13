@@ -18,13 +18,13 @@ class RepController extends Controller
     public function index(Request $request){
         $selected_reps = $request->has('handled') ? $request->get('handled'):null;
 
-        $reports = Report::all();
+        $reports = Report::paginate(10);
         // dd($reports);
 
         if($selected_reps != null){
 
-            if($selected_reps == 'yes'){$reports = Report::select()->where('is_handled' , 'yes')->get();}
-            if($selected_reps == 'no'){$reports = Report::select()->where('is_handled' , 'no')->get(); }
+            if($selected_reps == 'yes'){$reports = Report::select()->where('is_handled' , 'yes')->paginate(10);}
+            if($selected_reps == 'no'){$reports = Report::select()->where('is_handled' , 'no')->paginate(10); }
         }
        return view('Admin.report.index', compact('reports' , 'selected_reps'));
     }

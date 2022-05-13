@@ -392,7 +392,7 @@
             <div class="collapse" id="posts">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link"
-                            href="{{ route('admin.group.index') }}">Show Posts</a></li>
+                            href="{{ route('admin.post.index') }}">Show Posts</a></li>
                 </ul>
             </div>
         </li>

@@ -110,20 +110,22 @@
                                         </div>
 
 
-                                        <div>
-                                            <a href="{{ route('admin.report.index') }}" style="text-decoration: none">
-                                                <p class="statistics-title">Total Reports</p>
-                                                <h3 class="rate-percentage">{{ $data['groups_count'] }}</h3>
-                                                <p class="text-danger d-flex"><i
-                                                        class="mdi mdi-comment-question-outline"></i></p>
-                                            </a>
-                                        </div>
 
                                         <div>
                                             <a href="{{ route('admin.post.index') }}" style="text-decoration: none">
                                                 <p class="statistics-title">Total Posts</p>
                                                 <h3 class="rate-percentage">{{ $data['posts_count'] }}</h3>
                                                 <p class="text-danger d-flex"><i class="mdi mdi mdi-cards-outline"></i></p>
+                                            </a>
+                                        </div>
+
+
+                                        <div>
+                                            <a href="{{ route('admin.report.index') }}" style="text-decoration: none">
+                                                <p class="statistics-title">Total Reports</p>
+                                                <h3 class="rate-percentage">{{ $data['reports_count'] }}</h3>
+                                                <p class="text-danger d-flex"><i
+                                                        class="mdi mdi-comment-question-outline"></i></p>
                                             </a>
                                         </div>
 

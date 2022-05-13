@@ -12,7 +12,7 @@ class UserAController extends Controller
 {
     public function index()
     {
-        $data['users'] = User::select('id', 'name', 'email')->orderBy('id', 'desc')->get();
+        $data['users'] = User::select('id', 'name', 'email')->orderBy('id', 'desc')->paginate(10);
         return view('Admin.user.index')->with($data);
     }
 

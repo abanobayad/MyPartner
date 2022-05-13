@@ -41,8 +41,11 @@
                             class="btn btn-sm btn-danger text-white">Delete</a>
                     </td>
                 </tr>
-            @endforeach
+               @endforeach
                {{-- End Fetch Data --}}
+               <div class="d-flex justify-content-center">
+                {{ $rates->appends(request()->input())->links() }}
+            </div>
            </tbody>
        </table>
    </div>

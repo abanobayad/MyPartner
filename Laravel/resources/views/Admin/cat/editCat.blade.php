@@ -17,7 +17,7 @@
     <div class="mb-3">
             <label  class="form-label">Category Current Image</label>
             <div class="col-4  mb-5">
-                <img src="{{asset('uploads/Categories').'/'.$cat->image}}" alt="{{$cat->name}}" class="mb-3 col-12">
+                <img  style="object-fit:cover" style="object-fit:cover" src="{{asset('uploads/Categories').'/'.$cat->image}}" alt="{{$cat->name}}" class="mb-3 col-12">
                 <div style="float: right"><input class="form-control"  type="file" name="image" accept="image/png, image/jpg, image/jpeg" value="{{$cat->name}}"></div>
                 @error('image')<span class="text-danger">{{ $message }}</span>@enderror
             </div>

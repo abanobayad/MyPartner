@@ -10,7 +10,7 @@ class RateController extends Controller
 {
     public function index()
     {
-        $rates = Rate::all();
+        $rates = Rate::paginate(10);
         return view('Admin.rate.index', compact('rates'));
     }
 

@@ -20,7 +20,7 @@ class PostController extends Controller
         // dd($posts);
 
         if($selected_reps != null){
-            if($selected_reps == 'pendding'){$posts = Post::select()->where('status' , 'pendding')->paginate(10);}
+            if($selected_reps == 'pendding'){$posts = Post::select()->where('status' , 'pending')->paginate(10);}
             if($selected_reps == 'accept')  {$posts = Post::select()->where('status' , 'accept')->paginate(10); }
             if($selected_reps == 'reject')  {$posts = Post::select()->where('status' , 'reject')->paginate(10); }
             if($selected_reps == 'yes')  {$posts = Post::select()->where('visible' , 'yes')->paginate(10); }

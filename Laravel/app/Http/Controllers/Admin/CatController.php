@@ -19,7 +19,7 @@ class CatController extends Controller
 {
     public function index()
     {
-        $data['cats'] = Category::select()->orderBy('id', 'desc')->get();
+        $data['cats'] = Category::select()->orderBy('id', 'desc')->paginate(10);
         return view('Admin.cat.index')->with($data);
     }
 

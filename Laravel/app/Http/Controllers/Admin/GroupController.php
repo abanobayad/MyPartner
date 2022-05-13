@@ -18,7 +18,7 @@ class GroupController extends Controller
 
     public function index()
     {
-        $data['groups'] = Group::select()->orderBy('id', 'desc')->get();
+        $data['groups'] = Group::select()->orderBy('id', 'desc')->paginate(10);
         return view('Admin.group.index')->with($data);
     }
 

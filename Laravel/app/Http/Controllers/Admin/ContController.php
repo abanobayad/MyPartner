@@ -11,7 +11,7 @@ class ContController extends Controller
 {
     //to return all contacts exist in contacts table (admin)
     public function index(){
-        $contacts = Contact::all();
+        $contacts = Contact::paginate(10);
         return view('Admin.contact.index', compact('contacts'));
     }
 

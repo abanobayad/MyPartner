@@ -6,11 +6,11 @@
             <div class="row">
                 <div class=" col-12 m-auto">
                     <div class="card m-auto">
-                        <div class="card-body m-auto">
+                        <div class="card-body ">
                             <h4 class="fw-bold text-muted mb-3">
                                 <i class="mdi mdi-group"></i>
                                 {{ $group->name }}</h4>
-                                        <img class="card-img-top img-lg m-auto" style="height: 25% ;  object-fit:contain"
+                                        <img class="card-img-top img-lg m-auto" style="height: 100% ;object-fit:cover"
                                             src="{{ asset('uploads/Groups' . '/' . $group->image) }}">
                             <h6 class="card-text mt-4">Category :
                                 <a href="{{ route('admin.cat.show', $group->category->id) }}"
