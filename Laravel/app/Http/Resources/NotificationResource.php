@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class NotificationResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,13 +14,11 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-
-        return
-        [
-            'id' => $this->id,
-            'name ' => $this->name,
-            'canceled_Requests' , $this->user()->cancelRequests()->first()->reqs_count,
-            'updated_at' =>$this->updated_at->diffForhumans()
-
-        ];    }
+        return [
+            'id'                => $this->id,
+            'type'                => $this->type,
+            'details'              => $this->data,
+            'created_at'        => $this->created_at->diffForhumans()
+        ];
+    }
 }

@@ -18,7 +18,8 @@ class CreateRequestsTable extends Migration
             $table->foreignId('post_id')->constrained('posts')->onDelete('cascade');
             $table->foreignId('post_owner_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('requester_id')->constrained('users')->onDelete('cascade');
-            $table->enum('status' , ['pending' , 'accept' , 'reject'])->defualt('pending');
+            $table->enum('status' , ['pending' , 'accept' , 'reject'])->default('pending');
+            // $table->enum('canceled' , ['yes' , 'no'])->default('no');
             $table->timestamps();
         });
     }

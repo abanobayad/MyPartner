@@ -409,7 +409,7 @@ class DataSeeder extends Seeder
                     'content' => $group->name . ' Post Content',
                     'status' => 'pending',
                     'visible' => 'no',
-                    'needed_persons' => $faker->randomDigit,
+                    'needed_persons' => rand(1, 10),
                     'location' =>  $faker->url(),
                     'price' =>  rand(200, 2000),
                     'user_id' =>  $users[$i]->id,

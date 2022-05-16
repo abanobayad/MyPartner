@@ -26,6 +26,7 @@ class NotificationCollection extends ResourceCollection
                 'Notifiactions' => $this->collection->map(function($data) {
                     return [
                         'id'                => $data->id,
+                        'type'                => $data->type,
                         'details'              => $data->data,
                         'created_at'        => $data->created_at->diffForhumans()
                     ];})];

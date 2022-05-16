@@ -83,7 +83,7 @@ class AccountController extends BaseController
             $js_Profile = new ProfileResource($profile);
             $js_Posts = new PostCollection($posts);
             $js_rates = new RateCollection($rate);
-            $data = ['user_info' => $js_Profile , 'Posts' => $js_Posts , 'total_rate' => $total_rate , 'rates' => $js_rates];
+            $data = ['user_info' => $js_Profile , 'Posts' => $js_Posts , 'total_rate' => $total_rate , 'rates' => $js_rates , 'canceled_Requests' , $user->cancelRequests()->first()->reqs_count] ;
         }
 
         return $this->SendResponse($data , 'User Profile Sent');

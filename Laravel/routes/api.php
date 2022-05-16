@@ -81,6 +81,11 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
         //Request
         Route::prefix('/request')->group(function () {
             Route::get('/', 'ReqController@index');                   //show all requests of Auth user
+            Route::get('/pending', 'ReqController@showPending')->name('show.pending');                   //show all requests of Auth user
+            Route::get('/accepted', 'ReqController@showAccepted');                   //show all requests of Auth user
+            Route::get('/rejected', 'ReqController@showRejected');                   //show all requests of Auth user
+            Route::get('/cancel/{p_id}/{r_id}', 'ReqController@cancelRequest');                   //show all requests of Auth user
+            Route::get('/my/sent/requests', 'ReqController@mySentRequests');                   //show all requests of Auth user
             Route::get('/show/{p_id}/{r_id}', 'ReqController@showReq')->name('showRequest');
             Route::post('/doRequest', 'ReqController@doReq');                   //Req Post
             Route::get('acceptRequest/{post_id}/{requester_id}', 'ReqController@approveRequest')->name('acceptRequest');

@@ -69,6 +69,7 @@ class ProfileController extends BaseController
             $validator = Validator::make(
                 $input,
                 [
+                    'name' => 'string|required|max:20',
                     'image' => 'image|mimes:png,jpg,jpeg|nullable',
                     'phone' => 'string|min:8|max:11|nullable',
                     'address' => 'string|nullable',
@@ -89,7 +90,17 @@ class ProfileController extends BaseController
                 }
                 else    $input['image'] = $OldImgName;
 
-                $profile->update($input);
+                $user->update(['name' => $input['name']]);
+                $user->save();
+                $profile->update(
+                    [
+                        'image' => $input['image'],
+                        'phone' => $input['phone'],
+                        'address' => $input['address'],
+                        'bio' => $input['bio'],
+                        'gender' => $input['gender'],
+                    ]
+                );
                 $profile->save();
                 $profile_Json = ProfileResource::make($profile);
                 return $this->SendResponse($profile_Json, 'Profile Updated');

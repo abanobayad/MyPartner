@@ -121,4 +121,11 @@ class User extends Authenticatable
         return $this->hasMany(message::class, 'sender_id');
     }
 
+
+
+    public function cancelRequests()
+    {
+        return $this->belongsTo(CanceledRequest::class, 'requester_id');
+    }
+
 }
