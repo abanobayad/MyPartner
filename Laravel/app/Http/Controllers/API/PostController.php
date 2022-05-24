@@ -15,6 +15,7 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Notification;
 
 class PostController extends BaseController
@@ -50,9 +51,6 @@ class PostController extends BaseController
         if ($validator->fails()) {
             return $this->SendError("Validate Input",  $validator->errors());
         } else {
-
-
-
 
             if ($request->hasFile('image')) {
 
@@ -116,11 +114,10 @@ class PostController extends BaseController
                     return $this->SendError('The Image has Tobacco Products');
                 }
 
-
-
-                $newImgName = $request->image->hashName();
-                Image::make($input['image'])->save(public_path('uploads/Posts/' . $newImgName));
-                $input['image'] = $newImgName;
+                $file = $request->file('image');
+                $file_name = time().$file->getClientOriginalName();
+                $file->move('uploads/Posts/',$file_name);
+                $input['image'] = $file_name;
             }
 
             $post = Post::create($input);
@@ -232,10 +229,18 @@ class PostController extends BaseController
                 {
                     return $this->SendError('The Image has Tobacco Products');
                 }
+
+                $dest = 'uploads/Posts/' . $post->image;
+                if (File::exists($dest)) {
+                    File::delete($dest);
+                }
                     Storage::disk('uploads')->delete('Posts/' . $OldImgName);
-                    $newImgName = $request->image->hashName();
-                    Image::make($input['image'])->save(public_path('uploads/Posts/' . $newImgName));
-                    $input['image'] = $newImgName;
+                    // $newImgName = $request->image->hashName();
+                    // Image::make($input['image'])->save(public_path('uploads/Posts/' . $newImgName));
+                    $file = $request->file('image');
+                    $file_name = time().$file->getClientOriginalName();
+                    $file->move('uploads/Posts/',$file_name);
+                    $input['image'] = $file_name;
                 } else    $input['image'] = $OldImgName;
 
                 $post->update($input);

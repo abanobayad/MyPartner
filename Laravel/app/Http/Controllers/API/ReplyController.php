@@ -12,8 +12,10 @@ use App\Models\Post;
 use App\Notifications\MakeComment;
 use Illuminate\Http\Request;
 use App\Http\Resources\CommentResource;
+use App\Http\Resources\ReplyResource;
 use App\Notifications\MakeReply;
 use Aws\Rekognition\RekognitionClient;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Facades\Validator;
@@ -87,22 +89,23 @@ class ReplyController extends BaseController
                 return $this->SendError('The Image has Tobacco Products');
             }
 
-            $newImgName = $request->image->hashName();
-            Image::make($request->image)->save(public_path('uploads/replies/' . $newImgName));
-            $request->image = $newImgName;
+            $file = $request->file('image');
+            $file_name = time() . $file->getClientOriginalName();
+            $file->move('uploads/Replies/', $file_name);
 
-            Reply::create(
+
+            $reply =       Reply::create(
                 [
                     'user_id'    => Auth::id(),
                     'comment_id' => $request->comment_id,
                     'content'    => $request->content,
-                    'image'      => 'nullable|mimes:png,jpg,jpeg|image',
+                    'image'      => $file_name,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]
             );
         } else {
-            Reply::create(
+          $reply =   Reply::create(
                 [
                     'user_id'    => Auth::id(),
                     'comment_id' => $request->comment_id,
@@ -138,7 +141,9 @@ class ReplyController extends BaseController
             $user->notify(new MakeReply($details));
         }
 
-        return $this->SendResponse($request->content, "Reply Added Successfuly");
+        $js_replay = new ReplyResource($reply);
+
+        return $this->SendResponse($js_replay, "Reply Added Successfuly");
     }
 
 
@@ -146,6 +151,10 @@ class ReplyController extends BaseController
     {
         $request->updated_at = now();
         $reply = Reply::find($replay_id);
+        if($reply == null)
+        {
+            return $this->SendError('Reply Not Found');
+        }
         $input = $request->all();
         $validator = Validator::make($request->all(), ['content' => 'required', 'image' => 'nullable|mimes:png,jpg,jpeg|image']);
 
@@ -199,18 +208,24 @@ class ReplyController extends BaseController
             } else if (array_search('Tobacco', array_column($resLables, 'Name')) !== false) {
                 return $this->SendError('The Image has Tobacco Products');
             }
-            Storage::disk('uploads')->delete('Comments/' . $OldImgName);
-            $newImgName = $request->image->hashName();
-            Image::make($input['image'])->save(public_path('uploads/Comments/' . $newImgName));
-            $input['image'] = $newImgName;
+            $dest = 'uploads/Replies/' . $reply->image;
+            if (File::exists($dest)) {
+                File::delete($dest);
+            }
+            Storage::disk('uploads')->delete('Replies/' . $OldImgName);
+            $file = $request->file('image');
+            $file_name = time() . $file->getClientOriginalName();
+            $file->move('uploads/Replies/', $file_name);
+            $input['image'] = $file_name;
         } else    $input['image'] = $OldImgName;
 
 
         $reply->update($input);
         $reply->save();
 
-        //$reply_Json = CommentResource::make($comment);
-        return $this->SendResponse($reply, "Comment Edit Success");
+
+        $reply_Json =new  ReplyResource($reply);
+        return $this->SendResponse($reply_Json , "Comment Edit Success");
     }
 
 
@@ -224,8 +239,12 @@ class ReplyController extends BaseController
             if ($reply->user_id != Auth::id()) {
                 return $this->SendError("You Are Not Allowed to delete this rate");
             } else {
+                $dest = 'uploads/Replies/' . $reply->image;
+                if (File::exists($dest)) {
+                    File::delete($dest);
+                }
                 $reply = $reply->delete();
-                return $this->SendResponse($reply, 'reply Deleted Successfully');
+                return $this->SendResponse('', 'Reply Deleted Successfully');
             }
         }
     }

@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\Comment;
 use App\Http\Resources\CommentResource;
 use Aws\Rekognition\RekognitionClient;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Facades\Validator;
@@ -77,22 +78,23 @@ class CommentController extends BaseController
             } else if (array_search('Tobacco', array_column($resLables, 'Name')) !== false) {
                 return $this->SendError('The Image has Tobacco Products');
             }
-            $newImgName = $request->image->hashName();
-            Image::make($request->image)->save(public_path('uploads/Comments/' . $newImgName));
-            $request->image = $newImgName;
 
-            Comment::create(
+            $file = $request->file('image');
+            $file_name = time() . $file->getClientOriginalName();
+            $file->move('uploads/Comments/', $file_name);
+            $input['image'] = $file_name;
+            $comment =   Comment::create(
                 [
                     'user_id'    => Auth::id(),
                     'post_id'    => $request->post_id,
                     'content'    => $request->comment_content,
-                    'image'      => 'nullable|mimes:png,jpg,jpeg|image',
+                    'image'      => $input['image'],
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]
             );
         } else {
-            Comment::create(
+            $comment =   Comment::create(
                 [
                     'user_id'    => Auth::id(),
                     'post_id'    => $request->post_id,
@@ -113,16 +115,19 @@ class CommentController extends BaseController
 
             $user->notify(new MakeComment($details));
         }
-        return $this->SendResponse($request->comment_content, "Comment Added Successfuly");
+        $js_comment = new CommentResource($comment);
+        return $this->SendResponse($js_comment, "Comment Added Successfuly");
     }
 
     public function edit(Request $request, $c_id)
     {
         $request->updated_at = now();
         $comment = Comment::find($c_id);
-        // dd($comment->image);
+        if($comment == null)
+        {
+            return $this->SendError('Comment Not Found');
+        }
         $input = $request->all();
-        // dd($input['image']);
         $validator = Validator::make($request->all(), ['comment_content' => 'required', 'image' => 'nullable|mimes:png,jpg,jpeg|image']);
 
         if ($validator->fails()) {
@@ -175,10 +180,16 @@ class CommentController extends BaseController
             } else if (array_search('Tobacco', array_column($resLables, 'Name')) !== false) {
                 return $this->SendError('The Image has Tobacco Products');
             }
+
+            $dest = 'uploads/Comments/' . $comment->image;
+            if (File::exists($dest)) {
+                File::delete($dest);
+            }
             Storage::disk('uploads')->delete('Comments/' . $OldImgName);
-            $newImgName = $request->image->hashName();
-            Image::make($input['image'])->save(public_path('uploads/Comments/' . $newImgName));
-            $input['image'] = $newImgName;
+            $file = $request->file('image');
+            $file_name = time() . $file->getClientOriginalName();
+            $file->move('uploads/Comments/', $file_name);
+            $input['image'] = $file_name;
         } else    $input['image'] = $OldImgName;
 
 
@@ -199,8 +210,12 @@ class CommentController extends BaseController
             if ($comment->user_id != Auth::id()) {
                 return $this->SendError("You Are Not Allowed to delete this comment");
             } else {
+                $dest = 'uploads/Comments/' . $comment->image;
+                if (File::exists($dest)) {
+                    File::delete($dest);
+                }
                 $comment = $comment->delete();
-                return $this->SendResponse($comment, 'comment Deleted Successfully');
+                return $this->SendResponse($comment, 'Comment Deleted Successfully');
             }
         }
     }
