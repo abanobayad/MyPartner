@@ -99,6 +99,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
             Route::get('index', 'ContController@index')->name('admin.contact.index');
             Route::get('/get/{id}', 'ContController@GET')->name('admin.contact.get');
             Route::get('/show/{id}', 'ContController@show')->name('admin.contact.show');
+            Route::post('/replay/{id}', 'ContController@Replay')->name('admin.contact.replay');
             Route::get('/delete/{id}', 'ContController@DELETE')->name('admin.contact.delete');
         });
 

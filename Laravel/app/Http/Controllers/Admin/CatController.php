@@ -89,17 +89,6 @@ class CatController extends Controller
 
     }
 
-    public function test()
-    {
-        // $l = LaravelObjectDetection::getObjectsFromImageUrl('https://www.akc.org/wp-content/uploads/2017/04/Lagotto-Romangolo-Tongue-Out.jpg');
-        $l = new LaravelObjectDetection();
-
-        $r = $l->getObjectsFromImageUrl('https://www.thesprucepets.com/thmb/ykoJQf2rAGX85DPlwohHhHwllO0=/1000x1000/smart/filters:no_upscale()/top-friendliest-dog-breeds-4691511_hero-5c6a918dcf56409c888d78b0fac82d18.jpg');
-        dd($r);
-
-    }
-
-
 
     public function edit($id)
     {

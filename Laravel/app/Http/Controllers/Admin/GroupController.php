@@ -81,15 +81,28 @@ class GroupController extends Controller
             return back()->with('search_tag', $search_tag)->withErrors($s->errors())->withInput();
         }
 
-        $new_name =  $data['image']->hashName();
-        Image::make($data['image'])->save(public_path('uploads/Groups/' . $new_name)); //To store Image on the server
-        //  dd($new_name);
+        // $new_name =  $data['image']->hashName();
+        // Image::make($data['image'])->save(public_path('uploads/Groups/' . $new_name)); //To store Image on the server
+
+
+        //New Image code
+        // $dest = 'uploads/Groups/' . $group->image;
+        // if(File::exists($dest))
+        // {
+        // File::delete($dest);
+        // }
+        $file = $request->file('image');
+        $file_name = time().$file->getClientOriginalName();
+        $file->move('uploads/Groups/',$file_name);
+        $data['image'] = $file_name;
+
+
 
         $group = Group::create([
             'name'          => $request->name,
             'description'   => $request->description,
             'category_id'   => $request->category_id,
-            'image'         => $new_name,
+            'image'         => $data['image'],
             'admin_id'      => $request->admin_id,
         ]);
         $group->tags()->attach($request->tag);

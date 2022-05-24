@@ -11,7 +11,9 @@ use App\Models\Post;
 use App\Models\User;
 use App\Notifications\PostRequested;
 use App\Models\Req;
+use App\Notifications\RequestAccepted;
 use App\Notifications\RequestCanceled;
+use App\Notifications\RequestRejected;
 
 class ReqController extends BaseController
 {
@@ -232,6 +234,15 @@ class ReqController extends BaseController
             $other_reqs->update(['status' => 'reject']);
         }
 
+        //Notification to requester
+        $details = [
+            'post_id' => $post->id,
+            'title' =>'Request Accepted',
+            'body' => 'Your request of "' . $post->title . '" post is accpeted',
+        ];
+        $user = User::find($requester_id);
+        $user->notify(new RequestAccepted($details));
+
         return $this->SendResponse('Done', "Request Accepted");
     }
 
@@ -252,6 +263,14 @@ class ReqController extends BaseController
         }
         // DB::table('course_student')->where('student_id',$id)->where('course_id', $c_id)->update(['status'=>'approve']);
         DB::table('requests')->where('post_id', $post_id)->where('requester_id', $requester_id)->update(['status' => 'reject']);
+
+        $details = [
+            'post_id' => $post->id,
+            'title' =>'Request Rejected',
+            'body' => 'Your request of "' . $post->title . '" post is Rejected',
+        ];
+        $user = User::find($requester_id);
+        $user->notify(new RequestRejected($details));
         return $this->SendResponse('Done', "Request Rejected");
     }
 
@@ -349,4 +368,7 @@ class ReqController extends BaseController
         return $this->SendResponse($data, "User Sent Requests sent");
 
     }
+
+
+
 }

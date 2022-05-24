@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Contact;
+use App\Notifications\ContactReplay;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ContController extends Controller
 {
@@ -23,8 +26,8 @@ class ContController extends Controller
         if ($user == null) {
             return redirect()->back()->with('User not found');
         }
-        $contact = Contact::select()->where('user_id',$user->id)->get();
-        return view('Admin.contact.show', compact('contact'));
+        $contacts = Contact::select()->where('user_id',$user->id)->get();
+        return view('Admin.contact.show', compact('contacts'));
     }
 
     // to get details of specific contact
@@ -49,5 +52,28 @@ class ContController extends Controller
                 $contact = $contact->delete();
                 return redirect()->back();
             }
+    }
+
+
+    public function Replay(Request $request , $cont_id)
+    {
+
+        $s = Validator::make($request->all(), [
+            'content' => 'required',
+        ]);
+        if ($s->fails()) {
+            return back()->withErrors($s->errors())->withInput();
+        }
+
+        $contact = Contact::find($cont_id);
+        $details = [
+            'title' =>'MyPartner Team Answer Your Contact',
+            'body' => $request->content,
+        ];
+        $user = User::find($contact->user()->first()->id); //Contact Owner
+        // dd($user);
+        $user->notify(new ContactReplay($details));
+        Alert::info('Replay Sent');
+        return back();
     }
 }

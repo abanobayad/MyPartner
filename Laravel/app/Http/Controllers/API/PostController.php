@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\API;
-
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -10,6 +9,7 @@ use App\Http\Resources\SavedPostsCollection;
 use App\Models\Admin;
 use App\Models\SavedPosts;
 use App\Notifications\PostAdded;
+use Aws\Rekognition\RekognitionClient;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Auth;
@@ -29,12 +29,8 @@ class PostController extends BaseController
         return $this->SendResponse($data, 'Data sent');
     }
 
-
-
     public function ADD(Request $request)
     {
-
-
         $input = $request->all();
         $validator = Validator::make(
             $input,
@@ -54,7 +50,74 @@ class PostController extends BaseController
         if ($validator->fails()) {
             return $this->SendError("Validate Input",  $validator->errors());
         } else {
+
+
+
+
             if ($request->hasFile('image')) {
+
+                // Check Image Legal
+                $client = new RekognitionClient(
+                    [
+                        'region' => env('AWS_DEFAULT_REGION') ,
+                        'version' =>'latest' ,
+                    ]
+                );
+
+                $image = fopen($request->file('image')->getPathname(),'r');
+                $bytes = fread($image , $request->file('image')->getSize());
+
+                $result = $client->detectModerationLabels(
+                    [
+                        'Image' => ['Bytes' => $bytes],
+                        'MinConfidence' => 70,
+                    ]
+                );
+
+                $resLables = $result->get('ModerationLabels');
+                // dd($resLables);
+
+                if(array_search('Explicit Nudity' , array_column($resLables , 'Name')) !== false)
+                {
+                    return $this->SendError('The Image has Nudity content');
+                }
+                else if(array_search('Drugs' , array_column($resLables , 'Name')) !== false)
+                {
+                    return $this->SendError('The Image has Drugs content');
+                }
+                else if(array_search('Weapon Violence' , array_column($resLables , 'Name')) !== false)
+                {
+                    return $this->SendError('The Image has Weapon Violence content');
+                }
+                else if(array_search('Weapon Violence' , array_column($resLables , 'Name')) !== false)
+                {
+                    return $this->SendError('The Image has Weapon Violence content');
+                }
+                else if(array_search('Violence' , array_column($resLables , 'Name')) !== false)
+                {
+                    return $this->SendError('The Image has Violence content');
+                }
+                else if(array_search('Hate Symbols' , array_column($resLables , 'Name')) !== false)
+                {
+                    return $this->SendError('The Image has Hate Symbols');
+                }
+                else if(array_search('Alcohol' , array_column($resLables , 'Name')) !== false)
+                {
+                    return $this->SendError('The Image has Alcoholic Beverages"');
+                }
+
+                else if(array_search('Rude Gestures' , array_column($resLables , 'Name')) !== false)
+                {
+                    return $this->SendError('The Image has Rude Gestures');
+                }
+
+                else if(array_search('Tobacco' , array_column($resLables , 'Name')) !== false)
+                {
+                    return $this->SendError('The Image has Tobacco Products');
+                }
+
+
+
                 $newImgName = $request->image->hashName();
                 Image::make($input['image'])->save(public_path('uploads/Posts/' . $newImgName));
                 $input['image'] = $newImgName;
@@ -109,6 +172,66 @@ class PostController extends BaseController
             } else {
                 $OldImgName =  $post->image;
                 if ($request->hasFile('image')) {
+                      // Check Image Legal
+                $client = new RekognitionClient(
+                    [
+                        'region' => env('AWS_DEFAULT_REGION') ,
+                        'version' =>'latest' ,
+                    ]
+                );
+
+                $image = fopen($request->file('image')->getPathname(),'r');
+                $bytes = fread($image , $request->file('image')->getSize());
+
+                $result = $client->detectModerationLabels(
+                    [
+                        'Image' => ['Bytes' => $bytes],
+                        'MinConfidence' => 50,
+                    ]
+                );
+
+                $resLables = $result->get('ModerationLabels');
+                // dd($resLables);
+
+
+                if(array_search('Explicit Nudity' , array_column($resLables , 'Name')) !== false)
+                {
+                    return $this->SendError('The Image has Nudity content');
+                }
+                else if(array_search('Drugs' , array_column($resLables , 'Name')) !== false)
+                {
+                    return $this->SendError('The Image has Drugs content');
+                }
+                else if(array_search('Weapon Violence' , array_column($resLables , 'Name')) !== false)
+                {
+                    return $this->SendError('The Image has Weapon Violence content');
+                }
+                else if(array_search('Weapon Violence' , array_column($resLables , 'Name')) !== false)
+                {
+                    return $this->SendError('The Image has Weapon Violence content');
+                }
+                else if(array_search('Violence' , array_column($resLables , 'Name')) !== false)
+                {
+                    return $this->SendError('The Image has Violence content');
+                }
+                else if(array_search('Hate Symbols' , array_column($resLables , 'Name')) !== false)
+                {
+                    return $this->SendError('The Image has Hate Symbols');
+                }
+                else if(array_search('Alcohol' , array_column($resLables , 'Name')) !== false)
+                {
+                    return $this->SendError('The Image has Alcoholic Beverages"');
+                }
+
+                else if(array_search('Rude Gestures' , array_column($resLables , 'Name')) !== false)
+                {
+                    return $this->SendError('The Image has Rude Gestures');
+                }
+
+                else if(array_search('Tobacco' , array_column($resLables , 'Name')) !== false)
+                {
+                    return $this->SendError('The Image has Tobacco Products');
+                }
                     Storage::disk('uploads')->delete('Posts/' . $OldImgName);
                     $newImgName = $request->image->hashName();
                     Image::make($input['image'])->save(public_path('uploads/Posts/' . $newImgName));
@@ -153,11 +276,11 @@ class PostController extends BaseController
     {
         $post = Post::find($post_id);
         if($post == null) {return $this->SendError('Post Not Found');}
-     $old_post = DB::table('saved_posts')->where('post_id', $post_id)->where('user_id', Auth::user()->id)->get();
-     if(count($old_post) > 0)
-     {
-         return $this->SendError('This Post Saved Before');
-     }
+        $old_post = DB::table('saved_posts')->where('post_id', $post_id)->where('user_id', Auth::user()->id)->get();
+        if(count($old_post) > 0)
+        {
+        return $this->SendError('This Post Saved Before');
+        }
 
         SavedPosts::create(
             [
@@ -174,17 +297,17 @@ class PostController extends BaseController
     {
         $post = Post::find($post_id);
         if($post == null) {return $this->SendError('Post Not Found');}
-     $f = SavedPosts::select()->where('post_id' , $post_id)->where('user_id' , Auth::id())->first();
-     // dd($f);
-     if($f == null)
-     {
-         return $this->SendError('This Post Doesn\'t Saved Before');
-     }
-     else
-     {
-         DB::table('saved_posts')->where('post_id', $post_id)->where('user_id', Auth::id())->delete();
+        $f = SavedPosts::select()->where('post_id' , $post_id)->where('user_id' , Auth::id())->first();
+        // dd($f);
+        if($f == null)
+        {
+            return $this->SendError('This Post Doesn\'t Saved Before');
+        }
+        else
+        {
+            DB::table('saved_posts')->where('post_id', $post_id)->where('user_id', Auth::id())->delete();
         return $this->SendResponse('User Unsave Post','Removed');
-     }
+        }
     }
 
     public function showSaved()

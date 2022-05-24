@@ -73,6 +73,7 @@ class AdminsController extends Controller
                 $file_name = time().$file->getClientOriginalName();
                 $file->move('uploads/Admins',$file_name);
                 $data['image'] = $file_name;
+
             } else    $data['image'] = $OldImgName;
             $admin->update([
                 'name'           => $request->name,

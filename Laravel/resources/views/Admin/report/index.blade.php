@@ -19,9 +19,6 @@
                                     Handled Reports</option>
                                 <option value="no" @if ($selected_reps == 'no') selected @endif>
                                     Not Handled Reports</option>
-
-                                {{-- <option value="yes"@if (old('handled') == 'yes') {{ 'selected' }} @endif>Handled Reports</option>
-                        <option value="no" @if (old('handled') == 'no') {{ 'selected' }} @endif>Not Handled Reports</option> --}}
                             </select>
                         </div>
                         <div class="col-4">

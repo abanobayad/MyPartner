@@ -13,6 +13,7 @@ use App\Notifications\MakeComment;
 use Illuminate\Http\Request;
 use App\Http\Resources\CommentResource;
 use App\Notifications\MakeReply;
+use Aws\Rekognition\RekognitionClient;
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Facades\Validator;
@@ -43,6 +44,49 @@ class ReplyController extends BaseController
             return $this->SendError('Error Of Validation', $validator->errors());
         }
         if ($request->hasFile('image')) {
+
+            // Check Image Legal
+            $client = new RekognitionClient(
+                [
+                    'region' => env('AWS_DEFAULT_REGION'),
+                    'version' => 'latest',
+                ]
+            );
+
+            $image = fopen($request->file('image')->getPathname(), 'r');
+            $bytes = fread($image, $request->file('image')->getSize());
+
+            $result = $client->detectModerationLabels(
+                [
+                    'Image' => ['Bytes' => $bytes],
+                    'MinConfidence' => 50,
+                ]
+            );
+
+            $resLables = $result->get('ModerationLabels');
+            // dd($resLables);
+
+
+            if (array_search('Explicit Nudity', array_column($resLables, 'Name')) !== false) {
+                return $this->SendError('The Image has Nudity content');
+            } else if (array_search('Drugs', array_column($resLables, 'Name')) !== false) {
+                return $this->SendError('The Image has Drugs content');
+            } else if (array_search('Weapon Violence', array_column($resLables, 'Name')) !== false) {
+                return $this->SendError('The Image has Weapon Violence content');
+            } else if (array_search('Weapon Violence', array_column($resLables, 'Name')) !== false) {
+                return $this->SendError('The Image has Weapon Violence content');
+            } else if (array_search('Violence', array_column($resLables, 'Name')) !== false) {
+                return $this->SendError('The Image has Violence content');
+            } else if (array_search('Hate Symbols', array_column($resLables, 'Name')) !== false) {
+                return $this->SendError('The Image has Hate Symbols');
+            } else if (array_search('Alcohol', array_column($resLables, 'Name')) !== false) {
+                return $this->SendError('The Image has Alcoholic Beverages"');
+            } else if (array_search('Rude Gestures', array_column($resLables, 'Name')) !== false) {
+                return $this->SendError('The Image has Rude Gestures');
+            } else if (array_search('Tobacco', array_column($resLables, 'Name')) !== false) {
+                return $this->SendError('The Image has Tobacco Products');
+            }
+
             $newImgName = $request->image->hashName();
             Image::make($request->image)->save(public_path('uploads/replies/' . $newImgName));
             $request->image = $newImgName;
@@ -114,6 +158,47 @@ class ReplyController extends BaseController
         //Chcek IMAGES
         $OldImgName =  $reply->image;
         if ($request->hasFile('image')) {
+            // Check Image Legal
+            $client = new RekognitionClient(
+                [
+                    'region' => env('AWS_DEFAULT_REGION'),
+                    'version' => 'latest',
+                ]
+            );
+
+            $image = fopen($request->file('image')->getPathname(), 'r');
+            $bytes = fread($image, $request->file('image')->getSize());
+
+            $result = $client->detectModerationLabels(
+                [
+                    'Image' => ['Bytes' => $bytes],
+                    'MinConfidence' => 50,
+                ]
+            );
+
+            $resLables = $result->get('ModerationLabels');
+            // dd($resLables);
+
+
+            if (array_search('Explicit Nudity', array_column($resLables, 'Name')) !== false) {
+                return $this->SendError('The Image has Nudity content');
+            } else if (array_search('Drugs', array_column($resLables, 'Name')) !== false) {
+                return $this->SendError('The Image has Drugs content');
+            } else if (array_search('Weapon Violence', array_column($resLables, 'Name')) !== false) {
+                return $this->SendError('The Image has Weapon Violence content');
+            } else if (array_search('Weapon Violence', array_column($resLables, 'Name')) !== false) {
+                return $this->SendError('The Image has Weapon Violence content');
+            } else if (array_search('Violence', array_column($resLables, 'Name')) !== false) {
+                return $this->SendError('The Image has Violence content');
+            } else if (array_search('Hate Symbols', array_column($resLables, 'Name')) !== false) {
+                return $this->SendError('The Image has Hate Symbols');
+            } else if (array_search('Alcohol', array_column($resLables, 'Name')) !== false) {
+                return $this->SendError('The Image has Alcoholic Beverages"');
+            } else if (array_search('Rude Gestures', array_column($resLables, 'Name')) !== false) {
+                return $this->SendError('The Image has Rude Gestures');
+            } else if (array_search('Tobacco', array_column($resLables, 'Name')) !== false) {
+                return $this->SendError('The Image has Tobacco Products');
+            }
             Storage::disk('uploads')->delete('Comments/' . $OldImgName);
             $newImgName = $request->image->hashName();
             Image::make($input['image'])->save(public_path('uploads/Comments/' . $newImgName));
