@@ -10,7 +10,9 @@ use App\Notifications\MakeComment;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 use App\Http\Resources\CommentResource;
+use App\Models\IllegalWords;
 use Aws\Rekognition\RekognitionClient;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,15 +23,27 @@ class CommentController extends BaseController
     public function comment(Request $request)
     {
 
+        $words = IllegalWords::all();
+
+        $arr_words = [];
+
+        foreach ($words as $word) {
+            array_push($arr_words, $word->word);
+        }
+        // array_values($arr_words);
+        // dd('stop');
+        Config::set('profanity.defaults', array_values($arr_words));
+
         $post = Post::find($request->post_id);
         $user = User::find($post->user_id);          //Post Owner
 
         $validator = Validator::make(
             $request->all(),
             [
-                'comment_content' => 'required',
+                'comment_content' => 'required|profanity',
                 'image' => 'nullable|mimes:png,jpg,jpeg|image'
-            ]
+            ],
+            ['profanity' => 'the :attribute has illegal words']
         );
 
         if ($validator->fails()) {
@@ -120,14 +134,33 @@ class CommentController extends BaseController
 
     public function edit(Request $request, $c_id)
     {
+        $words = IllegalWords::all();
+
+        $arr_words = [];
+
+        foreach ($words as $word) {
+            array_push($arr_words, $word->word);
+        }
+        // array_values($arr_words);
+        // dd('stop');
+        Config::set('profanity.defaults', array_values($arr_words));
+
         $request->updated_at = now();
         $comment = Comment::find($c_id);
-        if($comment == null)
-        {
+        if ($comment == null) {
             return $this->SendError('Comment Not Found');
         }
         $input = $request->all();
-        $validator = Validator::make($request->all(), ['comment_content' => 'required', 'image' => 'nullable|mimes:png,jpg,jpeg|image']);
+        $validator = Validator::make(
+            $request->all(),
+
+            [
+                'comment_content' => 'required|profanity',
+                'image' => 'nullable|mimes:png,jpg,jpeg|image'
+            ],
+            ['profanity' => 'the :attribute has illegal words']
+
+        );
 
         if ($validator->fails()) {
             return $this->SendError('Error Of Validation', $validator->errors());
@@ -202,8 +235,7 @@ class CommentController extends BaseController
     public function get($c_id)
     {
         $comment = Comment::find($c_id);
-        if($comment == null)
-        {
+        if ($comment == null) {
             return $this->SendError('Comment Not Found');
         }
 

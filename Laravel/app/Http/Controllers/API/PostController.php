@@ -17,9 +17,12 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Notification;
+use App\Models\IllegalWords;
+use Illuminate\Support\Facades\Config;
 
 class PostController extends BaseController
 {
+
 
     public function index()
     {
@@ -32,6 +35,17 @@ class PostController extends BaseController
 
     public function ADD(Request $request)
     {
+        $words = IllegalWords::all();
+
+        $arr_words = [];
+
+        foreach ($words as $word) {
+            array_push($arr_words, $word->word);
+        }
+        // array_values($arr_words);
+        // dd('stop');
+        Config::set('profanity.defaults', array_values($arr_words));
+
         $input = $request->all();
         $validator = Validator::make(
             $input,
@@ -142,6 +156,17 @@ class PostController extends BaseController
 
     public function EDIT(Request $request, $post_id)
     {
+        $words = IllegalWords::all();
+
+        $arr_words = [];
+
+        foreach ($words as $word) {
+            array_push($arr_words, $word->word);
+        }
+        // array_values($arr_words);
+        // dd('stop');
+        Config::set('profanity.defaults', array_values($arr_words));
+
         $input = $request->all();
         $post = Post::find($post_id);
         if ($post == null) {
@@ -153,13 +178,14 @@ class PostController extends BaseController
                 $input,
                 [
                     'group_id' => 'required|exists:groups,id',
-                    'title' => 'string|required',
-                    'content' => 'string|required',
+                    'title' => 'string|profanity|required',
+                    'content' => 'string|profanity|required',
                     'location' => 'string|required',
                     'image' => 'image|mimes:png,jpg,jpeg|nullable',
                     'needed_persons' => 'numeric|required',
                     'price' => 'numeric|required',
-                ]
+                ],
+                ['profanity' => 'the :attribute has illegal words']
             );
 
             $input['user_id'] = Auth::user()->id;

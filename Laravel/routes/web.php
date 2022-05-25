@@ -33,6 +33,17 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
 
 
         //category routes
+        Route::prefix('/illegalword')->group(function () {
+            Route::get('/', 'IllegalWordsController@index')->name('admin.word.index');
+            Route::get('/create', 'IllegalWordsController@add')->name('admin.word.create');
+            Route::post('/do-create', 'IllegalWordsController@store')->name('admin.word.doCreate');
+            Route::get('/edit/{id}', 'IllegalWordsController@edit')->name('admin.word.edit');
+            Route::post('/do-edit', 'IllegalWordsController@doEdit')->name('admin.word.doEdit');
+            Route::get('/delete/{id}', 'IllegalWordsController@delete')->name('admin.word.delete');
+        });
+
+
+        //category routes
         Route::prefix('/cat')->group(function () {
             Route::get('/test', 'CatController@test');
             Route::get('/', 'CatController@index')->name('admin.cat.index');

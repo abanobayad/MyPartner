@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+        Askedio\Laravel5ProfanityFilter\Providers\ProfanityFilterServiceProvider::class,
 
 
         /*
