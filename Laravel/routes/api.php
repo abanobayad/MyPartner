@@ -107,6 +107,7 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
         Route::prefix('/comment')->group(function () {
             Route::post('/add', 'CommentController@comment');                   //add NEW comment
             Route::post('/edit/{c_id}', 'CommentController@edit');              //Edit OLD Comment "Send Comment ID"
+            Route::get('/get/{c_id}', 'CommentController@get');                //get OLD Comment "Send Comment ID"
             Route::post('/delete/{c_id}', 'CommentController@DELETE');          //delete Comment "Send Comment ID"
         });
 
@@ -116,6 +117,8 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
             Route::post('/add', 'ReplyController@make');                      //add NEW Reply
             Route::post('/edit/{r_id}', 'ReplyController@edit');              //Edit OLD Reply "Send Reply ID"
             Route::post('/delete/{r_id}', 'ReplyController@DELETE');          //delete Reply "Send Reply ID"
+            Route::get('/get/{c_id}', 'ReplyController@get');                //get OLD Comment "Send Comment ID"
+
         });
 
 

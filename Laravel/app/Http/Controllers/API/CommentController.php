@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Facades\Validator;
-use Intervention\Image\Facades\Image;
 
 class CommentController extends BaseController
 {
@@ -198,6 +197,18 @@ class CommentController extends BaseController
 
         $comment_Json = CommentResource::make($comment);
         return $this->SendResponse($comment_Json, "Comment Edit Success");
+    }
+
+    public function get($c_id)
+    {
+        $comment = Comment::find($c_id);
+        if($comment == null)
+        {
+            return $this->SendError('Comment Not Found');
+        }
+
+        $comment_Json = CommentResource::make($comment);
+        return $this->SendResponse($comment_Json, "Comment Sent Successfully");
     }
 
 

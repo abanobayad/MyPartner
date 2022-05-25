@@ -229,6 +229,18 @@ class ReplyController extends BaseController
     }
 
 
+    public function get($r_id)
+    {
+        $reply = Reply::find($r_id);
+        if($reply == null)
+        {
+            return $this->SendError('Reply Not Found');
+        }
+
+        $reply_Json = ReplyResource::make($reply);
+        return $this->SendResponse($reply_Json, "Comment Sent Successfully");
+    }
+
 
     public function DELETE($id)
     {

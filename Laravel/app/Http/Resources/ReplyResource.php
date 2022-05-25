@@ -15,8 +15,11 @@ class ReplyResource extends JsonResource
                 'id' => $this->id,
                 'content' => $this->content,
                 'username'=> $this->user->name,
+                'user_id'=> $this->user->id,
+                'comment_id' => $this->comment_id,
                 'image' => 'uploads/Replies/'.$this->image,
-                'created_at' =>$this->created_at->diffForhumans()
+                'updated_at' =>$this->updated_at->diffForhumans(),
+
             ];
         }
         else
@@ -25,8 +28,10 @@ class ReplyResource extends JsonResource
             [
                 'id' => $this->id,
                 'username'=> $this->user->name,
+                'user_id'=> $this->user->id,
+                'comment_id' => $this->comment_id,
                 'content' => $this->content,
-                'created_at' =>$this->created_at->diffForhumans()
+                'updated_at' =>$this->updated_at->diffForhumans(),
             ];
         }    }
 }

@@ -15,24 +15,58 @@ class CommentResource extends JsonResource
     public function toArray($request)
     {
         // return parent::toArray($request);
-        if ($this->image != null){
-            return
-            [
-                'id' => $this->id,
-                'content' => $this->content,
-                'image' => 'uploads/Comments/'.$this->image,
-                'created_at' =>$this->created_at->diffForhumans()
+        $replies = $this->replies()->get();
+        $js_replies = new RepliesCollection($replies);
 
-            ];
+        if ($this->image != null){
+
+            if($replies->count() != 0)
+            {
+                return
+                [
+                    'comment_id' => $this->id,
+                    'user_id' => $this->user()->first()->id,
+                    'content' => $this->content,
+                    'image' => 'uploads/Comments/'.$this->image,
+                    'updated_at'        => $this->updated_at->diffForhumans(),
+                    'replies' => $js_replies
+                ];
+            }
+            else
+            {
+                return
+                [
+                    'comment_id' => $this->id,
+                    'user_id' => $this->user()->first()->id,
+                    'content' => $this->content,
+                    'image' => 'uploads/Comments/'.$this->image,
+                    'updated_at'        => $this->updated_at->diffForhumans(),
+                ];
+            }
         }
         else
         {
-            return
-            [
-                'id' => $this->id,
-                'content' => $this->content,
-                'created_at' =>$this->created_at->diffForhumans()
-            ];
+            if($replies->count() != 0)
+            {
+                return
+                [
+                    'comment_id' => $this->id,
+                    'user_id' => $this->user()->first()->id,
+                    'content' => $this->content,
+                    'updated_at'        => $this->updated_at->diffForhumans(),
+                    'replies' => $js_replies
+                ];
+            }
+            else
+            {
+                return
+                [
+                    'comment_id' => $this->id,
+                    'user_id' => $this->user()->first()->id,
+                    'content' => $this->content,
+                    'updated_at'        => $this->updated_at->diffForhumans(),
+                ];
+            }
         }
     }
 }

@@ -19,7 +19,7 @@ class ProfileResource extends JsonResource
             'user_id' => $this->user_id ,
             'name' => $this->user()->first()->name,
             // 'canceled_Requests' => $this->user()->cancelRequests()->first()->req_count,
-            'canceled_Requests' => CanceledRequest::where('requester_id' , $this->user_id )->first()->req_count,
+            // 'canceled_Requests' => CanceledRequest::where('requester_id' , $this->user_id )->first()->req_count,
 
             'image' => 'uploads/Users/'.$this->image ,
             'address' =>$this->address ,
