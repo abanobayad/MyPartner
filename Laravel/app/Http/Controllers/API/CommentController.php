@@ -211,6 +211,21 @@ class CommentController extends BaseController
         return $this->SendResponse($comment_Json, "Comment Sent Successfully");
     }
 
+    public function post_comment($post_id){
+
+        $post = Post::find($post_id);
+        if ($post == null) {
+            return $this->SendError('Post Not Found');
+        }
+        $comments = Comment::all()->where('post_id' , $post_id);
+        if($comments->first() == null){
+            return $this->SendError('Post has no comment');
+        }
+        else{
+            $comment_Json = CommentResource::collection($comments);
+            return $this->SendResponse($comment_Json, "Comments Sent Successfully");
+        }
+        }
 
     public function DELETE($id)
     {
