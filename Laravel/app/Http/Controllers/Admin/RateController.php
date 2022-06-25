@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Rate;
 use App\Models\User;
 use Illuminate\Http\Request;
+use DB;
 
 class RateController extends Controller
 {
@@ -72,14 +73,8 @@ class RateController extends Controller
 
     public function DELETE($s_id , $r_id)
     {
-        $rate = Rate::select()->where('sender_id' , $s_id)->where('receiver_id' , $r_id)->first();
-        if ( $rate == null) {
-            return redirect()->back()->with('rate not found');
-        }else{
-            $rate = $rate->delete();
-            return redirect(route('admin.rate.index'));
-
-            }
+        DB::delete('DELETE FROM rates WHERE sender_id = ? AND receiver_id = ?',[$s_id,$r_id] );
+        return redirect(route('admin.rate.index'));
         }
 
 
@@ -94,7 +89,7 @@ class RateController extends Controller
             foreach ($rates as $rate){
                 $sum =$sum+ $rate->rate_value;
             }
-            if(sizeof($rates) > 0){
+            if(sizeof($rates) > 3){
                 $total = $sum / sizeof($rates);
                 if($total<3){
                     array_push($data,

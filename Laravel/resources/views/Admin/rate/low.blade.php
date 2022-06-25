@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h4 style="display: inline-block">Contacts</h4>
+    <h4 style="display: inline-block">Low rates</h4>
 
 <div class="table-responsive">
 <table class="table">

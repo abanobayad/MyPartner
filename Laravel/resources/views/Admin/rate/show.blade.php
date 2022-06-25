@@ -29,10 +29,8 @@
             </div>
 
             <div class="btn-group col-10 mx-auto">
-                <button type="button" class="btn btn-primary btn-lg">send msg to {{  $rate->receiver->name }} </button>
-                <button type="button" class="btn btn-primary btn-lg">view {{  $rate->receiver->name }} profile </button>
-                <button type="button" class="btn btn-primary btn-lg">create </button>
-                <a href="{{route('admin.rate.delete' , [$rate->sender_id , $rate->receiver_id])}}" > <button type="button"  class="btn btn-primary btn-lg">Delete </button> </a>
+                <a href="{{ route('admin.user.show', $rate->receiver_id) }}"  > <button type="button" class="btn btn-primary btn-lg">view {{  $rate->receiver->name }} profile </button>  </a>
+                <a href="{{route('admin.rate.delete' , [$rate->sender_id , $rate->receiver_id])}}" > <button type="button"  class="btn btn-danger btn-lg">Delete rate</button> </a>
             </div>
 
     </div>
