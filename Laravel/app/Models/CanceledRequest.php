@@ -9,7 +9,7 @@ class CanceledRequest extends Model
 {
     use HasFactory;
     protected $table = 'user_canceled_requests';
-    protected $fillable = ['requester_id' , 'req_count'];
+    protected $fillable = ['requester_id' , 'post_id'];
 
 
     public function user()
