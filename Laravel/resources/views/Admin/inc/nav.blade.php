@@ -472,6 +472,27 @@
             </div>
         </li>
 
+
+        {{-- Setting --}}
+        <li class="nav-item nav-category">Setting</li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#Setting" aria-expanded="false"
+                aria-controls="Setting">
+                <i class="menu-icon mdi mdi-settings"></i>
+                <span class="menu-title">Setting Actions</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="Setting">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link"
+                            href="{{ route('admin.word.index') }}">Illegal Words</a></li>
+                    <li class="nav-item"> <a class="nav-link"
+                                href="{{ route('admin.edit') }}">Account Info</a></li>
+
+                </ul>
+            </div>
+        </li>
+
 </nav>
 <!-- partial -->
 

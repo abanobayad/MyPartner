@@ -8,6 +8,7 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
     //Auth Routes "without middleware of sanctum Auth"
     Route::post('/register', 'AuthController@register')->name('reg');
     Route::post('/login', 'AuthController@login')->name('login');
+    Route::post('/facebook-login', 'FacebookLoginController@login')->name('face-login');
     Route::post('password/email', 'ForgotPasswordController@forgot');
     Route::post('password/reset', 'ForgotPasswordController@reset');
 
@@ -108,6 +109,7 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
             Route::post('/add', 'CommentController@comment');                   //add NEW comment
             Route::post('/edit/{c_id}', 'CommentController@edit');              //Edit OLD Comment "Send Comment ID"
             Route::get('/get/{c_id}', 'CommentController@get');                //get OLD Comment "Send Comment ID"
+            Route::get('/post_comment/{post_id}', 'CommentController@post_comment');    //get all Comment of post "Send post ID"
             Route::post('/delete/{c_id}', 'CommentController@DELETE');          //delete Comment "Send Comment ID"
             Route::get('/post_comment/{post_id}', 'CommentController@post_comment');    //get all Comment of post "Send post ID"
         });

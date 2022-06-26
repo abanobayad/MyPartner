@@ -9,22 +9,32 @@ use App\Models\Reply;
 use App\Models\User;
 use App\Models\Comment;
 use App\Models\Post;
-use App\Notifications\MakeComment;
 use Illuminate\Http\Request;
-use App\Http\Resources\CommentResource;
 use App\Http\Resources\ReplyResource;
+use App\Models\IllegalWords;
 use App\Notifications\MakeReply;
 use Aws\Rekognition\RekognitionClient;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Facades\Validator;
-use Intervention\Image\Facades\Image;
 
 class ReplyController extends BaseController
 {
     public function make(Request $request)
     {
+
+        $words = IllegalWords::all();
+
+        $arr_words = [];
+
+        foreach ($words as $word) {
+            array_push($arr_words, $word->word);
+        }
+        // array_values($arr_words);
+        // dd('stop');
+        Config::set('profanity.defaults', array_values($arr_words));
 
         $comment = Comment::find($request->comment_id);
         if ($comment == null) {
@@ -37,9 +47,11 @@ class ReplyController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'content' => 'required',
+                'content' => 'required|profanity',
                 'image' => 'nullable|mimes:png,jpg,jpeg|image'
-            ]
+            ],
+            ['profanity' => 'the :attribute has illegal words']
+
         );
 
         if ($validator->fails()) {
@@ -149,6 +161,17 @@ class ReplyController extends BaseController
 
     public function edit(Request $request, $replay_id)
     {
+        $words = IllegalWords::all();
+
+        $arr_words = [];
+
+        foreach ($words as $word) {
+            array_push($arr_words, $word->word);
+        }
+        // array_values($arr_words);
+        // dd('stop');
+        Config::set('profanity.defaults', array_values($arr_words));
+
         $request->updated_at = now();
         $reply = Reply::find($replay_id);
         if($reply == null)
@@ -156,7 +179,10 @@ class ReplyController extends BaseController
             return $this->SendError('Reply Not Found');
         }
         $input = $request->all();
-        $validator = Validator::make($request->all(), ['content' => 'required', 'image' => 'nullable|mimes:png,jpg,jpeg|image']);
+        $validator = Validator::make($request->all(),
+        ['content' => 'required|profanity', 'image' => 'nullable|mimes:png,jpg,jpeg|image'],
+        ['profanity' => 'the :attribute has illegal words']
+        );
 
         if ($validator->fails()) {
             return $this->SendError('Error Of Validation', $validator->errors());

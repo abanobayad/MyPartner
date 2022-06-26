@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 use App\Models\Group;
 use App\Models\Tag;
 use Illuminate\Support\Facades\File;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -69,15 +67,24 @@ class GroupController extends Controller
         $search_tag = $request->has('tag') ? $request->get('tag') : [];
         // dd($search_tag);
 
-        $s = Validator::make($data, [
-            'name' => 'required|max:50',
-            'description' => 'required|max:255',
-            'category_id' => 'required|exists:categories,id',
-            'tag' => 'required',
-            'image' => 'required|image|mimes:jpg,jpeg,png',
-            'admin_id' => 'required|exists:admins,id',
-        ]);
+        $string = app('profanityFilter')->filter($data['name']);
+        // dd($string);
+
+        $s = Validator::make(
+            $data,
+            [
+                'name' => 'required|profanity|max:50',
+                'description' => 'required|profanity|max:255',
+                'category_id' => 'required|exists:categories,id',
+                'tag' => 'required',
+                'image' => 'required|image|mimes:jpg,jpeg,png',
+                'admin_id' => 'required|exists:admins,id',
+            ],
+
+            ['profanity' => 'the :attribute has illegal words']
+        );
         if ($s->fails()) {
+            Alert::error('Validation Failed');
             return back()->with('search_tag', $search_tag)->withErrors($s->errors())->withInput();
         }
 
@@ -92,8 +99,8 @@ class GroupController extends Controller
         // File::delete($dest);
         // }
         $file = $request->file('image');
-        $file_name = time().$file->getClientOriginalName();
-        $file->move('uploads/Groups/',$file_name);
+        $file_name = time() . $file->getClientOriginalName();
+        $file->move('uploads/Groups/', $file_name);
         $data['image'] = $file_name;
 
 
