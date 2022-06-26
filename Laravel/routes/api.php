@@ -8,6 +8,7 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
     //Auth Routes "without middleware of sanctum Auth"
     Route::post('/register', 'AuthController@register')->name('reg');
     Route::post('/login', 'AuthController@login')->name('login');
+    Route::post('/facebook-login', 'FacebookLoginController@login')->name('face-login');
     Route::post('password/email', 'ForgotPasswordController@forgot');
     Route::post('password/reset', 'ForgotPasswordController@reset');
 
