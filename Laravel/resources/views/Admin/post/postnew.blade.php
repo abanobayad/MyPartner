@@ -37,31 +37,6 @@
                         </p>
                     </section>
                 </article>
-
-                <div class="row mt-0">
-                    <div class="col-lg-6 col-md-0"></div>
-                    <div class="col-lg-6 col-md-12">
-                        @if($post->status == 'pending')
-
-                            <div class="btn-group col-6" style="float: right">
-                                <div class="row " >
-                                    <div class="col-6">
-                                        <a href="{{ route('admin.post.approve', $post->id) }}"> <button
-                                                type="button" class="btn btn-sm btn-success btn-lg">Approve </button> </a>
-                                        {{-- make post visible and send notifi --}}
-                                    </div>
-                                    <div class="col-6">
-                                        <a href="{{ route('admin.post.reject',$post->id) }}"> <button
-                                                type="button" class="btn btn-sm btn-danger btn-lg">Reject </button>
-                                        </a>{{-- make post non visible  and send notifi--}}
-                                    </div>
-                                </div>
-                            </div>
-
-                        @endif
-                    </div>
-                </div>
-
                 <div class="row">
                     <div class="col-12">
                         @if ($post->comments->count() != 0)

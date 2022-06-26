@@ -407,8 +407,7 @@ class DataSeeder extends Seeder
                 [
                     'title' => $group->name . ' Post',
                     'content' => $group->name . ' Post Content',
-                    'status' => 'pending',
-                    'visible' => 'no',
+                    'visible' => 'yes',
                     'needed_persons' => rand(1, 10),
                     'location' =>  $faker->url(),
                     'price' =>  rand(200, 2000),
@@ -436,13 +435,6 @@ class DataSeeder extends Seeder
                     'status' => 'pending' ,
                 ]
             );
-
-            // $res = ['reason1' , 'reason2' , 'reason3' , 'reason4'];
-            // $reports[$i] = Report::create(
-            //     [
-            //         ''
-            //     ]
-            // );
         }
     }
 }

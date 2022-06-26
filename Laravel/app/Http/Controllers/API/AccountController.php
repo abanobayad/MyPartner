@@ -31,26 +31,26 @@ class AccountController extends BaseController
         }
 
 
-        $cancled = CanceledRequest::where('requester_id', Auth::id())->first();
+        $cancled = CanceledRequest::where('requester_id', Auth::id())->get()->count();
 
         //Response Handle
         if ($rate) {
             $js_Profile = new ProfileResource($profile);
             $js_Posts = new PostCollection($posts);
 
-            if ($cancled == null) {
+            if ($cancled == 0) {
                 $data = ['user_info' => $js_Profile, 'Posts' => $js_Posts, 'total_rate' => $total_rate, 'canceled_Requests' => 0];
             } else {
-                $data = ['user_info' => $js_Profile, 'Posts' => $js_Posts, 'total_rate' => $total_rate, 'canceled_Requests' => $cancled->req_count];
+                $data = ['user_info' => $js_Profile, 'Posts' => $js_Posts, 'total_rate' => $total_rate, 'canceled_Requests' => $cancled];
             }
         } else {
             $js_Profile = new ProfileResource($profile);
             $js_Posts = new PostCollection($posts);
             $js_rates = new RateCollection($rate);
-            if ($cancled == null) {
+            if ($cancled == 0) {
                 $data = ['user_info' => $js_Profile, 'Posts' => $js_Posts, 'total_rate' => $total_rate, 'rates' => $js_rates, 'canceled_Requests' => 0];
             } else {
-                $data = ['user_info' => $js_Profile, 'Posts' => $js_Posts, 'total_rate' => $total_rate, 'rates' => $js_rates, 'canceled_Requests' => $cancled->req_count];
+                $data = ['user_info' => $js_Profile, 'Posts' => $js_Posts, 'total_rate' => $total_rate, 'rates' => $js_rates, 'canceled_Requests' => $cancled];
             }
         }
 
@@ -82,7 +82,7 @@ class AccountController extends BaseController
 
 
         // $cancled= $user->cancelRequests()->first()->reqs_count;
-        $cancled = CanceledRequest::where('requester_id', $user_id)->first();
+        $cancled = CanceledRequest::where('requester_id', $user_id)->get()->count();
 
 
         //Response Handle

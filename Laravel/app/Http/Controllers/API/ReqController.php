@@ -320,22 +320,14 @@ class ReqController extends BaseController
         //Add Cancel in DB
 
         // $old_cancel = DB::table('user_canceled_requests')->where('requester_id' , $requester_id)->first();
-        $old_cancel = CanceledRequest::where('requester_id', $requester_id)->first();
-        if ($old_cancel == null) {
+        // $old_cancel = CanceledRequest::where('requester_id', $requester_id)->first();
+        // if ($old_cancel == null) {
             //Create New Row For this User
-            CanceledRequest::create(
-                [
-                    'requester_id' => $requester_id
-                ]
-            );
-        } else {
+            $c = CanceledRequest::create(['requester_id' => $requester_id , 'post_id' => $post->id]);
+        // } else {
             //Update Count Of Exited User
-            CanceledRequest::where('requester_id', $requester_id)->update(
-                [
-                    'req_count' =>  $old_cancel->req_count + 1
-                ]
-            );
-        }
+            // CanceledRequest::where('requester_id', $requester_id)->update(['req_count' =>  $old_cancel->req_count + 1    ]);
+        // }
 
         return $this->SendResponse('Done', "Request Canceled");
     }

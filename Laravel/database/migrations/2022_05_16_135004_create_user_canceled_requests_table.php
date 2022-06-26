@@ -14,9 +14,9 @@ class CreateUserCanceledRequestsTable extends Migration
     public function up()
     {
         Schema::create('user_canceled_requests', function (Blueprint $table) {
-            $table->primary(['requester_id']);
+            $table->id();
             $table->foreignId('requester_id')->constrained('users')->onDelete('cascade');
-            $table->integer('req_count')->default(1);
+            $table->foreignId('post_id')->constrained('posts')->onDelete('cascade');
             $table->timestamps();
         });
     }

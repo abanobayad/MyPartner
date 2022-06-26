@@ -2,7 +2,11 @@
 
 @section('content')
 
+<<<<<<< HEAD
     <h4 style="display: inline-block">Low Rates </h4>
+=======
+    <h4 style="display: inline-block">Low rates</h4>
+>>>>>>> text-detector
 
 <div class="table-responsive">
 <table class="table">

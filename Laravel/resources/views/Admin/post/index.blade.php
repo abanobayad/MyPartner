@@ -15,19 +15,10 @@
                         <div class="col-8">
                             <select name="status" class="form-control text-center " style="font-size: 14px">
                                 <option value="all">All Posts</option>
-                                <option value="pendding" @if ($selected_reps == 'pendding') selected @endif>
-                                    Pendding Posts</option>
-                                <option value="accept" @if ($selected_reps == 'accept') selected @endif>
-                                    Accepted Posts</option>
-                                <option value="reject" @if ($selected_reps == 'reject') selected @endif>
-                                     Rejected Posts</option>
                                 <option value="yes" @if ($selected_reps == 'yes') selected @endif>
                                         Visible</option>
                                 <option value="no" @if ($selected_reps == 'no') selected @endif>
                                             Invisible</option>
-
-                                {{-- <option value="yes"@if (old('handled') == 'yes') {{ 'selected' }} @endif>Handled Reports</option>
-                        <option value="no" @if (old('handled') == 'no') {{ 'selected' }} @endif>Not Handled Reports</option> --}}
                             </select>
                         </div>
                         <div class="col-4">
@@ -49,7 +40,6 @@
                         <th scope="col">Post Owner</th>
                         <th scope="col">At</th>
                         <th scope="col">Visible</th>
-                        <th scope="col">Status</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -76,16 +66,8 @@
                                 @else
                                     text-dark
                                 @endif
-                                "> {{ $post->visible }} </strong></td>
-                             <td><strong class="
-                                @if ($post->status == 'accept')
-                                    text-success
-                                @elseif($post->status == 'reject')
-                                    text-danger
-                                @else
-                                    text-dark
-                                @endif
-                                "> {{ $post->status }} </strong></td>
+                                "> {{ $post->visible }} </strong>
+                            </td>
                             <td>
                                 <a href="{{ route('admin.post.show', $post->id) }}"
                                     class="btn btn-sm btn-dark text-white">Show Details</a>
