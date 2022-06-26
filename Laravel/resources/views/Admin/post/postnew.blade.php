@@ -24,7 +24,7 @@
                         <div class="text-muted fst-italic mb-2"><i class="mdi mdi-comment-text col-blue"></i> Comments:
                             {{ count($post->comments) }}</div>
                         <!-- Post categories-->
-                        <a class="badge bg-secondary text-decoration-none link-light" href="#!">Group:
+                        <a class="badge bg-secondary text-decoration-none link-light" href="{{ route('admin.group.show', $post->group->id) }}">Group:
                             {{ $post->group->name }}</a>
                     </header>
                     <!-- Preview image figure-->
@@ -131,6 +131,29 @@
                                             <div class="col-6">
                                                 <li><a class="text-success fw-bold" href="{{ route('admin.tag.show', $tag->id) }}" style="text-decoration: none">{{ $tag->name }}</a></li>
                                             </div>
+                                            @endforeach
+                                        </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header">Requests</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul class="list-unstyled mb-0">
+                                    <div class="row">
+                                    @foreach ($post->requests as $request)
+                                            <div class="col-6">
+                                                <a class="text-success fw-bold" href="{{ route('admin.user.show', $request->requester_id) }}" style="text-decoration: none"> {{ $request->requester->name }} </a>
+                                            </div>
+                                            <br><br>
+                                            <div class="col-6">
+                                                {{ $request->status }}
+                                            </div>
+
                                             @endforeach
                                         </div>
                                 </ul>
