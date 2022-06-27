@@ -121,7 +121,7 @@
             <div class="col-lg-4">
                 <!-- Categories widget-->
                 <div class="card mb-4">
-                    <div class="card-header">Tags</div>
+                    <div class="card-header"> {{ count($post->group->tags) }} {{count($post->group->tags) > 1 ?"Tags":"Tag"}}</div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12">
@@ -129,7 +129,7 @@
                                     <div class="row">
                                     @foreach ($post->group->tags as $tag)
                                             <div class="col-6">
-                                                <li><a class="text-success fw-bold" href="{{ route('admin.tag.show', $tag->id) }}" style="text-decoration: none">{{ $tag->name }}</a></li>
+                                                <li><a href="{{ route('admin.tag.show', $tag->id) }}" style="text-decoration: none">{{ $tag->name }}</a></li>
                                             </div>
                                             @endforeach
                                         </div>
@@ -139,19 +139,25 @@
                     </div>
                 </div>
                 <div class="card mb-4">
-                    <div class="card-header">Requests</div>
+                    <div class="card-header"> {{ count($post->requests) }}  {{count($post->requests) > 1 ?"Requests":"Request"}}  </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12">
                                 <ul class="list-unstyled mb-0">
                                     <div class="row">
                                     @foreach ($post->requests as $request)
-                                            <div class="col-6">
-                                                <a class="text-success fw-bold" href="{{ route('admin.user.show', $request->requester_id) }}" style="text-decoration: none"> {{ $request->requester->name }} </a>
+                                            <div class="col-5">
+                                                <a  href="{{ route('admin.user.show', $request->requester_id) }}" style="text-decoration: none"> {{ $request->requester->name }} </a>
                                             </div>
                                             <br><br>
-                                            <div class="col-6">
-                                                {{ $request->status }}
+                                            <div class="col-3">
+                                                @if( $request->status == "pending")
+                                                    <button type="button" class="btn btn-primary" > {{ $request->status }}</button>
+                                                @elseif($request->status == "accept")
+                                                    <button type="button" class="btn btn-success" > {{ $request->status }}</button>
+                                                @else
+                                                    <button type="button" class="btn btn-danger" > {{ $request->status }}</button>
+                                                @endif
                                             </div>
 
                                             @endforeach

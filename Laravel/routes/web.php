@@ -74,6 +74,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
         Route::prefix('/group')->group(function () {
             Route::get('/', 'GroupController@index')->name('admin.group.index');
             Route::get('/show/{id}', 'GroupController@show')->name('admin.group.show');
+            Route::any('/show_posts/{id}', 'GroupController@show_posts')->name('admin.group.show_posts');
             Route::get('/create', 'GroupController@create')->name('admin.group.create');
             Route::post('/do-create', 'GroupController@doCreate')->name('admin.group.doCreate');
             Route::get('/create1', 'GroupController@create1')->name('admin.group.create1');
