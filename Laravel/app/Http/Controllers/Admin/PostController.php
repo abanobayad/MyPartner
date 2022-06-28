@@ -34,5 +34,25 @@ class PostController extends Controller
         return view('Admin.post.postnew' , compact('post'));
     }
 
+    public function showPostRequests(Request $request  , $id)
+    {
+
+        $post = Post::find($id);
+        // $requests = $post->requests()->paginate(10);
+
+        $selected_reps = $request->has('status') ? $request->get('status'):null;
+
+        $requests = $post->requests()->orderBy('status' , 'asc')->orderBy('updated_at' , 'desc')->paginate(10);
+        // dd($requests);
+
+        if($selected_reps != null){
+            if($selected_reps == 'pending')  {$requests = $post->requests()->where('status' , 'pending')->paginate(10); }
+            if($selected_reps == 'Acc')  {$requests = $post->requests()->where('status' , 'accept')->paginate(10); }
+            if($selected_reps == 'Rej')  {$requests = $post->requests()->where('status' , 'reject')->paginate(10); }
+        }
+
+        return view('Admin.post.postRequests' , compact('post','requests','selected_reps'));
+    }
+
 
 }

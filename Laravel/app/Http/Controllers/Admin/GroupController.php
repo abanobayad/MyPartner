@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Group;
+use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -27,6 +28,19 @@ class GroupController extends Controller
         return view('Admin.group.showGroup', compact('group'));
     }
 
+    public function showGroupPosts(Request $request , $id)
+    {
+        $group = Group::find($id);
+        $selected_reps = $request->has('status') ? $request->get('status'):null;
+        $posts = $group->posts()->orderBy('visible' , 'asc')->orderBy('updated_at' , 'desc')->paginate(10);
+
+        if($selected_reps != null){
+            if($selected_reps == 'yes')  {$posts = $group->posts()->where('visible' , 'yes')->paginate(10); }
+            if($selected_reps == 'no')  {$posts = $group->posts()->where('visible' , 'no')->paginate(10); }
+        }
+
+        return view('Admin.group.showGroupPosts', compact('group','posts' , 'selected_reps'));
+    }
 
     public function create()
     {

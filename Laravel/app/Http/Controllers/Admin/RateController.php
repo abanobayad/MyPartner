@@ -5,11 +5,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Rate;
 use App\Models\User;
 use Illuminate\Http\Request;
-use DB;
-<<<<<<< HEAD
-=======
+use Illuminate\Support\Facades\DB;
 
->>>>>>> text-detector
 class RateController extends Controller
 {
     public function index()
@@ -78,11 +75,7 @@ class RateController extends Controller
     {
         DB::delete('DELETE FROM rates WHERE sender_id = ? AND receiver_id = ?',[$s_id,$r_id] );
         return redirect(route('admin.rate.index'));
-<<<<<<< HEAD
     }
-=======
-        }
->>>>>>> text-detector
 
 
     public function low()

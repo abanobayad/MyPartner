@@ -24,12 +24,20 @@
                         <div class="text-muted fst-italic mb-2"><i class="mdi mdi-comment-text col-blue"></i> Comments:
                             {{ count($post->comments) }}</div>
                         <!-- Post categories-->
-                        <a class="badge bg-secondary text-decoration-none link-light" href="#!">Group:
+                        <a href="{{route('admin.post.requests.show' , $post->id)}}" style="text-decoration: none">
+                            <div class="text-muted fst-italic mb-2"><i class="mdi  mdi-comment-question-outline col-blue"></i> Requests:
+                                {{ count($post->requests) }}</div>
+                        </a>
+
+                        <a class="badge bg-secondary text-decoration-none link-light" href="{{route('admin.group.show' , $post->group->id)}}">Group:
                             {{ $post->group->name }}</a>
                     </header>
                     <!-- Preview image figure-->
-                    <figure class="mb-4"><img class="img-fluid rounded"
-                            src="{{ asset('uploads/Posts' . '/' . $post->image) }}" alt="{{ $post->title }}" /></figure>
+                    @if ($post->image != null)
+                        <figure class="mb-4"><img class="img-fluid rounded"
+                                src="{{ asset('uploads/Posts' . '/' . $post->image) }}" alt="{{ $post->title }}" />
+                        </figure>
+                    @endif
                     <!-- Post content-->
                     <section class="mb-5">
                         <p class="fs-5 mt-2 card p-3" style="text-transform: capitalize">
