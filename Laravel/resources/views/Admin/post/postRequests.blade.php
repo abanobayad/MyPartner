@@ -48,7 +48,15 @@
                         <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
                             <td> {{ $request->requester->name }} </td>
-                            <td> {{ $request->status }}</td>
+                            <td>
+                                @if( $request->status == "pending")
+                                <button type="button" class="btn btn-primary" > {{ $request->status }}</button>
+                            @elseif($request->status == "accept")
+                                <button type="button" class="btn btn-success" > {{ $request->status }}</button>
+                            @else
+                                <button type="button" class="btn btn-danger" > {{ $request->status }}</button>
+                            @endif
+                            </td>
                         </tr>
                     @endforeach
                     {{-- End Fetch Data --}}
