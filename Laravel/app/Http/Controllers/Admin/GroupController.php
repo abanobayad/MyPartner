@@ -7,7 +7,6 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Group;
 use App\Models\Post;
-
 use App\Models\Tag;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -29,28 +28,18 @@ class GroupController extends Controller
         return view('Admin.group.showGroup', compact('group'));
     }
 
-
-    // show all post in group , using group id
-    public function show_posts(Request $request ,$id)
+    public function showGroupPosts(Request $request , $id)
     {
         $group = Group::find($id);
-        if($group==null)
-        {
-            return "Group Not Found";
-        }
-
         $selected_reps = $request->has('status') ? $request->get('status'):null;
-
-        $posts = Post::where('visible','yes')->where('group_id',$id)->orderBy('visible' , 'asc')->orderBy('updated_at' , 'desc')->paginate(10);
-        // dd($posts);
+        $posts = $group->posts()->orderBy('visible' , 'asc')->orderBy('updated_at' , 'desc')->paginate(10);
 
         if($selected_reps != null){
-            if($selected_reps == 'yes')  {$posts = Post::select()->where('group_id',$id)->where('visible' , 'yes')->paginate(10); }
-            if($selected_reps == 'no')  {$posts = Post::select()->where('group_id',$id)->where('visible' , 'no')->paginate(10); }
+            if($selected_reps == 'yes')  {$posts = $group->posts()->where('visible' , 'yes')->paginate(10); }
+            if($selected_reps == 'no')  {$posts = $group->posts()->where('visible' , 'no')->paginate(10); }
         }
 
-        return view('Admin.group.groupposts' , compact('posts' , 'selected_reps','id'));
-
+        return view('Admin.group.showGroupPosts', compact('group','posts' , 'selected_reps'));
     }
 
     public function create()

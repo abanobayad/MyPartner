@@ -74,7 +74,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
         Route::prefix('/group')->group(function () {
             Route::get('/', 'GroupController@index')->name('admin.group.index');
             Route::get('/show/{id}', 'GroupController@show')->name('admin.group.show');
-            Route::any('/show_posts/{id}', 'GroupController@show_posts')->name('admin.group.show_posts');
+            Route::any('/show-group-posts/{id}', 'GroupController@showGroupPosts')->name('admin.group.posts.show');
             Route::get('/create', 'GroupController@create')->name('admin.group.create');
             Route::post('/do-create', 'GroupController@doCreate')->name('admin.group.doCreate');
             Route::get('/create1', 'GroupController@create1')->name('admin.group.create1');
@@ -119,8 +119,8 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/dashboard')->group(func
         Route::prefix('/post')->group(function () {
             Route::any('/', 'PostController@index')->name('admin.post.index');
             Route::get('/show/{id}', 'PostController@show')->name('admin.post.show');
-            Route::get('/approve/{id}', 'PostController@approve')->name('admin.post.approve');
-            Route::get('/reject/{id}', 'PostController@reject')->name('admin.post.reject');
+            Route::any('/show-post-requests/{id}', 'PostController@showPostRequests')->name('admin.post.requests.show');
+
         });
 
 

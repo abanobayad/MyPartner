@@ -398,7 +398,7 @@ class DataSeeder extends Seeder
                 'gender' => $gender,
                 'address' => $faker->address,
                 'bio' => $faker->word,
-                'image'    => 'user.png'
+                'image'    => 'u.png'
             ]);
 
             //post

@@ -125,7 +125,7 @@ class User extends Authenticatable
 
     public function cancelRequests()
     {
-        return $this->belongsTo(CanceledRequest::class, 'requester_id');
+        return $this->hasMany(CanceledRequest::class, 'requester_id');
     }
 
 }

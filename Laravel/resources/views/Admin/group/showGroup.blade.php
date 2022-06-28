@@ -23,6 +23,10 @@
                             <a href="{{ route('admin.group.edit', $group->id) }}" style="float: right"
                                 class="d-flex btn btn-sm btn-outline-dark">Edit
                             </a>
+
+                            <a href="{{ route('admin.group.posts.show', $group->id) }}" style="float: right"
+                                class="d-flex btn btn-sm btn-outline-success">Show Group Posts
+                            </a>
                         </div>
                     </div>
                 </div>

@@ -28,13 +28,25 @@
                     <div class="p-2 mt-2  d-flex justify-content-between rounded text stats">
 
                         <div class="image">
+                            @if ($user->profile->image == null)
                             <img class="img-lg rounded-circle"
-                                src="{{ asset('uploads/Users') . '/' . $user->profile->image }}" alt="user_image">
+                            src="{{ asset('uploads/Users/u.png')}}" alt="user_image">
+                            @else
+                            <img class="img-lg rounded-circle"
+                            src="{{ asset('uploads/Users') . '/' . $user->profile->image }}" alt="user_image">
+                            @endif
+
                         </div>
                         <div class="d-flex flex-column"> <span class="articles">Posts</span> <span
-                                class="number1">{{ count($user->posts) }}</span> </div>
+                                class="number1 text-center">{{ count($user->posts) }}</span>
+                        </div>
+
+                        <div class="d-flex flex-column"> <span class="articles">Canceled Requests</span> <span
+                            class="number1 text-primary text-center">{{ $user->cancelRequests->count() }}</span>
+                        </div>
+
                         <div class="d-flex flex-column"> <span class="rating">Rating</span> <span
-                                class="number3 @if ($rate->count() == 0) text-danger @endif">
+                                class="number3 text-center @if ($rate->count() == 0) text-danger @endif">
                                 {{ $total_rate }}
                             </span> </div>
                     </div>

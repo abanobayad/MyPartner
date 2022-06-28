@@ -24,12 +24,20 @@
                         <div class="text-muted fst-italic mb-2"><i class="mdi mdi-comment-text col-blue"></i> Comments:
                             {{ count($post->comments) }}</div>
                         <!-- Post categories-->
-                        <a class="badge bg-secondary text-decoration-none link-light" href="{{ route('admin.group.show', $post->group->id) }}">Group:
+                        <a href="{{route('admin.post.requests.show' , $post->id)}}" style="text-decoration: none">
+                            <div class="text-muted fst-italic mb-2"><i class="mdi  mdi-comment-question-outline col-blue"></i> Requests:
+                                {{ count($post->requests) }}</div>
+                        </a>
+
+                        <a class="badge bg-secondary text-decoration-none link-light" href="{{route('admin.group.show' , $post->group->id)}}">Group:
                             {{ $post->group->name }}</a>
                     </header>
                     <!-- Preview image figure-->
-                    <figure class="mb-4"><img class="img-fluid rounded"
-                            src="{{ asset('uploads/Posts' . '/' . $post->image) }}" alt="{{ $post->title }}" /></figure>
+                    @if ($post->image != null)
+                        <figure class="mb-4"><img class="img-fluid rounded"
+                                src="{{ asset('uploads/Posts' . '/' . $post->image) }}" alt="{{ $post->title }}" />
+                        </figure>
+                    @endif
                     <!-- Post content-->
                     <section class="mb-5">
                         <p class="fs-5 mt-2 card p-3" style="text-transform: capitalize">
@@ -121,7 +129,7 @@
             <div class="col-lg-4">
                 <!-- Categories widget-->
                 <div class="card mb-4">
-                    <div class="card-header"> {{ count($post->group->tags) }} {{count($post->group->tags) > 1 ?"Tags":"Tag"}}</div>
+                    <div class="card-header">Tags</div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12">
@@ -129,37 +137,8 @@
                                     <div class="row">
                                     @foreach ($post->group->tags as $tag)
                                             <div class="col-6">
-                                                <li><a href="{{ route('admin.tag.show', $tag->id) }}" style="text-decoration: none">{{ $tag->name }}</a></li>
+                                                <li><a class="text-success fw-bold" href="{{ route('admin.tag.show', $tag->id) }}" style="text-decoration: none">{{ $tag->name }}</a></li>
                                             </div>
-                                            @endforeach
-                                        </div>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-header"> {{ count($post->requests) }}  {{count($post->requests) > 1 ?"Requests":"Request"}}  </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <ul class="list-unstyled mb-0">
-                                    <div class="row">
-                                    @foreach ($post->requests as $request)
-                                            <div class="col-5">
-                                                <a  href="{{ route('admin.user.show', $request->requester_id) }}" style="text-decoration: none"> {{ $request->requester->name }} </a>
-                                            </div>
-                                            <br><br>
-                                            <div class="col-3">
-                                                @if( $request->status == "pending")
-                                                    <button type="button" class="btn btn-primary" > {{ $request->status }}</button>
-                                                @elseif($request->status == "accept")
-                                                    <button type="button" class="btn btn-success" > {{ $request->status }}</button>
-                                                @else
-                                                    <button type="button" class="btn btn-danger" > {{ $request->status }}</button>
-                                                @endif
-                                            </div>
-
                                             @endforeach
                                         </div>
                                 </ul>

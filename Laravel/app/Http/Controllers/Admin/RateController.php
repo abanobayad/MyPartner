@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Rate;
 use App\Models\User;
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class RateController extends Controller
 {
@@ -75,7 +75,7 @@ class RateController extends Controller
     {
         DB::delete('DELETE FROM rates WHERE sender_id = ? AND receiver_id = ?',[$s_id,$r_id] );
         return redirect(route('admin.rate.index'));
-        }
+    }
 
 
     public function low()

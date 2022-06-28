@@ -111,6 +111,7 @@ Route::namespace('App\Http\Controllers\API')->group(function () {
             Route::get('/get/{c_id}', 'CommentController@get');                //get OLD Comment "Send Comment ID"
             Route::get('/post_comment/{post_id}', 'CommentController@post_comment');    //get all Comment of post "Send post ID"
             Route::post('/delete/{c_id}', 'CommentController@DELETE');          //delete Comment "Send Comment ID"
+            Route::get('/post_comment/{post_id}', 'CommentController@post_comment');    //get all Comment of post "Send post ID"
         });
 
 
