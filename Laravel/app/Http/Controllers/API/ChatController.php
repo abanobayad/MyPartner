@@ -9,6 +9,7 @@ use App\Models\Req;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class ChatController extends BaseController
 {
@@ -126,13 +127,25 @@ class ChatController extends BaseController
 
         foreach ($Chats as $Chat){
             if($Chat->user1_id == $user1 ){
-                $last_mess = message::select('body')->where([ ['chat_id',$Chat->id] , ['v_user1',1] ])->latest()->first();
+                $last_mess = message::select()->where([ ['chat_id',$Chat->id] , ['v_user1',1] ])->latest()->first();
                 if(!is_null($last_mess)){
-                    array_push($data,["user" => $Chat->user2()->select('id' , 'name')->get()],["last_message" => $last_mess]);}
+                    $receiver = $Chat->user2()->first();
+                    $receiver_id = $receiver->id;
+                    $receiver_name =  $receiver->name;
+                    $receiver = User::find($receiver_id);
+                    $avatar = $receiver->profile()->first()->image;
+                    $avatar = "uploads/Users/".$avatar;
+                    array_push($data,["user_id" => $receiver_id,"user_name"=>$receiver_name,"image"=> $avatar,"last_message" => $last_mess->body,"date"=>$last_mess->created_at->diffForhumans()]);}
             }else{
-                $last_mess = message::select('body')->where([ ['chat_id',$Chat->id] , ['v_user2',1] ])->latest()->first();
+                $last_mess = message::select('body','created_at')->where([ ['chat_id',$Chat->id] , ['v_user2',1] ])->latest()->first();
                 if(!is_null($last_mess)){
-                    array_push($data,["user" => $Chat->user1()->select('id' , 'name')->get()],["last_message" => $last_mess]);}
+                    $receiver = $Chat->user1()->first();
+                    $receiver_id = $receiver->id;
+                    $receiver_name =  $receiver->name;
+                    $receiver = User::find($receiver_id);
+                    $avatar = $receiver->profile()->first()->image;
+                    $avatar = "uploads/Users/".$avatar;
+                    array_push($data,["user_id" => $receiver_id,"user_name"=>$receiver_name,"image"=> $avatar,"last_message" => $last_mess->body,"date"=>$last_mess->created_at->diffForhumans()]);}
             }
         }
 

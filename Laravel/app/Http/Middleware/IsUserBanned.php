@@ -14,7 +14,6 @@ class IsUserBanned
     {
 
         if (auth()->check() && auth()->user()->banned_till != null) {
-            // dd(auth()->user());
             if (auth()->user()->banned_till == 0) {
                 $message = 'Your account has been banned permanently.';
                 auth()->user()->tokens()->delete();

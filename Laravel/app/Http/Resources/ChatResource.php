@@ -12,6 +12,9 @@ class ChatResource extends JsonResource
 
         $chat = $this->chat()->select()->first();
         $sender = $this->sender()->select('id' , 'name')->first();
+        $user = [];
+        array_push($user,["id" => $sender->id,"name"=>$sender->id]);
+
 
         if($chat->user1_id == $sender->id){
             $reciver = $chat->user2()->select('id' , 'name')->get();
@@ -21,7 +24,7 @@ class ChatResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'Sender ' => $sender,
+            'Sender ' => $user,
             'reciver'=>$reciver,
             'body' => $this->body,
             'attachment ' => $this->attachment,
