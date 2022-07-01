@@ -50,17 +50,27 @@
                     @foreach ($reports as $report)
                         <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
-                            <td> {{ $report->user->name }} </td>
-                            <td>{{ $report->post->title }}</td>
-                            <td>{{ $report->post->user->name }}</td>
+                            <td>
+                                <a href="{{ route('admin.user.show',$report->user->id) }}" style="text-decoration: none">
+                                    {{ $report->user->name }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ route('admin.post.show',$report->post->id) }}" style="text-decoration: none">
+                                    {{ $report->post->title }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ route('admin.user.show',$report->post->user_id) }}" style="text-decoration: none">
+                                    {{ $report->post->user->name }}
+                                </a>
+                            </td>
                             <td>{{ $report->reason }}</td>
                             <td>{{ $report->feedback }}</td>
                             <td>{{ $report->is_handled }}</td>
                             <td>
                                 <a href="{{ route('admin.report.show', [$report->post_id, $report->user_id]) }}"
                                     class="btn btn-sm btn-dark text-white">Show Details</a>
-                                <a href="{{ route('admin.report.reject', [$report->post_id, $report->user_id]) }}"
-                                    class="btn btn-sm btn-danger text-white">Delete</a>
                             </td>
                         </tr>
                     @endforeach

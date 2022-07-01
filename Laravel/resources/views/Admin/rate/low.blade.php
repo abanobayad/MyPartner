@@ -2,11 +2,7 @@
 
 @section('content')
 
-<<<<<<< HEAD
     <h4 style="display: inline-block">Low Rates </h4>
-=======
-    <h4 style="display: inline-block">Low rates</h4>
->>>>>>> text-detector
 
 <div class="table-responsive">
 <table class="table">
@@ -23,7 +19,11 @@
        @foreach ($data as $d)
                 <tr>
                 <th scope="row">{{$loop->iteration}}</th>
-                <td> {{$d['name']}} </td>
+                <td>
+                    <a href="{{ route('admin.user.show',$d['id']) }}" style="text-decoration: none">
+                        {{$d['name']}}
+                    </a>
+                </td>
                 <td>{{$d['avg']}}</td>
                 <td>{{$d['number']}}</td>
                 <td>

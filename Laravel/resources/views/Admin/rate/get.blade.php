@@ -5,7 +5,8 @@
 <div class="row">
     @if (count($rates) < 1)
         <div class="alert alert-danger" role="alert">
-            No one rate {{$user->name}}
+
+            No one rate for {{$user->name}}
         </div>
     @else
     <div class="col-6 m-auto">
