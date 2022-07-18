@@ -165,6 +165,7 @@ class GroupController extends Controller
 
         if ($request->hasFile('image')) {
 
+
             //check old image
             $OldImg = Group::find($request->id)->image;
 
@@ -184,17 +185,25 @@ class GroupController extends Controller
                 $newImgName = $request->image->hashName();
                 $request->file('image')->move('uploads/Groups/', $newImgName);
                 $data['image'] = $newImgName;
+                $group->update([
+                    'name'          => $request->name,
+                    'description'   => $request->description,
+                    'category_id'   => $request->category_id,
+                    'image'         => $data['image'],
+                    'admin_id' =>      $data['admin_id'],
+                ]);
             }
         }
+        else
+        {
+            $group->update([
+                'name'          => $request->name,
+                'description'   => $request->description,
+                'category_id'   => $request->category_id,
+                'admin_id' =>      $data['admin_id'],
+            ]);
+        }
 
-
-        $group->update([
-            'name'          => $request->name,
-            'description'   => $request->description,
-            'category_id'   => $request->category_id,
-            'image'         => $data['image'],
-            'admin_id' =>      $data['admin_id'],
-        ]);
         $group->tags()->sync($request->tag);
         Alert::success('Edit Completed', 'Group ' . $group->name . ' Changed Successfully');
         return back();

@@ -45,6 +45,7 @@
                     <h6 for="exampleFormControlInput1">Updated at : {{ $report->updated_at->diffForhumans() }}</h6>
                 </div>
 
+                @if($report->is_handled == "no")
                 <div class="btn-group  mx-auto">
                     <div class="row">
                         <div class="col-6">
@@ -59,6 +60,10 @@
                         </div>
                     </div>
                 </div>
+
+
+                @endif
+
             </div>
         </div>
 
