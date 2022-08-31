@@ -19,7 +19,7 @@ class CreatePostsTable extends Migration
             $table->text('content');
             $table->string('image')->nullable();
             $table->mediumText('location');
-            $table->enum('visible' , ['no','yes'])->defualt('no');
+            $table->enum('visible' , ['no','yes'])->defualt('yes');
             $table->integer('needed_persons')->default(1);
             $table->unsignedDouble('price' , 8 , 2)->default(0.00);
 
